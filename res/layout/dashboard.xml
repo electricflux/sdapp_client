@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+ 
+    <com.parking.dashboard.DashboardLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+ 
+        <Button android:id="@+id/dashboard_button_add"
+            style="@style/DashboardButton"
+            android:text="@string/activity_add"
+            android:drawableTop="@drawable/dashboard_button_add" />
+ 
+        <Button android:id="@+id/dashboard_button_viewall"
+            style="@style/DashboardButton"
+            android:text="@string/activity_viewall"
+            android:drawableTop="@drawable/dashboard_button_add" />
+ 
+        <Button android:id="@+id/dashboard_button_manage"
+            style="@style/DashboardButton"
+            android:text="@string/activity_manage"
+            android:drawableTop="@drawable/dashboard_button_add" />
+ 
+        <Button android:id="@+id/dashboard_button_personalbests"
+            style="@style/DashboardButton"
+            android:text="@string/activity_personalbests"
+            android:drawableTop="@drawable/dashboard_button_add" />   
+ 
+    </com.parking.dashboard.DashboardLayout>
+ 
+</LinearLayout>

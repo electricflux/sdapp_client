@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, PainlessParkingActivity!</string>
+    <string name="app_name">PainlessParking</string>
+    <string name="activity_add">Add</string>
+    <string name="activity_viewall">View</string>
+    <string name="activity_manage">Manage</string>
+    <string name="activity_personalbests">Personal Best</string>
+</resources>

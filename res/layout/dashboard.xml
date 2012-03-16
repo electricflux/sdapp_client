@@ -13,22 +13,22 @@
  
         <Button android:id="@+id/dashboard_button_add"
             style="@style/DashboardButton"
-            android:text="@string/activity_add"
+            android:text="@string/activity_findparking"
             android:drawableTop="@drawable/dashboard_button_add" />
  
         <Button android:id="@+id/dashboard_button_viewall"
             style="@style/DashboardButton"
-            android:text="@string/activity_viewall"
+            android:text="@string/activity_locatemycar"
             android:drawableTop="@drawable/dashboard_button_add" />
  
         <Button android:id="@+id/dashboard_button_manage"
             style="@style/DashboardButton"
-            android:text="@string/activity_manage"
+            android:text="@string/activity_payforspot"
             android:drawableTop="@drawable/dashboard_button_add" />
  
         <Button android:id="@+id/dashboard_button_personalbests"
             style="@style/DashboardButton"
-            android:text="@string/activity_personalbests"
+            android:text="@string/activity_paymenthistory"
             android:drawableTop="@drawable/dashboard_button_add" />   
  
     </com.parking.dashboard.DashboardLayout>

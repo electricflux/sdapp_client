@@ -1,12 +1,4 @@
-/*
- * Copyright © 2011 QUALCOMM Incorporated. All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * QUALCOMM Incorporated ("Proprietary Information"). You shall not
- * disclose such Proprietary Information, and shall use it only in
- * accordance with the terms of the license agreement you entered into
- * with QUALCOMM Incorporated.
- */
+
 package com.parking.dashboard.activity;
 
 import android.app.Activity;
@@ -15,11 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.parking.add.AddCapture;
 import com.parking.dashboard.R;
-import com.parking.manage.Manage;
-import com.parking.personalbests.PersonalBests;
-import com.parking.view.ViewAll;
+import com.parking.findparking.FindParking;
+import com.parking.locatemycar.LocateMyCar;
+import com.parking.payforspot.PayForSpot;
+import com.parking.paymenthistory.PaymentHistory;
 
 public class DashboardActivity extends Activity{
    
@@ -45,16 +37,16 @@ public class DashboardActivity extends Activity{
           Intent i = null;
           switch (v.getId()) {
               case R.id.dashboard_button_add:
-                  i = new Intent(DashboardActivity.this, AddCapture.class);
+                  i = new Intent(DashboardActivity.this, PaymentHistory.class);
                   break;
               case R.id.dashboard_button_viewall:
-                  i = new Intent(DashboardActivity.this, ViewAll.class);
+                  i = new Intent(DashboardActivity.this, PayForSpot.class);
                   break;
               case R.id.dashboard_button_manage:
-                  i = new Intent(DashboardActivity.this, Manage.class);
+                  i = new Intent(DashboardActivity.this, FindParking.class);
                   break;
               case R.id.dashboard_button_personalbests:
-                  i = new Intent(DashboardActivity.this, PersonalBests.class);
+                  i = new Intent(DashboardActivity.this, LocateMyCar.class);
                   break;
               default:
                   break;

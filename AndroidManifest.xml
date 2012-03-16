@@ -14,19 +14,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.parking.add.AddCapture"
+        <activity android:name="com.parking.paymenthistory.PaymentHistory"
                   android:label="@string/app_name">
         </activity>
         
-        <activity android:name="com.parking.manage.Manage"
+        <activity android:name="com.parking.findparking.FindParking"
                   android:label="@string/app_name">
         </activity>
 
-        <activity android:name="com.parking.personalbests.PersonalBests"
+        <activity android:name="com.parking.locatemycar.LocateMyCar"
                   android:label="@string/app_name">
         </activity>
 
-        <activity android:name="com.parking.view.ViewAll"
+        <activity android:name="com.parking.payforspot.PayForSpot"
                   android:label="@string/app_name">
         </activity>
 

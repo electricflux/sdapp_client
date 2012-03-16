@@ -27,10 +27,10 @@ public final class R {
         public static final int main=0x7f030001;
     }
     public static final class string {
-        public static final int activity_add=0x7f040002;
-        public static final int activity_manage=0x7f040004;
-        public static final int activity_personalbests=0x7f040005;
-        public static final int activity_viewall=0x7f040003;
+        public static final int activity_findparking=0x7f040002;
+        public static final int activity_locatemycar=0x7f040003;
+        public static final int activity_payforspot=0x7f040004;
+        public static final int activity_paymenthistory=0x7f040005;
         public static final int app_name=0x7f040001;
         public static final int hello=0x7f040000;
     }

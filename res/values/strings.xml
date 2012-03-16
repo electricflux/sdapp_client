@@ -2,8 +2,8 @@
 <resources>
     <string name="hello">Hello World, PainlessParkingActivity!</string>
     <string name="app_name">PainlessParking</string>
-    <string name="activity_add">Add</string>
-    <string name="activity_viewall">View</string>
-    <string name="activity_manage">Manage</string>
-    <string name="activity_personalbests">Personal Best</string>
+    <string name="activity_findparking">Find Parking</string>
+    <string name="activity_locatemycar">Locate My Car</string>
+    <string name="activity_payforspot">Pay For Spot</string>
+    <string name="activity_paymenthistory">Payment History</string>
 </resources>

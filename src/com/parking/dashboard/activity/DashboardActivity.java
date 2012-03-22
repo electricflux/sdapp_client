@@ -24,7 +24,7 @@ public class DashboardActivity extends Activity{
       
     //attach event handler to dash buttons
       DashboardClickListener dBClickListener = new DashboardClickListener();
-      findViewById(R.id.dashboard_button_add).setOnClickListener(dBClickListener);
+      findViewById(R.id.dashboard_button_find_parking).setOnClickListener(dBClickListener);
       findViewById(R.id.dashboard_button_viewall).setOnClickListener(dBClickListener);
       findViewById(R.id.dashboard_button_manage).setOnClickListener(dBClickListener);
       findViewById(R.id.dashboard_button_personalbests).setOnClickListener(dBClickListener);
@@ -36,14 +36,14 @@ public class DashboardActivity extends Activity{
       public void onClick(View v) {
           Intent i = null;
           switch (v.getId()) {
-              case R.id.dashboard_button_add:
-                  i = new Intent(DashboardActivity.this, PaymentHistory.class);
+              case R.id.dashboard_button_find_parking:
+                  i = new Intent(DashboardActivity.this, FindParkingTabs.class);
                   break;
               case R.id.dashboard_button_viewall:
                   i = new Intent(DashboardActivity.this, PayForSpot.class);
                   break;
               case R.id.dashboard_button_manage:
-                  i = new Intent(DashboardActivity.this, FindParkingTabs.class);
+                  i = new Intent(DashboardActivity.this, PaymentHistory.class);
                   break;
               case R.id.dashboard_button_personalbests:
                   i = new Intent(DashboardActivity.this, LocateMyCar.class);

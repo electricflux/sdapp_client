@@ -18,7 +18,7 @@ public class FindParkingList extends Activity{
       super.onCreate(savedInstanceState);
 
       TextView textview = new TextView(this);
-      textview.setText("This is the Artists tab");
+      textview.setText("List of Parking Spots");
       setContentView(textview);
   }
 }

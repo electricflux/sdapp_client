@@ -38,7 +38,7 @@ public class FindParkingTabs extends TabActivity {
             .setContent(intent);
       tabHost.addTab(spec);
 
-      // Do the same for the other tabs
+      // Do the same for the other tab
       intent = new Intent().setClass(this, FindParkingList.class);
       spec = tabHost.newTabSpec("list").setIndicator("List",
             res.getDrawable(R.drawable.ic_tab_artists))

@@ -14,8 +14,11 @@ public final class R {
         public static final int add_button_default=0x7f020000;
         public static final int add_button_selected=0x7f020001;
         public static final int dashboard_button_add=0x7f020002;
-        public static final int icon=0x7f020003;
-        public static final int map_marker_blue=0x7f020004;
+        public static final int ic_tab_artists=0x7f020003;
+        public static final int ic_tab_artists_grey=0x7f020004;
+        public static final int ic_tab_artists_white=0x7f020005;
+        public static final int icon=0x7f020006;
+        public static final int map_marker_blue=0x7f020007;
     }
     public static final class id {
         public static final int dashboard_button_add=0x7f060000;
@@ -28,6 +31,7 @@ public final class R {
         public static final int dashboard=0x7f030000;
         public static final int findparking=0x7f030001;
         public static final int main=0x7f030002;
+        public static final int map_list_tabs=0x7f030003;
     }
     public static final class string {
         public static final int activity_findparking=0x7f040002;

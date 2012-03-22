@@ -22,10 +22,19 @@
                   android:label="@string/app_name">
         </activity>
         
-        <activity android:name="com.parking.findparking.FindParking"
+        <activity android:name="com.parking.findparking.FindParkingMap"
                   android:label="@string/app_name">
         </activity>
 
+        <activity android:name="com.parking.findparking.FindParkingList"
+                  android:label="@string/app_name">
+        </activity>
+        
+        <activity android:name="com.parking.findparking.FindParkingTabs" 
+                  android:label="@string/app_name"
+                  android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+         
         <activity android:name="com.parking.locatemycar.LocateMyCar"
                   android:label="@string/app_name">
         </activity>

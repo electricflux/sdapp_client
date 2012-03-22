@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.parking.dashboard.R;
-import com.parking.findparking.FindParking;
+import com.parking.findparking.FindParkingTabs;
 import com.parking.locatemycar.LocateMyCar;
 import com.parking.payforspot.PayForSpot;
 import com.parking.paymenthistory.PaymentHistory;
@@ -43,7 +43,7 @@ public class DashboardActivity extends Activity{
                   i = new Intent(DashboardActivity.this, PayForSpot.class);
                   break;
               case R.id.dashboard_button_manage:
-                  i = new Intent(DashboardActivity.this, FindParking.class);
+                  i = new Intent(DashboardActivity.this, FindParkingTabs.class);
                   break;
               case R.id.dashboard_button_personalbests:
                   i = new Intent(DashboardActivity.this, LocateMyCar.class);

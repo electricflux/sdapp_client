@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -44,6 +45,26 @@ public class FindParkingMap extends MapActivity {
       createMarker();
    }
 
+   @Override
+   public void onDestroy(){
+      super.onDestroy();
+      Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT).show();
+   }
+   
+   @Override
+   public void onResume(){
+      super.onResume();
+      Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_SHORT).show();
+   }
+   
+   @Override
+   public void onPause(){
+      super.onPause();
+      Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_SHORT).show();
+   }
+   
+   
+   
    public String ConvertPointToLocation(GeoPoint point) {
       String address = "";
       Geocoder geoCoder = new Geocoder(getBaseContext(), Locale.getDefault());
@@ -78,6 +99,7 @@ public class FindParkingMap extends MapActivity {
 
       locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
       locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new GeoUpdateHandler());
+      locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new GeoUpdateHandler());
 
    }
 

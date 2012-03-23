@@ -12,20 +12,21 @@ public final class R {
     }
     public static final class drawable {
         public static final int actionbar_background=0x7f020000;
-        public static final int add_button_default=0x7f020001;
-        public static final int add_button_default_orig=0x7f020002;
-        public static final int add_button_pressed=0x7f020003;
-        public static final int add_button_selected=0x7f020004;
-        public static final int add_button_selected_orig=0x7f020005;
-        public static final int dashboard_button_add=0x7f020006;
-        public static final int facebook_logo=0x7f020007;
-        public static final int facebook_logo_orig=0x7f020008;
-        public static final int ic_tab_artists=0x7f020009;
-        public static final int ic_tab_artists_grey=0x7f02000a;
-        public static final int ic_tab_artists_white=0x7f02000b;
-        public static final int icon=0x7f02000c;
-        public static final int icon_=0x7f02000d;
-        public static final int map_marker_blue=0x7f02000e;
+        public static final int actionbar_background_backup=0x7f020001;
+        public static final int add_button_default=0x7f020002;
+        public static final int add_button_default_orig=0x7f020003;
+        public static final int add_button_pressed=0x7f020004;
+        public static final int add_button_selected=0x7f020005;
+        public static final int add_button_selected_orig=0x7f020006;
+        public static final int dashboard_button_add=0x7f020007;
+        public static final int facebook_logo=0x7f020008;
+        public static final int facebook_logo_orig=0x7f020009;
+        public static final int ic_tab_artists=0x7f02000a;
+        public static final int ic_tab_artists_grey=0x7f02000b;
+        public static final int ic_tab_artists_white=0x7f02000c;
+        public static final int icon=0x7f02000d;
+        public static final int icon_=0x7f02000e;
+        public static final int map_marker_blue=0x7f02000f;
     }
     public static final class id {
         public static final int dashboard_button_find_parking=0x7f060000;

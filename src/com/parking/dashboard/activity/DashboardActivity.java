@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.parking.auth.AccountList;
+import com.parking.auth.AppInfo;
 import com.parking.dashboard.R;
 import com.parking.findparking.FindParkingTabs;
 import com.parking.locatemycar.LocateMyCar;
@@ -29,6 +31,12 @@ public class DashboardActivity extends Activity{
       findViewById(R.id.dashboard_button_manage).setOnClickListener(dBClickListener);
       findViewById(R.id.dashboard_button_personalbests).setOnClickListener(dBClickListener);
       
+   }
+   
+   @Override
+   protected void onResume()
+   {
+	   super.onResume();
    }
 
    private class DashboardClickListener implements OnClickListener {

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.R.integer;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -181,17 +182,25 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	
 	public void dbquery(int i){
 		Log.v(TAG, "dbquery 0 ");
-		Cursor cursor = myDataBase.query("parking_info", null, null, null, null, null, null);
+		Cursor cursor = getReadableDatabase().rawQuery("select * from parking_info where _id = 3", null);
 		if (cursor != null)
 		{
-			Log.v(TAG, "dbquery 1 " + cursor.getColumnCount() + cursor.getCount());
-		/*	Log.v(TAG, "dbquery 1 " + cursor.getInt(1));
-			Log.v(TAG, "dbquery 1 " + cursor.getString(2));
-			Log.v(TAG, "dbquery 1 " + cursor.getString(3));
-			Log.v(TAG, "dbquery 1 " + cursor.getFloat(4));
-			Log.v(TAG, "dbquery 1 " + cursor.getFloat(5));
+			//"(_id INTEGER PRIMARY KEY, BlockName TEXT, Terminal_I TEXT, Lat FLOAT, Lon FLOAT);");
+			Log.v(TAG, "dbquery 1 ::" + cursor.getColumnCount() +" :: "+ cursor.getCount());
+			int iId = (cursor.getColumnIndexOrThrow("_id"));
+			Log.v(TAG, "dbquery 1 ::" + iId);
+			cursor.moveToFirst();
+			Log.v(TAG, "dbquery 2 ::" + cursor.getInt(iId));
+			Log.v(TAG, "dbquery 1 ::" + cursor.getString(cursor.getColumnIndexOrThrow("_id")));
+			/*Log.v(TAG, "dbquery 1 ::" + cursor.getString(1));
+			Log.v(TAG, "dbquery 1 ::" + cursor.getString(2));
+			Log.v(TAG, "dbquery 1 ::" + cursor.getFloat(3));
+			Log.v(TAG, "dbquery 1 ::" + cursor.getFloat(4));
 			
 			*/
+		
+			
+			
 		}
 		
 	}

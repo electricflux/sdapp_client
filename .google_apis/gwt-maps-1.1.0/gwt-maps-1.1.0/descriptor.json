@@ -1,0 +1,17 @@
+    {
+      "kind": "discovery#directoryItem",
+      "id": "gwt-maps:1.1.0",
+      "name": "gwt-maps",
+      "version": "1.1.0",
+      "title": "GAL GWT Maps",
+      "publisher": "Google",
+      "description": "The Google Maps API library provides a way to access the Google Maps API from a GWT project without having to write additional JavaScript code. The library gives you full control using the standard Maps components such as InfoWindows, Markers, MapTypes, Overlays, StreetviewPanorama and Geocoding service. You can even use advanced features such as adding GWT widgets to the Map, creating custom overlays, custom map types, and other components.",
+      "downloadLink": "static/gwt-maps-1.1.0.zip",
+      "icons": {
+        "x16": "icons/search-16.png"
+      },
+      "tosLink": "http://code.google.com/terms.html",
+      "releaseDate": "2009-11-05",
+      "documentationLink": "http://code.google.com/p/gwt-google-apis/wiki/MapsGettingStarted",
+      "preferred": true
+    }

@@ -38,4 +38,29 @@ public class ParkingLocationDataEntry {
 
 	// Persistent
 	private String contact;
+	
+	public void setid (Long i){
+		id = i;
+	}
+	
+	public void setlatitude (float lat){
+		latitude = lat;
+	}
+	
+	public void setlongitude (float lon){
+		longitude = lon;
+	}
+	
+	public Long getid (){
+		return id;
+	}
+	
+	public float getlatitude (){
+		return latitude;
+	}
+	
+	public float getlongitude(){
+		return longitude;
+	}
+	
 }

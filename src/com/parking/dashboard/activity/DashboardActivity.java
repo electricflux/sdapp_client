@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.parking.dashboard.R;
+import com.parking.datamanager.ParkingLocationsAll;
 import com.parking.findparking.FindParkingTabs;
 import com.parking.locatemycar.LocateMyCar;
 import com.parking.payforspot.PayForSpot;
@@ -24,6 +25,7 @@ public class DashboardActivity extends Activity{
    
    public static final String TAG = "DashboardActivity";
    public static Context myContext = null;
+   public static DataBaseHelper myDbHelper = null;
 
 @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,6 @@ public class DashboardActivity extends Activity{
       
 		Log.v(TAG, "Create DB: 1 ");
 
-		DataBaseHelper myDbHelper = null;
 		myDbHelper = new DataBaseHelper(null);
 		myDbHelper = new DataBaseHelper(getAppContext());
 
@@ -81,6 +82,8 @@ public class DashboardActivity extends Activity{
           switch (v.getId()) {
               case R.id.dashboard_button_find_parking:
                   i = new Intent(DashboardActivity.this, FindParkingTabs.class);
+                  ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
+                  mParkingLocationsAll.getParkingLocations(10, myDbHelper);
                   break;
               case R.id.dashboard_button_viewall:
                   i = new Intent(DashboardActivity.this, PayForSpot.class);

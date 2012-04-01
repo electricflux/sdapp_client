@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.parking.datamanager.ParkingLocationDataEntry;
 
-import android.R.integer;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -216,7 +215,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 	}
 
 	public void dbquery(int limit, List<ParkingLocationDataEntry> parkingLocations ){
-		Log.v(TAG, "dbquery 0 ");
+		Log.v(TAG, "dbquery 1 ");
 		Cursor cursor = getReadableDatabase().rawQuery("select * from parking_info where _id LIMIT "+limit, null);
 		ParkingLocationDataEntry tLocationObj = null; 
 		tLocationObj = new ParkingLocationDataEntry();
@@ -246,11 +245,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 					} while (cursor.moveToNext());
 				}
 			}
-
-
-
 		}
-
 	}
 	// Add your public helper methods to access and get content from the database.
 	// You could return cursors by doing "return myDataBase.query(....)" so it'd be easy

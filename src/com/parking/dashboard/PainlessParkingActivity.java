@@ -22,24 +22,16 @@ public class PainlessParkingActivity extends Activity {
         
         ParkingLocationManager appLocManager = new ParkingLocationManager(myContext);
         appLocManager.setUpLocationServices();
-        
-        
     }
     
-
-
-
    @Override
    protected void onResume() {
-      
       super.onResume();
-      
    }
 
 
    @Override
    protected void onDestroy() {
-
       appLocManager.stopListeningToLocationUpdates();
       super.onDestroy();
       

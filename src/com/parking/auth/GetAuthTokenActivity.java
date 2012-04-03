@@ -1,14 +1,8 @@
 package com.parking.auth;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.parking.application.ParkingApplication;
 import com.parking.dashboard.R;
 
 import android.accounts.Account;
@@ -17,14 +11,14 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
-public class AppInfo extends Activity {
+public class GetAuthTokenActivity extends Activity implements AsyncTaskResultNotifierInterface{
 	
-	private static final String TAG = AppInfo.class.getSimpleName();
+	private static final String TAG = GetAuthTokenActivity.class.getSimpleName();
 	private static final String ALL_SERVICES = "ah";
+	private static final int RegisterActivityIdentifier = 55;
 	
 	DefaultHttpClient http_client = new DefaultHttpClient();
 
@@ -37,10 +31,10 @@ public class AppInfo extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Intent intent = getIntent();
 		AccountManager accountManager = AccountManager.get(getApplicationContext());
-		Account account = (Account)intent.getExtras().get("account");
-		accountManager.getAuthToken(account, ALL_SERVICES, false, new GetAuthTokenCallback(), null);
+		Account account = ParkingApplication.getAccount();
+		accountManager.getAuthToken(account, 
+				ALL_SERVICES, false, new GetAuthTokenCallback(), null);
 	}
 
 	private class GetAuthTokenCallback implements AccountManagerCallback<Bundle> {
@@ -64,16 +58,51 @@ public class AppInfo extends Activity {
 	protected void onGetAuthToken(Bundle bundle) {
 		String auth_token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
 		Log.v(TAG,"Got auth token: "+auth_token);
-		new GetCookieTask().execute(auth_token);
+		ParkingApplication.setAuthToken(auth_token);
+		/**
+		 * Verify if the user is registered
+		 */
+		new LoginUserAsyncTask(this,this).execute("");
+		/**new GetCookieTask().execute(auth_token);*/
 	}
 
-	private class GetCookieTask extends AsyncTask<String, Void, Boolean> {
+	@Override
+	public void notifyResult(boolean result) {
+		ParkingApplication.setUserAuthenticated(result);
+		if (result == true)
+		{
+			finish();
+		}
+		else
+		{
+			/** Launch registration activity here */
+			Intent intent = new Intent(this.getBaseContext(), RegisterUserActivity.class);
+			startActivityForResult(intent, RegisterActivityIdentifier);
+		}
+	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.v(TAG, "Got activity result " + resultCode); 
+        /** Registration was successful. Kill this activity. */
+        if (requestCode == RegisterActivityIdentifier)
+        	finish();
+    }
+
+	/**
+	 * Unused code as of now
+	 */
+/*	private class GetCookieTask extends AsyncTask<String, Void, Boolean> {
 		protected Boolean doInBackground(String... tokens) {
 			try {
-				/** Don't follow redirects */
+				*//** Don't follow redirects *//*
 				http_client.getParams().setBooleanParameter(ClientPNames.HANDLE_REDIRECTS, false);
 
-				HttpGet http_get = new HttpGet("https://sdapp-parking.appspot.com/_ah/login?continue=http://localhost/&auth=" + tokens[0]);
+				HttpGet http_get = 
+						new HttpGet(
+								ParkingConstants.serverUrl + 
+								"/_ah/login?continue=http://localhost/&auth=" + 
+								tokens[0]);
 				HttpResponse response;
 				response = http_client.execute(http_get);
 				Log.v(TAG,"Respone is "+response.getStatusLine().getStatusCode());
@@ -84,7 +113,7 @@ public class AppInfo extends Activity {
 				for(Cookie cookie : http_client.getCookieStore().getCookies()) {
 					Log.v(TAG,"Cookie found: "+cookie.getExpiryDate().toLocaleString());
 					Log.v(TAG,"Cookie found: "+cookie.getName());
-					/** SACSID cookie because we are using https to authenticate with appspot */
+					*//** SACSID cookie because we are using https to authenticate with appspot *//*
 					if(cookie.getName().equals("SACSID"))
 					{
 						return true;
@@ -104,5 +133,5 @@ public class AppInfo extends Activity {
 			else
 				Log.v(TAG,"Could not find the cookie.");
 		}
-	}
+	}*/
 }

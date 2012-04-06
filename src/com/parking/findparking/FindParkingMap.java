@@ -47,8 +47,6 @@ public class FindParkingMap extends MapActivity {
    private Vector<GeoPoint> geoPointsVector = new Vector<GeoPoint>();
 
    private List<ParkingLocationDataEntry> parkingLocations = new ArrayList<ParkingLocationDataEntry>();
-   
-   private Cursor parkingSpotsCursor;
 
    public void onCreate(Bundle bundle) {
 
@@ -175,7 +173,7 @@ public class FindParkingMap extends MapActivity {
    @Override
    public void onDestroy() {
       super.onDestroy();
-      parkingSpotsCursor.close();
+//      parkingSpotsCursor.close();
       Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT).show();
 
    }

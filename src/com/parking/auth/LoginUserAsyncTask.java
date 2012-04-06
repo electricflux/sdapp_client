@@ -58,6 +58,8 @@ public class LoginUserAsyncTask extends AsyncTask<String, Void, Boolean> {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 			nameValuePairs.add(new BasicNameValuePair("username", 
 					ParkingApplication.getAccount().name));
+			nameValuePairs.add(new BasicNameValuePair("isDevice", 
+					"true"));
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 			HttpResponse response;

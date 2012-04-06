@@ -10,6 +10,7 @@
 package com.parking.findparking;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.database.Cursor;
 import android.database.DataSetObserver;
@@ -28,45 +29,14 @@ import com.parking.datamanager.ParkingLocationDataEntry;
 public class NearbyParkingSpotsOverlay extends Overlay{
 
    private static final String TAG = "ParkingApp";
-   private Cursor parkingSpotsCursor;
-   private ArrayList<ParkingLocationDataEntry> parkingLocationsList;
+   private List<ParkingLocationDataEntry> parkingLocationsList = null;
    
    
-   public NearbyParkingSpotsOverlay(Cursor cursor){
+   public NearbyParkingSpotsOverlay(List<ParkingLocationDataEntry> parkingLocations){
       super();
-      parkingSpotsCursor = cursor;
-      parkingLocationsList = new ArrayList<ParkingLocationDataEntry>();
-      refreshParkingSpots();
-      
-      parkingSpotsCursor.registerDataSetObserver(new DataSetObserver(){
-         @Override
-         public void onChanged(){
-            refreshParkingSpots();
-         }
-      });
-      
-      
+      parkingLocationsList = parkingLocations;
+           
    }
-   
-   private void refreshParkingSpots(){
-      if(parkingSpotsCursor.moveToFirst()){
-         do{
-            ParkingLocationDataEntry pSpotInfo = new ParkingLocationDataEntry();
-            int lat, lng; 
-            
-            lat = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndex("Lat")) * 1E6);
-            lng = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndex("Lon")) * 1E6);
-            Log.e(TAG, " Lat: "+lat + " Lon: "+lng);
- 
-            GeoPoint geoPoint = new GeoPoint(lat, lng);
-            pSpotInfo.setGeoPoint(geoPoint);
-            
-            parkingLocationsList.add(pSpotInfo);
-            
-         }while(parkingSpotsCursor.moveToNext());
-      }
-   }
-   
    
    @Override
    public void draw(Canvas canvas, MapView mapView, boolean shadow) {
@@ -100,8 +70,8 @@ public class NearbyParkingSpotsOverlay extends Overlay{
 
    @Override
    public boolean onTap(GeoPoint arg0, MapView arg1) {
-      // TODO Auto-generated method stub
       return super.onTap(arg0, arg1);
+      
    }
    
 

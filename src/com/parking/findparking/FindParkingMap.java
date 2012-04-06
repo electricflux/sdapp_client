@@ -1,5 +1,6 @@
 package com.parking.findparking;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
@@ -23,6 +24,7 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.parking.dashboard.R;
 import com.parking.datamanager.DBInterface;
+import com.parking.datamanager.ParkingLocationDataEntry;
 import com.parking.dbManager.DataBaseHelper;
 import com.parking.location.ParkingLocationManager;
 import com.parking.location.ParkingSpots;
@@ -44,6 +46,8 @@ public class FindParkingMap extends MapActivity {
    private static Vector<ParkingSpots> parkingSpotsVector = new Vector<ParkingSpots>();
    private Vector<GeoPoint> geoPointsVector = new Vector<GeoPoint>();
 
+   private List<ParkingLocationDataEntry> parkingLocations = new ArrayList<ParkingLocationDataEntry>();
+   
    private Cursor parkingSpotsCursor;
 
    public void onCreate(Bundle bundle) {
@@ -66,13 +70,15 @@ public class FindParkingMap extends MapActivity {
    private void overlayParkingSpots() {
       //String parkingURI = parkingSpotsProvider.CONTENT_URI;
       String selection = "";
+      
+      //Temporary Dummy 
+      GeoPoint gp = new GeoPoint(0, 0);
 
       DataBaseHelper myDbHelper = new DataBaseHelper(myContext);
-      myDbHelper.openDataBase();
-      parkingSpotsCursor = myDbHelper.dbquery(1);
+      myDbHelper.openDataBase(); 
+      myDbHelper.dbquery(gp, parkingLocations);
 
-      //parkingSpotsCursor = getContentResolver().query(parkingURI, null, selection, null, null);
-      NearbyParkingSpotsOverlay pso = new NearbyParkingSpotsOverlay(parkingSpotsCursor);
+      NearbyParkingSpotsOverlay pso = new NearbyParkingSpotsOverlay(parkingLocations);
       mapView.getOverlays().add(pso);
 
       overlayTappableParkingSpots();
@@ -84,29 +90,29 @@ public class FindParkingMap extends MapActivity {
    private void overlayTappableParkingSpots() {
 
       String address = "No Associated Address";
-      int lat, lng;
-      GeoPoint commonGP = null;
+      GeoPoint pSpotGeoPoint = null;
       OverlayItem overlayitem = null;
+      String sPpotInfo = "No Info Available";
+      
+      for (ParkingLocationDataEntry parkingSpot : parkingLocations) {
 
-      if (parkingSpotsCursor.moveToFirst()) {
-         do {
+         pSpotGeoPoint = parkingSpot.getGeoPoint();
+         address   = convertPointToLocation(pSpotGeoPoint);
+         sPpotInfo = convertObjToString(parkingSpot); 
+         
+         overlayitem = new OverlayItem(pSpotGeoPoint, address, sPpotInfo);
+         itemizedOverlays.addOverlay(overlayitem);
 
-            lat = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndex("Lat")) * 1E6);
-            lng = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndex("Lon")) * 1E6);
-
-            commonGP = new GeoPoint(lat, lng);
-            address = ConvertPointToLocation(commonGP);
-            overlayitem = new OverlayItem(commonGP, address, "Park Here?");
-            itemizedOverlays.addOverlay(overlayitem);
-
-            Log.e(TAG, " Lat: " + lat + " Lon: " + lng);
-
-         } while (parkingSpotsCursor.moveToNext());
-
+            
          mapView.getOverlays().add(itemizedOverlays);
          mapView.postInvalidate();
 
       }
+   }
+
+   private String convertObjToString(ParkingLocationDataEntry parkingSpot) {
+      String pSpotInfo = Float.toString(parkingSpot.getlatitude()) + "," + Float.toString(parkingSpot.getlongitude()) + "," + parkingSpot.getMeterId();
+      return pSpotInfo;
    }
 
    private void updateCurrentUserLocation() {
@@ -191,7 +197,7 @@ public class FindParkingMap extends MapActivity {
    private static void createMarker() {
       String address = "Not found";
       GeoPoint p = mapView.getMapCenter();
-      address = ConvertPointToLocation(p);
+      address = convertPointToLocation(p);
 
       OverlayItem overlayitem = new OverlayItem(p, address, "My Location P ");
 
@@ -202,7 +208,7 @@ public class FindParkingMap extends MapActivity {
 
    }
 
-   public static String ConvertPointToLocation(GeoPoint point) {
+   public static String convertPointToLocation(GeoPoint point) {
       String address = "";
       Geocoder geoCoder = new Geocoder(myContext, Locale.getDefault());
       return LocationUtility.ConvertPointToLocation(point, geoCoder);

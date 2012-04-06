@@ -11,6 +11,9 @@ public class ParkingLocationDataEntry {
    // PrimaryKey
    private Long id;
 
+   //Every meter has a meter id
+   private Long meterID;
+   
    // Persistent
    private float latitude;
 
@@ -44,6 +47,8 @@ public class ParkingLocationDataEntry {
    //Geopoint to simplify display
    private GeoPoint gpoint;
    
+   
+   
    public void setid(Long i) {
       id = i;
    }
@@ -75,6 +80,15 @@ public class ParkingLocationDataEntry {
 
    public GeoPoint getGeoPoint() {
       return gpoint;
+   }
+
+   public void setMeterId(Long meterId) {
+      this.meterID = meterId; 
+      
+   }
+
+   public Long getMeterId() {
+      return meterID;
    }
 
 }

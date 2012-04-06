@@ -14,7 +14,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import com.parking.datamanager.*;
+
+import com.google.android.maps.GeoPoint;
+import com.parking.datamanager.ParkingLocationDataEntry;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -44,6 +46,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
       if (dbExist) {
          Log.v(TAG, "Database Exists, we can proceed");
       } else {
+         
             try {
             //Create empty DB & copy our database to the empty DB
             this.getReadableDatabase();
@@ -169,17 +172,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
    }
 
-   public Cursor dbquery(int i) {
+   public List<ParkingLocationDataEntry> dbquery(GeoPoint gp, List<ParkingLocationDataEntry> parkingLocations) {
+
+      int lat, lng; 
+      long meterId;
+      
       Log.v(TAG, "dbquery 0 ");
       String selection = "Lat LIKE '34.1%'";
-      Cursor cursor = myDataBase.query("parking_info", null, selection, null, null, null, null);
-      if (cursor != null)
+      Cursor parkingSpotsCursor = myDataBase.query("parking_info", null, selection, null, null, null, null);
+      if (parkingSpotsCursor != null)
       {
-         Log.v(TAG, "dbquery 1 " + cursor.getColumnCount() + cursor.getCount());
+         
+         if(parkingSpotsCursor.moveToFirst()){
+            do{
+               ParkingLocationDataEntry pSpotInfo = new ParkingLocationDataEntry();
+               
+               //Lat Lon
+               lat = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndexOrThrow("Lat")) * 1E6);
+               lng = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndexOrThrow("Lon")) * 1E6);
+               Log.e(TAG, " Lat: "+lat + " Lon: "+lng);
+               
+               GeoPoint geoPoint = new GeoPoint(lat, lng);
+               pSpotInfo.setGeoPoint(geoPoint);
+               pSpotInfo.setlatitude(lat);
+               pSpotInfo.setlongitude(lng);
+               
+               //Meter Id
+               meterId = (long) parkingSpotsCursor.getInt(parkingSpotsCursor.getColumnIndexOrThrow("MeterId"));
+               pSpotInfo.setMeterId(meterId);
+               
+               
+               parkingLocations.add(pSpotInfo);
+               
+            }while(parkingSpotsCursor.moveToNext());
+         }
+         
+         Log.v(TAG, "dbquery 1 > " + parkingSpotsCursor.getColumnCount() + parkingSpotsCursor.getCount());
 
       }
       
-      return cursor;
+      return parkingLocations;
 
    }
 

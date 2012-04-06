@@ -1,5 +1,7 @@
 package com.parking.datamanager;
 
+import com.google.android.maps.GeoPoint;
+
 public class ParkingLocationDataEntry {
 
    private enum ParkingType {
@@ -39,6 +41,9 @@ public class ParkingLocationDataEntry {
    // Persistent
    private String contact;
 
+   //Geopoint to simplify display
+   private GeoPoint gpoint;
+   
    public void setid(Long i) {
       id = i;
    }

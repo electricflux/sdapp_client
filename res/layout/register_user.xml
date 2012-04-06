@@ -55,7 +55,6 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="left"
             android:hint="Please enter license plate numbers seperated by ;"
-            android:inputType="textPassword"
             android:lines="3"
             android:selectAllOnFocus="true" >
         </EditText>

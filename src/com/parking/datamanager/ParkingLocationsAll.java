@@ -3,10 +3,11 @@ package com.parking.datamanager;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.parking.dbManager.DataBaseHelper;
-
 import android.database.SQLException;
 import android.util.Log;
+
+import com.parking.datamanager.ParkingLocationDataEntry;
+import com.parking.dbManager.DataBaseHelper;
 
 public class ParkingLocationsAll {
 

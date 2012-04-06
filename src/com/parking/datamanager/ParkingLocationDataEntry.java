@@ -68,4 +68,13 @@ public class ParkingLocationDataEntry {
       return longitude;
    }
 
+   public void setGeoPoint(GeoPoint geoPoint) {
+      gpoint = geoPoint;
+      
+   }
+
+   public GeoPoint getGeoPoint() {
+      return gpoint;
+   }
+
 }

@@ -11,7 +11,6 @@ package com.parking.findparking;
 
 import java.util.ArrayList;
 
-import android.content.ContentResolver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
@@ -24,18 +23,19 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
+import com.parking.datamanager.ParkingLocationDataEntry;
 
 public class NearbyParkingSpotsOverlay extends Overlay{
 
    private static final String TAG = "ParkingApp";
    private Cursor parkingSpotsCursor;
-   private ArrayList<GeoPoint> parkingLocationsList;
+   private ArrayList<ParkingLocationDataEntry> parkingLocationsList;
    
    
    public NearbyParkingSpotsOverlay(Cursor cursor){
       super();
       parkingSpotsCursor = cursor;
-      parkingLocationsList = new ArrayList<GeoPoint>();
+      parkingLocationsList = new ArrayList<ParkingLocationDataEntry>();
       refreshParkingSpots();
       
       parkingSpotsCursor.registerDataSetObserver(new DataSetObserver(){
@@ -51,14 +51,17 @@ public class NearbyParkingSpotsOverlay extends Overlay{
    private void refreshParkingSpots(){
       if(parkingSpotsCursor.moveToFirst()){
          do{
+            ParkingLocationDataEntry pSpotInfo = new ParkingLocationDataEntry();
             int lat, lng; 
             
             lat = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndex("Lat")) * 1E6);
             lng = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndex("Lon")) * 1E6);
-            GeoPoint geoPoint = new GeoPoint(lat, lng);
-            
             Log.e(TAG, " Lat: "+lat + " Lon: "+lng);
-            parkingLocationsList.add(geoPoint);
+ 
+            GeoPoint geoPoint = new GeoPoint(lat, lng);
+            pSpotInfo.setGeoPoint(geoPoint);
+            
+            parkingLocationsList.add(pSpotInfo);
             
          }while(parkingSpotsCursor.moveToNext());
       }
@@ -80,10 +83,10 @@ public class NearbyParkingSpotsOverlay extends Overlay{
       if(shadow == true)
       {
          //Draw all the nearby spots
-         for(GeoPoint gPoint : parkingLocationsList)
+         for(ParkingLocationDataEntry pSpotInfo : parkingLocationsList)
          {
             Point myPoint = new Point();
-            projection.toPixels(gPoint, myPoint);
+            projection.toPixels(pSpotInfo.getGeoPoint(), myPoint);
             
             RectF oval = new RectF( myPoint.x - radius, myPoint.y - radius, 
                                     myPoint.x + radius, myPoint.y + radius);

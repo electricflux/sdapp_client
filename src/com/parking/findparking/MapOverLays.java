@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
@@ -83,4 +84,8 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
       populate();
    }
 
+   void onFocusChanged(ItemizedOverlay overlay, OverlayItem newFocus){
+      Toast.makeText(mContext, "onFocusChanged", Toast.LENGTH_LONG).show();
+   }
+   
 }

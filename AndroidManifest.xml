@@ -32,7 +32,11 @@
         <activity android:name="com.parking.findparking.FindParkingMap"
                   android:label="@string/app_name">
         </activity>
-
+        
+        <activity android:name="com.parking.findparking.ParkingSpotAndPaymentInformation"
+          android:label="@string/app_name">
+        </activity>
+        
         <activity android:name="com.parking.findparking.FindParkingList"
                   android:label="@string/app_name">
         </activity>

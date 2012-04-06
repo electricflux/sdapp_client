@@ -11,15 +11,18 @@ package com.parking.findparking;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
+import com.parking.dashboard.activity.DashboardActivity;
 
 public class MapOverLays extends ItemizedOverlay<OverlayItem> {
 
    private Context mContext;
-   private static int maxNum = 3;
+   private static int maxNum = 10;
    private OverlayItem overlays[] = new OverlayItem[maxNum];
    private int index = 0;
    private boolean full = false;
@@ -44,6 +47,12 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
    @Override
    protected boolean onTap(int index) {
 
+      Intent pspotInfo = new Intent(DashboardActivity.myContext, ParkingSpotAndPaymentInformation.class);
+      pspotInfo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      Bundle pspot_bundle = new Bundle();
+      //pspotInfo.putExtra("", value);
+      
+      DashboardActivity.myContext.startActivity(pspotInfo);
       OverlayItem item = overlays[index];
       AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
       dialog.setTitle(item.getTitle());

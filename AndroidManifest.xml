@@ -11,52 +11,64 @@
     
     <!-- OpenID Authentication Permissions -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"></uses-permission>
-	<uses-permission android:name="android.permission.USE_CREDENTIALS"></uses-permission>
-	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	 <uses-permission android:name="android.permission.USE_CREDENTIALS"></uses-permission>
+	 <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+	 <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	 <uses-permission android:name="com.android.vending.BILLING" />
     
-    <application android:icon="@drawable/icon" android:label="@string/app_name" 
-        android:name="com.parking.application.ParkingApplication">
-        <activity android:name="com.parking.dashboard.activity.DashboardActivity"
+      <application android:icon="@drawable/icon" android:label="@string/app_name" 
+         android:name="com.parking.application.ParkingApplication">
+         <activity android:name="com.parking.dashboard.activity.DashboardActivity"
                   android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+         </activity>
 
-        <activity android:name="com.parking.paymenthistory.PaymentHistory"
+         <activity android:name="com.parking.paymenthistory.PaymentHistory"
                   android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
+         </activity>
         
-        <activity android:name="com.parking.findparking.FindParkingMap"
+         <activity android:name="com.parking.findparking.FindParkingMap"
                   android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
+         </activity>
         
-        <activity android:name="com.parking.findparking.ParkingSpotAndPaymentInformation"                  
+         <activity android:name="com.parking.findparking.ParkingSpotAndPaymentInformation"                  
                   android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
+         </activity>
         
-        <activity android:name="com.parking.findparking.FindParkingList"
+         <activity android:name="com.parking.findparking.FindParkingList"
                   android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
+         </activity>
         
-        <activity android:name="com.parking.findparking.FindParkingTabs" 
+         <activity android:name="com.parking.findparking.FindParkingTabs" 
                   android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
+         </activity>
          
-        <activity android:name="com.parking.locatemycar.LocateMyCar"
+         <activity android:name="com.parking.locatemycar.LocateMyCar"
                   android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
+         </activity>
 
-        <activity android:name="com.parking.payforspot.PayForSpot"
+         <activity android:name="com.parking.payforspot.PayForSpot"
                   android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
+         </activity>
         
-        <activity android:name="com.parking.auth.GetAccountListActivity"></activity>
-        <activity android:name="com.parking.auth.GetAuthTokenActivity"></activity>
-        <activity android:name="com.parking.auth.RegisterUserActivity"></activity>
+         <activity android:name="com.parking.auth.GetAccountListActivity"></activity>
+         <activity android:name="com.parking.auth.GetAuthTokenActivity"></activity>
+         <activity android:name="com.parking.auth.RegisterUserActivity"></activity>
 
-      <uses-library android:name="com.google.android.maps" />
+         <uses-library android:name="com.google.android.maps" />
+      
+         <service android:name="com.parking.billing.ParkingBillingService" />
+         <receiver android:name="com.parking.billing.ParkingBillingReceiver">
+            <intent-filter>
+               <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
+               <action android:name="com.android.vending.billing.RESPONSE_CODE" />
+               <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />               
+            </intent-filter>
+         </receiver>
+         
+      
     </application>
 </manifest>

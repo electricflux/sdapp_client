@@ -11,4 +11,10 @@
         android:layout_height="wrap_content"
         android:text="All of it" />
             
+   <Button
+      android:id="@+id/payButton"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="Pay Here"
+   />         
 </LinearLayout>

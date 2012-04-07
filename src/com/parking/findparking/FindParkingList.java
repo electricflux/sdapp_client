@@ -9,16 +9,35 @@
  */
 package com.parking.findparking;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.ListView;
+
+import com.parking.dashboard.R;
+import com.parking.datamanager.ParkingLocationDataEntry;
 
 public class FindParkingList extends Activity{
+   
+   private ArrayList<ParkingLocationDataEntry> parkingData = new ArrayList<ParkingLocationDataEntry>(); 
+   private MyParkingArrayAdapter aa = null;
+   
    public void onCreate(Bundle savedInstanceState) {
+      
       super.onCreate(savedInstanceState);
-
-      TextView textview = new TextView(this);
-      textview.setText("List of Parking Spots");
-      setContentView(textview);
+      setContentView(R.layout.parkingspotslistview);
+   
+      ParkingLocationDataEntry test = new ParkingLocationDataEntry();
+      test.setMeterId(100L);
+      parkingData.add(test);
+      
+      ListView psListView = (ListView) findViewById(R.id.pSlistView);
+      int resID = R.layout.pspotlistrowlayout;
+      aa = new MyParkingArrayAdapter(this, resID, parkingData);
+      psListView.setAdapter(aa);
+      
+      
   }
+
 }

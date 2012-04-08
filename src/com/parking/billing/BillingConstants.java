@@ -101,5 +101,5 @@ public class BillingConstants {
     public static final String BILLING_RESPONSE_REQUEST_ID = "REQUEST_ID";
     public static long BILLING_RESPONSE_INVALID_REQUEST_ID = -1;
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 }

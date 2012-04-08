@@ -40,8 +40,11 @@ public class DashboardActivity extends Activity{
 		DashboardClickListener dBClickListener = new DashboardClickListener();
 		findViewById(R.id.dashboard_button_find_parking).setOnClickListener(dBClickListener);
 		findViewById(R.id.dashboard_button_viewall).setOnClickListener(dBClickListener);
-		findViewById(R.id.dashboard_button_manage).setOnClickListener(dBClickListener);
 		findViewById(R.id.dashboard_button_personalbests).setOnClickListener(dBClickListener);
+		//c. changes
+      findViewById(R.id.dashboard_button_parkandremind).setOnClickListener(dBClickListener);
+      findViewById(R.id.dashboard_button_towingcontact).setOnClickListener(dBClickListener);
+      findViewById(R.id.dashboard_button_parkingrules).setOnClickListener(dBClickListener);
 
       //Initialize the DB here
       if(createOrCopyDB()){
@@ -92,12 +95,21 @@ public class DashboardActivity extends Activity{
 			case R.id.dashboard_button_viewall:
 				i = new Intent(DashboardActivity.this, PayForSpot.class);
 				break;
-			case R.id.dashboard_button_manage:
-				i = new Intent(DashboardActivity.this, PaymentHistory.class);
-				break;
+
 			case R.id.dashboard_button_personalbests:
 				i = new Intent(DashboardActivity.this, LocateMyCar.class);
 				break;
+				
+         case R.id.dashboard_button_parkandremind:
+            i = new Intent(DashboardActivity.this, LocateMyCar.class);
+            break;
+        case R.id.dashboard_button_towingcontact:
+            i = new Intent(DashboardActivity.this, LocateMyCar.class);
+            break;
+        case R.id.dashboard_button_parkingrules:
+            i = new Intent(DashboardActivity.this, LocateMyCar.class);
+            break;                  
+	
 			default:
 				break;
 			}

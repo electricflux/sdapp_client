@@ -55,7 +55,7 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
 //      dialog.setMessage(item.getSnippet());
 //      dialog.show();
 
-      Intent pspotInfo = new Intent(DashboardActivity.myContext, ParkingSpotAndPaymentInformation.class);
+      Intent pspotInfo = new Intent(DashboardActivity.myContext, Dungeons.class); //ParkingSpotAndPaymentInformation.class);
       pspotInfo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       pspotInfo.putExtra("info", item.getSnippet());
       

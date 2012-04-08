@@ -58,10 +58,16 @@
          <activity android:name="com.parking.auth.GetAuthTokenActivity"></activity>
          <activity android:name="com.parking.auth.RegisterUserActivity"></activity>
 
+         <!-- In App Billing Test -->
+         <activity android:name="com.parking.findparking.Dungeons"
+                  android:theme="@android:style/Theme.NoTitleBar">
+         </activity>
+         
          <uses-library android:name="com.google.android.maps" />
       
-         <service android:name="com.parking.billing.ParkingBillingService" />
-         <receiver android:name="com.parking.billing.ParkingBillingReceiver">
+         <service android:name="com.parking.billing.BillingService" />
+         
+         <receiver android:name="com.parking.billing.BillingReceiver">
             <intent-filter>
                <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
                <action android:name="com.android.vending.billing.RESPONSE_CODE" />

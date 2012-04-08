@@ -22,15 +22,25 @@
             android:text="@string/activity_locatemycar"
             android:drawableTop="@drawable/dashboard_button_add" />
  
-        <Button android:id="@+id/dashboard_button_manage"
-            style="@style/DashboardButton"
-            android:text="@string/activity_payforspot"
-            android:drawableTop="@drawable/dashboard_button_add" />
- 
         <Button android:id="@+id/dashboard_button_personalbests"
             style="@style/DashboardButton"
             android:text="@string/activity_paymenthistory"
+            android:drawableTop="@drawable/dashboard_button_add" />
+        
+        <Button android:id="@+id/dashboard_button_parkandremind"
+            style="@style/DashboardButton"
+            android:text="@string/activity_parkandremind"
+            android:drawableTop="@drawable/dashboard_button_add" />       
+            
+        <Button android:id="@+id/dashboard_button_towingcontact"
+            style="@style/DashboardButton"
+            android:text="@string/activity_towingcontact"
             android:drawableTop="@drawable/dashboard_button_add" />   
+        
+        <Button android:id="@+id/dashboard_button_parkingrules"
+            style="@style/DashboardButton"
+            android:text="@string/activity_parkingrules"
+            android:drawableTop="@drawable/dashboard_button_add" />    
  
   </com.parking.dashboard.DashboardLayout>
 

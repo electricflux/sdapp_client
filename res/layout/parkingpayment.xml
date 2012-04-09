@@ -21,15 +21,9 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="4dip"
-    android:paddingRight="4dip"
+    android:paddingLeft="6dip"
+    android:paddingRight="6dip"
     android:background="@color/screen_background">
-
-    <TextView
-        android:id="@+id/billing_supported"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/error_message" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -38,17 +32,28 @@
         android:textColor="@android:color/black"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold"
-        android:text="@string/items_for_sale" />
+        android:text="@string/spot_details" />
+        
+       <TextView
+        android:id="@+id/parkingAllDetailsTextView" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dip"
+        android:textColor="@android:color/black"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"
+        android:text="@string/spot_details" />
+                
+    <TextView
+        android:id="@+id/billing_supported"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/error_message" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/buy_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/buy" />
         <Spinner
             android:id="@+id/item_choices"
             android:layout_width="0dip"
@@ -56,10 +61,19 @@
             android:layout_height="wrap_content"
             android:prompt="@string/select_item" />
         <Button
+            android:id="@+id/buy_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_here" />
+            
+        <!-- The developer payload seems to be null all the time     
+        <Button
             android:id="@+id/payload_edit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/edit_payload" />
+         -->
+             
     </LinearLayout>
     <TextView
         android:layout_width="fill_parent"
@@ -68,7 +82,7 @@
         android:textColor="@android:color/black"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold"
-        android:text="@string/items_you_own" />
+        android:text="@string/payment_history" />
     <ListView
         android:id="@+id/owned_items"
         android:layout_width="fill_parent"

@@ -126,7 +126,7 @@ public class ParkingPayment extends Activity implements OnClickListener,
             if (supported) {
                 restoreDatabase();
                 mBuyButton.setEnabled(true);
-                mEditPayloadButton.setEnabled(true);
+                //mEditPayloadButton.setEnabled(true);
             } else {
                 showDialog(DIALOG_BILLING_NOT_SUPPORTED_ID);
             }
@@ -211,9 +211,15 @@ public class ParkingPayment extends Activity implements OnClickListener,
 
     /** An array of product list entries for the products that can be purchased. */
     private static final CatalogEntry[] CATALOG = new CatalogEntry[] {
-        new CatalogEntry("sword_001", R.string.two_handed_sword, Managed.MANAGED),
-        new CatalogEntry("potion_001", R.string.potions, Managed.UNMANAGED),
-        new CatalogEntry("android.test.purchased", R.string.android_test_purchased, Managed.UNMANAGED),
+        new CatalogEntry("android.test.purchased", R.string.min15, Managed.UNMANAGED),
+        new CatalogEntry("android.test.purchased", R.string.min30, Managed.UNMANAGED),
+        new CatalogEntry("android.test.purchased", R.string.min45, Managed.UNMANAGED),
+        new CatalogEntry("android.test.purchased", R.string.hr1, Managed.UNMANAGED),
+        new CatalogEntry("android.test.purchased", R.string.hr1min15, Managed.UNMANAGED),
+        new CatalogEntry("android.test.purchased", R.string.hr1min30, Managed.UNMANAGED),
+        new CatalogEntry("android.test.purchased", R.string.hr1min45, Managed.UNMANAGED),
+        new CatalogEntry("android.test.purchased", R.string.hr2, Managed.UNMANAGED),
+        
         new CatalogEntry("android.test.canceled", R.string.android_test_canceled, Managed.UNMANAGED),
         new CatalogEntry("android.test.refunded", R.string.android_test_refunded, Managed.UNMANAGED),
         new CatalogEntry("android.test.item_unavailable", R.string.android_test_item_unavailable, Managed.UNMANAGED),
@@ -235,6 +241,14 @@ public class ParkingPayment extends Activity implements OnClickListener,
         mBillingService.setContext(this);
 
         mPurchaseDatabase = new PurchaseDatabase(DashboardActivity.myContext);
+        
+        //Get on the spot selected 
+        Intent starterIntent = getIntent();
+        Bundle bundle = starterIntent.getExtras();
+        String all = bundle.getString("info");
+        TextView textAll = (TextView) findViewById(R.id.parkingAllDetailsTextView);
+        textAll.setText(all);
+
         setupWidgets();
 
         // Check if billing is supported.
@@ -355,9 +369,10 @@ public class ParkingPayment extends Activity implements OnClickListener,
         mBuyButton.setEnabled(false);
         mBuyButton.setOnClickListener(this);
 
-        mEditPayloadButton = (Button) findViewById(R.id.payload_edit_button);
-        mEditPayloadButton.setEnabled(false);
-        mEditPayloadButton.setOnClickListener(this);
+        //The Payload doesnt seem to do anythign!!
+        //mEditPayloadButton = (Button) findViewById(R.id.payload_edit_button);
+        //mEditPayloadButton.setEnabled(false);
+        //mEditPayloadButton.setOnClickListener(this);
 
         mSelectItemSpinner = (Spinner) findViewById(R.id.item_choices);
         mCatalogAdapter = new CatalogAdapter(this, CATALOG);

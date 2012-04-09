@@ -116,7 +116,7 @@ public class ParkingSpotAndPaymentInformation extends Activity{
       mBillingService = new BillingService();
       mBillingService.setContext(this);
 
-      mPurchaseDatabase = new PurchaseDatabase(this);
+      mPurchaseDatabase = new PurchaseDatabase(DashboardActivity.myContext);
       setupWidgets();
 
       // Check if billing is supported.

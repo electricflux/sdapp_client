@@ -15,12 +15,11 @@ import android.widget.Toast;
 import com.parking.application.ParkingApplication;
 import com.parking.auth.Authenticator;
 import com.parking.dashboard.R;
-import com.parking.datamanager.ParkingLocationsAll;
 import com.parking.dbManager.DataBaseHelper;
 import com.parking.findparking.FindParkingTabs;
 import com.parking.locatemycar.LocateMyCar;
 import com.parking.payforspot.PayForSpot;
-import com.parking.paymenthistory.PaymentHistory;
+import com.parking.rulesandregulations.RulesandRegulations;
 
 public class DashboardActivity extends Activity{
 	private static final String TAG = DashboardActivity.class.getSimpleName();
@@ -108,13 +107,14 @@ public class DashboardActivity extends Activity{
             i = new Intent(DashboardActivity.this, LocateMyCar.class);
             break;
         case R.id.dashboard_button_parkingrules:
-            i = new Intent(DashboardActivity.this, LocateMyCar.class);
+            i = new Intent(DashboardActivity.this, RulesandRegulations.class);
             break;                  
 	
 			default:
 				break;
 			}
 			if(i != null) {
+				Log.v(TAG, "About to start Activity");
 				startActivity(i);
 			}
 		}

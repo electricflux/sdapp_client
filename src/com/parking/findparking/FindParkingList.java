@@ -29,7 +29,7 @@ public class FindParkingList extends Activity{
       setContentView(R.layout.parkingspotslistview);
    
       ParkingLocationDataEntry test = new ParkingLocationDataEntry();
-      test.setMeterId(100L);
+      test.setMeterID(100L);
       parkingData.add(test);
       
       ListView psListView = (ListView) findViewById(R.id.pSlistView);

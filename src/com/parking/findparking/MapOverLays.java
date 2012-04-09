@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
+import com.parking.billing.ParkingPayment;
 import com.parking.dashboard.activity.DashboardActivity;
 
 public class MapOverLays extends ItemizedOverlay<OverlayItem> {
@@ -55,7 +56,7 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
 //      dialog.setMessage(item.getSnippet());
 //      dialog.show();
 
-      Intent pspotInfo = new Intent(DashboardActivity.myContext, Dungeons.class); //ParkingSpotAndPaymentInformation.class);
+      Intent pspotInfo = new Intent(DashboardActivity.myContext, ParkingPayment.class); //ParkingSpotAndPaymentInformation.class);
       pspotInfo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       pspotInfo.putExtra("info", item.getSnippet());
       

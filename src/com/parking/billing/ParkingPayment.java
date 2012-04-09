@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.parking.findparking;
+package com.parking.billing;
 
 
 import java.util.HashSet;
@@ -49,21 +49,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parking.billing.BillingConstants;
 import com.parking.billing.BillingConstants.PurchaseState;
 import com.parking.billing.BillingConstants.ResponseCode;
-import com.parking.billing.BillingService;
 import com.parking.billing.BillingService.RequestPurchase;
 import com.parking.billing.BillingService.RestoreTransactions;
-import com.parking.billing.PurchaseDatabase;
-import com.parking.billing.PurchaseObserver;
-import com.parking.billing.ResponseHandler;
 import com.parking.dashboard.R;
+import com.parking.dashboard.activity.DashboardActivity;
 
 /**
  * A sample application that demonstrates in-app billing.
  */
-public class Dungeons extends Activity implements OnClickListener,
+public class ParkingPayment extends Activity implements OnClickListener,
         OnItemSelectedListener {
     private static final String TAG = "Dungeons";
 
@@ -79,7 +75,7 @@ public class Dungeons extends Activity implements OnClickListener,
      */
     private static final String DB_INITIALIZED = "db_initialized";
 
-    private DungeonsPurchaseObserver mDungeonsPurchaseObserver;
+    private ParkingPurchaseObserver mParkingPurchaseObserver;
     private Handler mHandler;
 
     private BillingService mBillingService;
@@ -117,9 +113,9 @@ public class Dungeons extends Activity implements OnClickListener,
      * A {@link PurchaseObserver} is used to get callbacks when Android Market sends
      * messages to this application so that we can update the UI.
      */
-    private class DungeonsPurchaseObserver extends PurchaseObserver {
-        public DungeonsPurchaseObserver(Handler handler) {
-            super(Dungeons.this, handler);
+    private class ParkingPurchaseObserver extends PurchaseObserver {
+        public ParkingPurchaseObserver(Handler handler) {
+            super(ParkingPayment.this, handler);
         }
 
         @Override
@@ -217,14 +213,10 @@ public class Dungeons extends Activity implements OnClickListener,
     private static final CatalogEntry[] CATALOG = new CatalogEntry[] {
         new CatalogEntry("sword_001", R.string.two_handed_sword, Managed.MANAGED),
         new CatalogEntry("potion_001", R.string.potions, Managed.UNMANAGED),
-        new CatalogEntry("android.test.purchased", R.string.android_test_purchased,
-                Managed.UNMANAGED),
-        new CatalogEntry("android.test.canceled", R.string.android_test_canceled,
-                Managed.UNMANAGED),
-        new CatalogEntry("android.test.refunded", R.string.android_test_refunded,
-                Managed.UNMANAGED),
-        new CatalogEntry("android.test.item_unavailable", R.string.android_test_item_unavailable,
-                Managed.UNMANAGED),
+        new CatalogEntry("android.test.purchased", R.string.android_test_purchased, Managed.UNMANAGED),
+        new CatalogEntry("android.test.canceled", R.string.android_test_canceled, Managed.UNMANAGED),
+        new CatalogEntry("android.test.refunded", R.string.android_test_refunded, Managed.UNMANAGED),
+        new CatalogEntry("android.test.item_unavailable", R.string.android_test_item_unavailable, Managed.UNMANAGED),
     };
 
     private String mItemName;
@@ -235,18 +227,18 @@ public class Dungeons extends Activity implements OnClickListener,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.parkingpayment);
 
         mHandler = new Handler();
-        mDungeonsPurchaseObserver = new DungeonsPurchaseObserver(mHandler);
+        mParkingPurchaseObserver = new ParkingPurchaseObserver(mHandler);
         mBillingService = new BillingService();
         mBillingService.setContext(this);
 
-        mPurchaseDatabase = new PurchaseDatabase(this);
+        mPurchaseDatabase = new PurchaseDatabase(DashboardActivity.myContext);
         setupWidgets();
 
         // Check if billing is supported.
-        ResponseHandler.register(mDungeonsPurchaseObserver);
+        ResponseHandler.register(mParkingPurchaseObserver);
         if (!mBillingService.checkBillingSupported()) {
             showDialog(DIALOG_CANNOT_CONNECT_ID);
         }
@@ -258,7 +250,7 @@ public class Dungeons extends Activity implements OnClickListener,
     @Override
     protected void onStart() {
         super.onStart();
-        ResponseHandler.register(mDungeonsPurchaseObserver);
+        ResponseHandler.register(mParkingPurchaseObserver);
         initializeOwnedItems();
     }
 
@@ -268,7 +260,7 @@ public class Dungeons extends Activity implements OnClickListener,
     @Override
     protected void onStop() {
         super.onStop();
-        ResponseHandler.unregister(mDungeonsPurchaseObserver);
+        ResponseHandler.unregister(mParkingPurchaseObserver);
     }
 
     @Override

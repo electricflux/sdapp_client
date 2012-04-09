@@ -73,6 +73,7 @@ public class DashboardActivity extends Activity{
          throw new Error("Unable to create database");
       }
       
+      myDbHelper.close();
       return retVal;
       
 

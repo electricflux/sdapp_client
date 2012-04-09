@@ -14,10 +14,13 @@
 	 <uses-permission android:name="android.permission.USE_CREDENTIALS"></uses-permission>
 	 <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 	 <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-	 <uses-permission android:name="com.android.vending.BILLING" />
+
     
       <application android:icon="@drawable/icon" android:label="@string/app_name" 
          android:name="com.parking.application.ParkingApplication">
+         
+             <uses-permission android:name="com.android.vending.BILLING" />
+             
          <activity android:name="com.parking.dashboard.activity.DashboardActivity"
                   android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
@@ -54,12 +57,20 @@
                   android:theme="@android:style/Theme.NoTitleBar">
          </activity>
         
-         <activity android:name="com.parking.auth.GetAccountListActivity"></activity>
-         <activity android:name="com.parking.auth.GetAuthTokenActivity"></activity>
-         <activity android:name="com.parking.auth.RegisterUserActivity"></activity>
+         <activity android:name="com.parking.auth.GetAccountListActivity"                  
+                  android:theme="@android:style/Theme.NoTitleBar">
+         </activity>
+         
+         <activity android:name="com.parking.auth.GetAuthTokenActivity"                  
+                  android:theme="@android:style/Theme.NoTitleBar">
+         </activity>
+
+         <activity android:name="com.parking.auth.RegisterUserActivity"                  
+                  android:theme="@android:style/Theme.NoTitleBar">
+         </activity>
 
          <!-- In App Billing Test -->
-         <activity android:name="com.parking.findparking.Dungeons"
+         <activity android:name="com.parking.billing.ParkingPayment"
                   android:theme="@android:style/Theme.NoTitleBar">
          </activity>
          

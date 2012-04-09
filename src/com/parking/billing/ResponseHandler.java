@@ -20,6 +20,7 @@ import com.parking.billing.BillingConstants.PurchaseState;
 import com.parking.billing.BillingConstants.ResponseCode;
 import com.parking.billing.BillingService.RequestPurchase;
 import com.parking.billing.BillingService.RestoreTransactions;
+import com.parking.dashboard.activity.DashboardActivity;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -125,7 +126,7 @@ public class ResponseHandler {
         // first.
         new Thread(new Runnable() {
             public void run() {
-                PurchaseDatabase db = new PurchaseDatabase(context);
+                PurchaseDatabase db = new PurchaseDatabase(DashboardActivity.myContext);
                 int quantity = db.updatePurchase(
                         orderId, productId, purchaseState, purchaseTime, developerPayload);
                 db.close();

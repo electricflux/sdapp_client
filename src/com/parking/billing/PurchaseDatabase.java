@@ -55,11 +55,13 @@ public class PurchaseDatabase {
     };
 
     // These are the column names for the "purchased items" table.
-    public static final String PURCHASED_PRODUCT_ID_COL = "_id";
+    public static final String PURCHASED_ORDER_ID_COL = "_id";
+    public static final String PURCHASED_PRODUCT_ID_COL = "product_id";
     public static final String PURCHASED_QUANTITY_COL = "quantity";
+    
 
     private static final String[] PURCHASED_COLUMNS = {
-        PURCHASED_PRODUCT_ID_COL, PURCHASED_QUANTITY_COL
+       PURCHASED_ORDER_ID_COL, PURCHASED_PRODUCT_ID_COL, PURCHASED_QUANTITY_COL
     };
 
     private SQLiteDatabase mDb;
@@ -202,7 +204,8 @@ public class PurchaseDatabase {
                     HISTORY_DEVELOPER_PAYLOAD_COL + " TEXT, " +
                     HISTORY_PURCHASE_TIME_COL + " INTEGER)");
             db.execSQL("CREATE TABLE " + PURCHASED_ITEMS_TABLE_NAME + "(" +
-                    PURCHASED_PRODUCT_ID_COL + " TEXT PRIMARY KEY, " +
+                    PURCHASED_ORDER_ID_COL + " AUTO PRIMARY KEY, " +
+                    PURCHASED_PRODUCT_ID_COL + " TEXT, " +
                     PURCHASED_QUANTITY_COL + " INTEGER)");
         }
     }

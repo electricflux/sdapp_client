@@ -123,7 +123,8 @@ public class Security {
         if (BillingConstants.DEBUG) {
             Log.i(TAG, "signedData: " + signedData);
         }
-        boolean verified = false;
+        //boolean verified = false;
+        boolean verified = true;
         if (!TextUtils.isEmpty(signature)) {
             /**
              * Compute your public key (that you got from the Android Market publisher site).
@@ -138,8 +139,8 @@ public class Security {
              * Generally, encryption keys / passwords should only be kept in memory
              * long enough to perform the operation they need to perform.
              */
-            String base64EncodedPublicKey = "your public key here";
-            //MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj7zgTswMi1ePyAK7rCnCOkpmviHZzoSn2cxtyQ5ZQRFifNGkKq3Gli3VbeIeeJR8GHzlfOPUSgtMrd17WtGJoo29rsw6UuXov+imQutGKZglcM/cIrlIdZCsse3dGYyDcKFhEHrC/nPdwlYxgIGBaZKAcbbhitkdgYaVHQvGFTagCytxDq9NDJAY7exSKKm2HimfjlcBZjhHeImZ+cRCPux+9uoBQ4mTRYjrXfcpi/OPKTKsq2AHXf/y60qsZJlgGl3tBgRQo6lOEr7UbbHKESTKvOQ4t3J1wjNz8Z3+T0PZHb5JkeTsdAE7cG7jmz2HmMxfdXcT5mBTTDei6DPDGwIDAQAB
+            //String base64EncodedPublicKey = "your public key here";
+            String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj7zgTswMi1ePyAK7rCnCOkpmviHZzoSn2cxtyQ5ZQRFifNGkKq3Gli3VbeIeeJR8GHzlfOPUSgtMrd17WtGJoo29rsw6UuXov+imQutGKZglcM/cIrlIdZCsse3dGYyDcKFhEHrC/nPdwlYxgIGBaZKAcbbhitkdgYaVHQvGFTagCytxDq9NDJAY7exSKKm2HimfjlcBZjhHeImZ+cRCPux+9uoBQ4mTRYjrXfcpi/OPKTKsq2AHXf/y60qsZJlgGl3tBgRQo6lOEr7UbbHKESTKvOQ4t3J1wjNz8Z3+T0PZHb5JkeTsdAE7cG7jmz2HmMxfdXcT5mBTTDei6DPDGwIDAQAB";
             PublicKey key = Security.generatePublicKey(base64EncodedPublicKey);
             verified = Security.verify(key, signedData, signature);
             if (!verified) {
@@ -188,9 +189,17 @@ public class Security {
 
                 // If the purchase state is PURCHASED, then we require a
                 // verified nonce.
-                if (purchaseState == PurchaseState.PURCHASED && !verified) {
-                    continue;
-                }
+                
+                /**
+                 *   mandarm - We are ok with no signature for our test code! 
+                 */
+                //TODO - Take care for signed purchases.
+                
+//                
+//                if (purchaseState == PurchaseState.PURCHASED && !verified) {
+//                    continue;
+//                }
+//                
                 purchases.add(new VerifiedPurchase(purchaseState, notifyId, productId,
                         orderId, purchaseTime, developerPayload));
             }

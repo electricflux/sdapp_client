@@ -76,8 +76,8 @@ public class FindParkingMap extends MapActivity {
       myDbHelper.openDataBase(); 
       myDbHelper.dbquery(gp, parkingLocations);
 
-      NearbyParkingSpotsOverlay pso = new NearbyParkingSpotsOverlay(parkingLocations);
-      mapView.getOverlays().add(pso);
+      //NearbyParkingSpotsOverlay pso = new NearbyParkingSpotsOverlay(parkingLocations);
+      //mapView.getOverlays().add(pso);
 
       overlayTappableParkingSpots();
 
@@ -101,11 +101,13 @@ public class FindParkingMap extends MapActivity {
          overlayitem = new OverlayItem(pSpotGeoPoint, address, sPpotInfo);
          itemizedOverlays.addOverlay(overlayitem);
 
-            
-         mapView.getOverlays().add(itemizedOverlays);
-         mapView.postInvalidate();
-
       }
+      
+      
+      mapView.getOverlays().add(itemizedOverlays);
+      mapView.postInvalidate();
+
+
    }
 
    private String convertObjToString(ParkingLocationDataEntry parkingSpot) {

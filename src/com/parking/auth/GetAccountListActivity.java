@@ -27,7 +27,7 @@ public class GetAccountListActivity extends ListActivity {
         //add header to list
         ListView lv = getListView();
         LayoutInflater inflater = getLayoutInflater();
-        View header = inflater.inflate(R.layout.account_list_header, (ViewGroup) findViewById(R.id.header_layout_root));
+        View header = inflater.inflate(R.layout.account_list_header_fragment, (ViewGroup) findViewById(R.id.header_layout_root));
         lv.addHeaderView(header, null, false);
  
         accountManager = AccountManager.get(getApplicationContext());

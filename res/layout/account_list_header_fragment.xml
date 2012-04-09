@@ -6,6 +6,7 @@
   android:id="@+id/header_layout_root"
   android:background="#ffffff"
   android:orientation="vertical">
+    <!-- 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -16,13 +17,15 @@
         android:gravity="center_horizontal"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
-    </TextView>
+    </TextView> -->
+    
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:layout_centerInParent="true"
             android:id="@+id/sample_image"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:src="@drawable/parking"
@@ -32,10 +35,10 @@
         <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Select an account to login"
-        android:background="#000000"
+        android:text="Login Using Google"
+        android:background="#ffffff"
         android:textColor="#0000ff"
-        android:textSize="28dp"
+        android:textSize="21dp"
         android:gravity="center_horizontal"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">

@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
-
-    <ListView
-        android:id="@+id/android:list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none" />
-
-    <TextView
-        android:id="@+id/android:empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
-
+    android:layout_height="fill_parent" 
+    android:orientation="vertical">
+   
+    <include layout="@layout/actionbar_layout"/>    
+    <include layout="@layout/account_list_fragment"/>
+    <include layout="@layout/footer_layout"/>
+    
 </LinearLayout>

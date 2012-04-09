@@ -18,6 +18,6 @@
 -->
 
 <resources>
-    <color name="screen_background">#ffc0f0c0</color>
+    <color name="screen_background">#ffffffff</color>
     <color name="error_message">#ffc00000</color>
 </resources>

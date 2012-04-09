@@ -55,6 +55,8 @@ import com.parking.billing.BillingService.RequestPurchase;
 import com.parking.billing.BillingService.RestoreTransactions;
 import com.parking.dashboard.R;
 import com.parking.dashboard.activity.DashboardActivity;
+import com.parking.datamanager.ParkingLocationDataEntry;
+import com.parking.utils.LocationUtility;
 
 /**
  * A sample application that demonstrates in-app billing.
@@ -75,6 +77,14 @@ public class ParkingPayment extends Activity implements OnClickListener,
      */
     private static final String DB_INITIALIZED = "db_initialized";
 
+    private String mItemName;
+    private String mSku;
+    private CatalogAdapter mCatalogAdapter;
+    
+    //Parking data that comes in from the previous activity
+    public static ParkingLocationDataEntry parkingLocationObj = null;
+    public int nLeastCountTime = 15;
+    
     private ParkingPurchaseObserver mParkingPurchaseObserver;
     private Handler mHandler;
 
@@ -225,10 +235,6 @@ public class ParkingPayment extends Activity implements OnClickListener,
         new CatalogEntry("android.test.item_unavailable", R.string.android_test_item_unavailable, Managed.UNMANAGED),
     };
 
-    private String mItemName;
-    private String mSku;
-    private CatalogAdapter mCatalogAdapter;
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -248,6 +254,10 @@ public class ParkingPayment extends Activity implements OnClickListener,
         String all = bundle.getString("info");
         TextView textAll = (TextView) findViewById(R.id.parkingAllDetailsTextView);
         textAll.setText(all);
+        
+        //Recreate the object from the text
+        parkingLocationObj = LocationUtility.convertStringToObject(all);
+        textAll.setText(parkingLocationObj.getLatitude()+"");
 
         setupWidgets();
 
@@ -475,6 +485,9 @@ public class ParkingPayment extends Activity implements OnClickListener,
             if (BillingConstants.DEBUG) {
                 Log.d(TAG, "buying: " + mItemName + " sku: " + mSku);
             }
+            
+            mPayloadContents = "20";
+            
             if (!mBillingService.requestPurchase(mSku, mPayloadContents)) {
                 showDialog(DIALOG_BILLING_NOT_SUPPORTED_ID);
             }
@@ -526,7 +539,9 @@ public class ParkingPayment extends Activity implements OnClickListener,
      * Called when an item in the spinner is selected.
      */
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        //1 hr 15 min
         mItemName = getString(CATALOG[position].nameId);
+        //android.test.purchased
         mSku = CATALOG[position].sku;
     }
 

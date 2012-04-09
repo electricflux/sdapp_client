@@ -16,14 +16,15 @@
 
 package com.parking.billing;
 
-import com.parking.billing.BillingConstants.PurchaseState;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.parking.billing.BillingConstants.PurchaseState;
+import com.parking.datamanager.ParkingLocationDataEntry;
 
 /**
  * An example database that records the state of each purchase. You should use
@@ -49,9 +50,23 @@ public class PurchaseDatabase {
     static final String HISTORY_PURCHASE_TIME_COL = "purchaseTime";
     static final String HISTORY_DEVELOPER_PAYLOAD_COL = "developerPayload";
 
+    public static final String HISTORY_IDX_COL = "idx";
+    public static final String HISTORY_LAT_COL = "Lat";
+    public static final String HISTORY_LON_COL = "Lon";
+    public static final String HISTORY_RATE_COL = "Rate";
+    public static final String HISTORY_AMOUNT_PAID_COL = "Amount_Paid";
+    public static final String HISTORY_STARTTIME = "StartTime";
+    public static final String HISTORY_DURATION_COL = "Duration";
+    public static final String HISTORY_METERID_COL = "MeterId";
+    
     private static final String[] HISTORY_COLUMNS = {
         HISTORY_ORDER_ID_COL, HISTORY_PRODUCT_ID_COL, HISTORY_STATE_COL,
-        HISTORY_PURCHASE_TIME_COL, HISTORY_DEVELOPER_PAYLOAD_COL
+        HISTORY_PURCHASE_TIME_COL, HISTORY_DEVELOPER_PAYLOAD_COL, 
+        HISTORY_IDX_COL, HISTORY_METERID_COL,  
+        HISTORY_LAT_COL, HISTORY_LON_COL, 
+        HISTORY_RATE_COL, HISTORY_AMOUNT_PAID_COL, 
+        HISTORY_STARTTIME, HISTORY_DURATION_COL 
+        
     };
 
     // These are the column names for the "purchased items" table.
@@ -59,11 +74,10 @@ public class PurchaseDatabase {
     public static final String PURCHASED_PRODUCT_ID_COL = "product_id";
     public static final String PURCHASED_QUANTITY_COL = "quantity";
     
-
     private static final String[] PURCHASED_COLUMNS = {
        PURCHASED_ORDER_ID_COL, PURCHASED_PRODUCT_ID_COL, PURCHASED_QUANTITY_COL
     };
-
+    
     private SQLiteDatabase mDb;
     private DatabaseHelper mDatabaseHelper;
 
@@ -89,12 +103,29 @@ public class PurchaseDatabase {
      */
     private void insertOrder(String orderId, String productId, PurchaseState state,
             long purchaseTime, String developerPayload) {
-        ContentValues values = new ContentValues();
+        
+       ContentValues values = new ContentValues();
+       ParkingLocationDataEntry parkingSpotObj = ParkingPayment.parkingLocationObj; 
+        
         values.put(HISTORY_ORDER_ID_COL, orderId);
         values.put(HISTORY_PRODUCT_ID_COL, productId);
         values.put(HISTORY_STATE_COL, state.ordinal());
         values.put(HISTORY_PURCHASE_TIME_COL, purchaseTime);
         values.put(HISTORY_DEVELOPER_PAYLOAD_COL, developerPayload);
+        
+        if(parkingSpotObj != null){
+           //Other custom history data
+           values.put(HISTORY_IDX_COL, parkingSpotObj.getId());
+           values.put(HISTORY_LAT_COL, parkingSpotObj.getLatitude());
+           values.put(HISTORY_LON_COL, parkingSpotObj.getLongitude());
+           values.put(HISTORY_RATE_COL, parkingSpotObj.getRate());
+           
+           //TODO, calculate the amount paid
+           values.put(HISTORY_AMOUNT_PAID_COL, "0");
+           values.put(HISTORY_STARTTIME, purchaseTime);
+           values.put(HISTORY_DURATION_COL, parkingSpotObj.getDuration());
+           values.put(HISTORY_METERID_COL, parkingSpotObj.getMeterID());
+        }
         mDb.replace(PURCHASE_HISTORY_TABLE_NAME, null /* nullColumnHack */, values);
     }
 
@@ -202,7 +233,15 @@ public class PurchaseDatabase {
                     HISTORY_STATE_COL + " INTEGER, " +
                     HISTORY_PRODUCT_ID_COL + " TEXT, " +
                     HISTORY_DEVELOPER_PAYLOAD_COL + " TEXT, " +
-                    HISTORY_PURCHASE_TIME_COL + " INTEGER)");
+                    HISTORY_PURCHASE_TIME_COL + " INTEGER, " +
+                    HISTORY_IDX_COL + " INTEGER, " +
+                    HISTORY_LAT_COL + " FLOAT, " +
+                    HISTORY_LON_COL + " FLOAT, " +
+                    HISTORY_RATE_COL + " FLOAT, " +
+                    HISTORY_AMOUNT_PAID_COL + " FLOAT, " +
+                    HISTORY_STARTTIME + " TEXT, " +
+                    HISTORY_DURATION_COL + " INTEGER, " +
+                    HISTORY_METERID_COL + " TEXT)");
             db.execSQL("CREATE TABLE " + PURCHASED_ITEMS_TABLE_NAME + "(" +
                     PURCHASED_ORDER_ID_COL + " AUTO PRIMARY KEY, " +
                     PURCHASED_PRODUCT_ID_COL + " TEXT, " +

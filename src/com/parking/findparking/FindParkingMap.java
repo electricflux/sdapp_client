@@ -96,7 +96,7 @@ public class FindParkingMap extends MapActivity {
 
          pSpotGeoPoint = parkingSpot.getGeoPoint();
          address   = convertPointToLocation(pSpotGeoPoint);
-         sPpotInfo = convertObjToString(parkingSpot); 
+         sPpotInfo = LocationUtility.convertObjToString(parkingSpot); 
          
          overlayitem = new OverlayItem(pSpotGeoPoint, address, sPpotInfo);
          itemizedOverlays.addOverlay(overlayitem);
@@ -108,15 +108,6 @@ public class FindParkingMap extends MapActivity {
       mapView.postInvalidate();
 
 
-   }
-
-   private String convertObjToString(ParkingLocationDataEntry parkingSpot) {
-      String pSpotInfo = 
-            
-            Float.toString(parkingSpot.getLatitude()) + "," 
-          + Float.toString(parkingSpot.getLongitude()) + "," 
-          + parkingSpot.getMeterID();
-      return pSpotInfo;
    }
 
    private void updateCurrentUserLocation() {

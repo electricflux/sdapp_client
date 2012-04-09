@@ -43,9 +43,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
       boolean dbExist = checkDataBase();
       boolean retVal = true;
 
-      if (dbExist) {
-         Log.v(TAG, "Database Exists, we can proceed");
-      } else {
+      //TODO Uncomment, commented so that the db can be replaced
+//      if (dbExist) {
+//         Log.v(TAG, "Database Exists, we can proceed");
+//      } else {
          
             try {
             //Create empty DB & copy our database to the empty DB
@@ -56,7 +57,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                retVal = false;
                throw new Error("Error copying database");
             }
-      }
+//      }
 
       return retVal;
    }

@@ -194,12 +194,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                
                GeoPoint geoPoint = new GeoPoint(lat, lng);
                pSpotInfo.setGeoPoint(geoPoint);
-               pSpotInfo.setlatitude(lat);
-               pSpotInfo.setlongitude(lng);
+               pSpotInfo.setLatitude(lat);
+               pSpotInfo.setLongitude(lng);
                
                //Meter Id
                meterId = (long) parkingSpotsCursor.getInt(parkingSpotsCursor.getColumnIndexOrThrow("MeterId"));
-               pSpotInfo.setMeterId(meterId);
+               pSpotInfo.setMeterID(meterId);
                
                
                parkingLocations.add(pSpotInfo);
@@ -238,9 +238,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 						float Lat = cursor.getFloat(cursor.getColumnIndexOrThrow("Lat"));
 						float Lon = cursor.getFloat(cursor.getColumnIndexOrThrow("Lon"));
 						Log.v(TAG, "dbquery :: " + Id + " Lat:: " + Lat + " Lon:: " + Lon);
-						tLocationObj.setid(Id);
-						tLocationObj.setlatitude(Lat);
-						tLocationObj.setlongitude(Lon);
+						tLocationObj.setId(Id);
+						tLocationObj.setLatitude(Lat);
+						tLocationObj.setLongitude(Lon);
 						parkingLocations.add(tLocationObj);
 
 					} while (cursor.moveToNext());

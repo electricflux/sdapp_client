@@ -36,9 +36,9 @@ public class ParkingLocationsAll {
 				/* Loop through all Results */
 				/* Retrieve the values of the Entry
 				 * the Cursor is pointing to. */
-				Long Id =  mParkingLocationDataEntry.getid();
-				float Lat = mParkingLocationDataEntry.getlatitude();
-				float Lon = mParkingLocationDataEntry.getlongitude();
+				Long Id =  mParkingLocationDataEntry.getId();
+				float Lat = mParkingLocationDataEntry.getLatitude();
+				float Lon = mParkingLocationDataEntry.getLongitude();
 				Log.v(TAG, i + "ParkingLocationsAll :: " + Id + " Lat:: " + Lat + " Lon:: " + Lon);
 
 			}

@@ -111,7 +111,11 @@ public class FindParkingMap extends MapActivity {
    }
 
    private String convertObjToString(ParkingLocationDataEntry parkingSpot) {
-      String pSpotInfo = Float.toString(parkingSpot.getlatitude()) + "," + Float.toString(parkingSpot.getlongitude()) + "," + parkingSpot.getMeterId();
+      String pSpotInfo = 
+            
+            Float.toString(parkingSpot.getLatitude()) + "," 
+          + Float.toString(parkingSpot.getLongitude()) + "," 
+          + parkingSpot.getMeterID();
       return pSpotInfo;
    }
 

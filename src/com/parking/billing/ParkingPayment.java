@@ -253,11 +253,16 @@ public class ParkingPayment extends Activity implements OnClickListener,
         Bundle bundle = starterIntent.getExtras();
         String all = bundle.getString("info");
         TextView textAll = (TextView) findViewById(R.id.parkingAllDetailsTextView);
-        textAll.setText(all);
         
         //Recreate the object from the text
+        //TODO Format
         parkingLocationObj = LocationUtility.convertStringToObject(all);
-        textAll.setText(parkingLocationObj.getLatitude()+"");
+        textAll.setText( "Details...\n"
+                         + "Lat:     " + parkingLocationObj.getLatitude()   +"\n" 
+                         + "Lon:     " + parkingLocationObj.getLongitude()  +"\n"
+                         + "MeterId: " + parkingLocationObj.getMeterID()    +"\n"
+                         + "Address: " + parkingLocationObj.getAddress()    +"\n"
+                         );
 
         setupWidgets();
 

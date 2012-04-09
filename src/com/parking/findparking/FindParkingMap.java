@@ -90,23 +90,24 @@ public class FindParkingMap extends MapActivity {
       String address = "No Associated Address";
       GeoPoint pSpotGeoPoint = null;
       OverlayItem overlayitem = null;
-      String sPpotInfo = "No Info Available";
+      String sSppotInfo = "No Info Available";
       
       for (ParkingLocationDataEntry parkingSpot : parkingLocations) {
 
          pSpotGeoPoint = parkingSpot.getGeoPoint();
          address   = convertPointToLocation(pSpotGeoPoint);
-         sPpotInfo = LocationUtility.convertObjToString(parkingSpot); 
          
-         overlayitem = new OverlayItem(pSpotGeoPoint, address, sPpotInfo);
+         //Add address it to the object
+         parkingSpot.setAddress(address);
+         sSppotInfo = LocationUtility.convertObjToString(parkingSpot); 
+         
+         overlayitem = new OverlayItem(pSpotGeoPoint, address, sSppotInfo);
          itemizedOverlays.addOverlay(overlayitem);
 
       }
-      
-      
+
       mapView.getOverlays().add(itemizedOverlays);
       mapView.postInvalidate();
-
 
    }
 

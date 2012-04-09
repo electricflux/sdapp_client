@@ -14,17 +14,17 @@ public class LocationUtility {
 
    public static String convertObjToString(ParkingLocationDataEntry parkingSpot) {
       String pSpotInfo = 
-         (parkingSpot.getId() == null ? 0 : parkingSpot.getId()) + ","
-       + parkingSpot.getAddress() + ","
-       + (parkingSpot.getMeterID() == null ? 0 : parkingSpot.getMeterID()) + ","
-       + parkingSpot.getAttendent() + ","
-       + parkingSpot.getContact() + ","
-       + (parkingSpot.getDuration() == 0 ? 0 : parkingSpot.getDuration()) + ","
-       + parkingSpot.getParkingType() + ","
-       + parkingSpot.getQuantity() + ","
-       + (parkingSpot.getRate()  == 0 ? 0 : parkingSpot.getRate()) + ","
-       + parkingSpot.getType() + ","
-       + Float.toString(parkingSpot.getLatitude()) + "," 
+         (parkingSpot.getId() == null ? 0 : parkingSpot.getId()) + ":"
+       + parkingSpot.getAddress() + ":"
+       + (parkingSpot.getMeterID() == null ? 0 : parkingSpot.getMeterID()) + ":"
+       + parkingSpot.getAttendent() + ":"
+       + parkingSpot.getContact() + ":"
+       + (parkingSpot.getDuration() == 0 ? 0 : parkingSpot.getDuration()) + ":"
+       + parkingSpot.getParkingType() + ":"
+       + parkingSpot.getQuantity() + ":"
+       + (parkingSpot.getRate()  == 0 ? 0 : parkingSpot.getRate()) + ":"
+       + parkingSpot.getType() + ":"
+       + Float.toString(parkingSpot.getLatitude()) + ":" 
        + Float.toString(parkingSpot.getLongitude()); 
       return pSpotInfo;
    }
@@ -39,7 +39,7 @@ public class LocationUtility {
       
       ParkingLocationDataEntry parkingObj = new ParkingLocationDataEntry();
       
-      String[] parkingSpotValues = sParkingSpot.split(",");
+      String[] parkingSpotValues = sParkingSpot.split(":");
       
       parkingObj.setId(parkingSpotValues[0] == "null" ? 0 : Long.parseLong(parkingSpotValues[0]));
       parkingObj.setAddress(parkingSpotValues[1]);

@@ -79,6 +79,9 @@ public class ParkingPayment extends Activity implements OnClickListener,
 
     private String mItemName;
     private String mSku;
+    private int mDurationTotalTime;
+    private  int mTimePeriods;
+    
     private CatalogAdapter mCatalogAdapter;
     
     //Parking data that comes in from the previous activity
@@ -120,6 +123,19 @@ public class ParkingPayment extends Activity implements OnClickListener,
     private enum Managed { MANAGED, UNMANAGED }
 
     /**
+     * A {@link ServerUpdateListener} is used to get callbacks when the payment is updated on the server
+     */
+    private class ServerUpdateListener implements IServerUpdateListener{
+
+      @Override
+      public void handleCallback(int responseCode) {
+         // TODO Auto-generated method stub
+         
+      }
+       
+    }
+    
+    /**
      * A {@link PurchaseObserver} is used to get callbacks when Android Market sends
      * messages to this application so that we can update the UI.
      */
@@ -157,12 +173,28 @@ public class ParkingPayment extends Activity implements OnClickListener,
 
             if (purchaseState == PurchaseState.PURCHASED) {
                 mOwnedItems.add(itemId);
+                
+                //Update Server with the Payment Info!
+                updateServer();
+                
             }
             mCatalogAdapter.setOwnedItems(mOwnedItems);
             mOwnedItemsCursor.requery();
         }
 
-        @Override
+        private void updateServer() {
+
+           //Send the Info to the Server
+           ServerUpdate serverUpdate = new ServerUpdate();
+           ServerUpdateListener serverUpdateListener = new ServerUpdateListener();
+           serverUpdate.registerListener(serverUpdateListener);
+           serverUpdate.updatePayment(parkingLocationObj);
+           
+           //Get Confirmation
+         
+      }
+
+      @Override
         public void onRequestPurchaseResponse(RequestPurchase request,
                 ResponseCode responseCode) {
             if (BillingConstants.DEBUG) {
@@ -491,7 +523,9 @@ public class ParkingPayment extends Activity implements OnClickListener,
                 Log.d(TAG, "buying: " + mItemName + " sku: " + mSku);
             }
             
-            mPayloadContents = "20";
+            //Update the static object on this page with the duration 
+            parkingLocationObj.setDuration(mDurationTotalTime);
+            parkingLocationObj.setQuantity(mTimePeriods);
             
             if (!mBillingService.requestPurchase(mSku, mPayloadContents)) {
                 showDialog(DIALOG_BILLING_NOT_SUPPORTED_ID);
@@ -548,6 +582,10 @@ public class ParkingPayment extends Activity implements OnClickListener,
         mItemName = getString(CATALOG[position].nameId);
         //android.test.purchased
         mSku = CATALOG[position].sku;
+        //0 = 15 min, 1 = 30 min, 2 = 45 etc...
+        //total time =  (0+1)* 15
+        mDurationTotalTime = ( position + 1 ) * nLeastCountTime;
+        mTimePeriods = position +1;
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {

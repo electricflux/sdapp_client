@@ -45,24 +45,17 @@ public class ParkingSpotAndPaymentInformation extends Activity{
 
    private BillingService mBillingService;
    private Button mPayButton;
-   private Button mEditPayloadButton;
    private TextView mLogTextView;
-   private Spinner mSelectItemSpinner;
-   private ListView mOwnedItemsTable;
-   private SimpleCursorAdapter mOwnedItemsAdapter;
    private PurchaseDatabase mPurchaseDatabase;
    private Cursor mOwnedItemsCursor;
    private Set<String> mOwnedItems = new HashSet<String>();
 
-   private String mItemName;
-   private String mSku;
    private CatalogAdapter mCatalogAdapter;
+   
    /**
     * The developer payload that is sent with subsequent
     * purchase requests.
     */
-   private String mPayloadContents = null;
-
    private static final int DIALOG_CANNOT_CONNECT_ID = 1;
    private static final int DIALOG_BILLING_NOT_SUPPORTED_ID = 2;
 
@@ -257,10 +250,7 @@ public class ParkingSpotAndPaymentInformation extends Activity{
                }
            }
        }
-
-
    }
-
 
    private void logProductActivity(String product, String activity) {
       SpannableStringBuilder contents = new SpannableStringBuilder();
@@ -275,7 +265,6 @@ public class ParkingSpotAndPaymentInformation extends Activity{
       contents.append(mLogTextView.getText());
       mLogTextView.setText(contents);
   }
-
 
    private static class CatalogAdapter extends ArrayAdapter<String> {
       private CatalogEntry[] mCatalog;

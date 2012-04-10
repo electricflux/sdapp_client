@@ -28,6 +28,11 @@ public class ParkingLocationDataEntry {
 
    // Persistent
    private int duration;
+   
+   
+   private long startTimestampMs;
+   
+   private long endTimestampMs;
 
    // Persistent
    private int type;
@@ -93,7 +98,21 @@ public class ParkingLocationDataEntry {
 //      return meterID;
 //   }
 //   
-   
+	 public long getStartTimestampMs() {
+		 return startTimestampMs;
+		 }
+
+		 public void setStartTimestampMs(long startTimestampMs) {
+		 this.startTimestampMs = startTimestampMs;
+		 }
+
+		 public long getEndTimestampMs() {
+		 return endTimestampMs;
+		 }
+
+		 public void setEndTimestampMs(long endTimestampMs) {
+		 this.endTimestampMs = endTimestampMs;
+		 }
 
    public Long getId() {
       return id;
@@ -200,7 +219,7 @@ public class ParkingLocationDataEntry {
    }
    
    public void setDistance(double distance){
-		this.distance = distance;
+		distance = distance;
 	}
 	public double getDistance (){
 		return distance;

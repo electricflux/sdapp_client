@@ -57,7 +57,10 @@
          <activity android:name="com.parking.auth.GetAccountListActivity"></activity>
          <activity android:name="com.parking.auth.GetAuthTokenActivity"></activity>
          <activity android:name="com.parking.auth.RegisterUserActivity"></activity>
-
+         <activity android:name="com.parking.rulesandregulations.RulesandRegulations"
+                  android:theme="@android:style/Theme.NoTitleBar">
+         </activity>
+         
          <!-- In App Billing Test -->
          <activity android:name="com.parking.billing.ParkingPayment"
                   android:theme="@android:style/Theme.NoTitleBar">

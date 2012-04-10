@@ -1,19 +1,22 @@
 /*
- * Copyright © 2011 QUALCOMM Incorporated. All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * QUALCOMM Incorporated ("Proprietary Information"). You shall not
- * disclose such Proprietary Information, and shall use it only in
- * accordance with the terms of the license agreement you entered into
- * with QUALCOMM Incorporated.
- */
+* Copyright © 2011 QUALCOMM Incorporated. All rights reserved.
+*
+* This software is the confidential and proprietary information of
+* QUALCOMM Incorporated ("Proprietary Information"). You shall not
+* disclose such Proprietary Information, and shall use it only in
+* accordance with the terms of the license agreement you entered into
+* with QUALCOMM Incorporated.
+*/
 package com.parking.findparking;
+
+import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.maps.ItemizedOverlay;
@@ -23,9 +26,10 @@ import com.parking.dashboard.activity.DashboardActivity;
 
 public class MapOverLays extends ItemizedOverlay<OverlayItem> {
 
-   private Context mContext;
+   private static final String TAG = "MapOverLays";
+private Context mContext;
    private static int maxNum = 10;
-   private OverlayItem overlays[] = new OverlayItem[maxNum];
+	private ArrayList<OverlayItem> overlays ;
    private int index = 0;
    private boolean full = false;
 
@@ -37,12 +41,14 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
    public MapOverLays(Drawable defaultMarker, Context context) {
 
       super(boundCenterBottom(defaultMarker));
+		overlays = new ArrayList<OverlayItem>();
+		populate();
       mContext = context;
    }
 
    @Override
    protected OverlayItem createItem(int i) {
-      return overlays[i];
+		return overlays.get(i);
 
    }
 
@@ -50,12 +56,13 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
    protected boolean onTap(int index) {
 
       
-      OverlayItem item = overlays[index];
-//      AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-//      dialog.setTitle(item.getTitle());
-//      dialog.setMessage(item.getSnippet());
-//      dialog.show();
+		OverlayItem item = overlays.get(index);
+// AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+// dialog.setTitle(item.getTitle());
+// dialog.setMessage(item.getSnippet());
+// dialog.show();
 
+	Log.v(TAG, "here 1 ...");
       Intent pspotInfo = new Intent(DashboardActivity.myContext, ParkingPayment.class); //ParkingSpotAndPaymentInformation.class);
       pspotInfo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       pspotInfo.putExtra("info", item.getSnippet());
@@ -67,23 +74,12 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
 
    @Override
    public int size() {
-      if (full) {
-         return overlays.length;
-      } else {
-         return index;
-      }
+		return overlays.size();	
 
    }
 
    public void addOverlay(OverlayItem overlay) {
-      if (index < maxNum) {
-         overlays[index] = overlay;
-      } else {
-         index = 0;
-         full = true;
-         overlays[index] = overlay;
-      }
-      index++;
+		overlays.add(overlay);
       populate();
    }
 

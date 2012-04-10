@@ -47,6 +47,8 @@ public class ParkingLocationDataEntry {
    //Geopoint to simplify display
    private GeoPoint gpoint;
    
+ //Distance from users current location. This value is dynamically populated after reading from DB
+	double distance;
    
    
 //   public void setid(Long i) {
@@ -197,6 +199,11 @@ public class ParkingLocationDataEntry {
       this.gpoint = gpoint;
    }
    
-   
+   public void setDistance(double distance){
+		this.distance = distance;
+	}
+	public double getDistance (){
+		return distance;
+	}
 
 }

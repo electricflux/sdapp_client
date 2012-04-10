@@ -59,7 +59,7 @@
          <activity android:name="com.parking.auth.RegisterUserActivity"></activity>
 
          <!-- In App Billing Test -->
-         <activity android:name="com.parking.findparking.Dungeons"
+         <activity android:name="com.parking.billing.ParkingPayment"
                   android:theme="@android:style/Theme.NoTitleBar">
          </activity>
          

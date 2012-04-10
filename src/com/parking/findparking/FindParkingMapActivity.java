@@ -31,7 +31,7 @@ import com.parking.location.ParkingSpots;
 import com.parking.utils.LocationUtility;
 import com.parking.utils.ParkingConstants;
 
-public class FindParkingMap extends MapActivity {
+public class FindParkingMapActivity extends MapActivity {
 
    private static final String TAG = "FindParkingMap";
    private static MapView mapView;

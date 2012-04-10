@@ -9,17 +9,17 @@ import com.parking.application.ParkingApplication;
 import com.parking.dashboard.R;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegisterUserActivity extends Activity implements AsyncTaskResultNotifierInterface {
 	
 	private static final String TAG = RegisterUserActivity.class.getSimpleName();
+	protected static final int MIN_LICENSE_PLATE_LENGTH = 7;
 	private EditText userNameText = null;
 	private EditText fullNameText = null;
 	private EditText licensePlateNumbersText = null;
@@ -47,7 +47,6 @@ public class RegisterUserActivity extends Activity implements AsyncTaskResultNot
 			
 			@Override
 			public void onClick(View v) {
-				userNameText.setText("");
 				fullNameText.setText("");
 				licensePlateNumbersText.setText("");
 			}
@@ -58,6 +57,21 @@ public class RegisterUserActivity extends Activity implements AsyncTaskResultNot
 			
 			@Override
 			public void onClick(View v) {
+				
+				String licensePlateNumbersString = 
+						licensePlateNumbersText.getText().toString();
+						
+				/** Sanity for license plate number */
+				if (licensePlateNumbersString.length() < 
+						MIN_LICENSE_PLATE_LENGTH)
+				{
+					Toast.makeText(RegisterUserActivity.this,
+							"Please enter valid license plate information",
+							Toast.LENGTH_SHORT);
+					clearButton.performClick();
+					return;
+				}
+					
 				List<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("username", 
 						ParkingApplication.getAccount().name));

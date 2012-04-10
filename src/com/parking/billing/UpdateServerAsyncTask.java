@@ -37,7 +37,7 @@ public class UpdateServerAsyncTask extends AsyncTask<List<BasicNameValuePair>, V
 	}
 	
 	protected void onPreExecute() {
-		this.dialog.setMessage("Processing registration...");
+		this.dialog.setMessage("Registering your payment..");
 		this.dialog.show();
 	}
 	

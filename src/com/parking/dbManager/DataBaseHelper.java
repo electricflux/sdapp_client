@@ -48,20 +48,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
       boolean retVal = true;
 
       //TODO Uncomment, commented so that the db can be replaced
-//      if (dbExist) {
-//         Log.v(TAG, "Database Exists, we can proceed");
-//      } else {
-         
-            try {
-            //Create empty DB & copy our database to the empty DB
-            this.getReadableDatabase();
-            retVal = copyDataBase();
+      //      if (dbExist) {
+      //         Log.v(TAG, "Database Exists, we can proceed");
+      //      } else {
 
-            } catch (IOException e) {
-               retVal = false;
-               throw new Error("Error copying database");
-            }
-//      }
+      try {
+         //Create empty DB & copy our database to the empty DB
+         this.getReadableDatabase();
+         retVal = copyDataBase();
+
+      } catch (IOException e) {
+         retVal = false;
+         throw new Error("Error copying database");
+      }
+      //      }
 
       return retVal;
    }
@@ -179,209 +179,204 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
    public List<ParkingLocationDataEntry> dbquery(GeoPoint gp, List<ParkingLocationDataEntry> parkingLocations) {
 
-      int lat, lng; 
+      int lat, lng;
       long meterId;
-      
+
       Log.v(TAG, "dbquery 0 ");
       String selection = "Lat LIKE '34.1%'";
       Cursor parkingSpotsCursor = myDataBase.query("parking_info", null, selection, null, null, null, null);
       if (parkingSpotsCursor != null)
       {
-         
-         if(parkingSpotsCursor.moveToFirst()){
-            do{
+
+         if (parkingSpotsCursor.moveToFirst()) {
+            do {
                ParkingLocationDataEntry pSpotInfo = new ParkingLocationDataEntry();
-               
+
                //Lat Lon
                lat = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndexOrThrow("Lat")) * 1E6);
                lng = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndexOrThrow("Lon")) * 1E6);
-               Log.e(TAG, " Lat: "+lat + " Lon: "+lng);
-               
+               Log.e(TAG, " Lat: " + lat + " Lon: " + lng);
+
                GeoPoint geoPoint = new GeoPoint(lat, lng);
                pSpotInfo.setGeoPoint(geoPoint);
                pSpotInfo.setLatitude(lat);
                pSpotInfo.setLongitude(lng);
-               
+
                //Meter Id
                meterId = (long) parkingSpotsCursor.getInt(parkingSpotsCursor.getColumnIndexOrThrow("MeterId"));
                pSpotInfo.setMeterID(meterId);
-               
-               
+
                parkingLocations.add(pSpotInfo);
-               
-            }while(parkingSpotsCursor.moveToNext());
+
+            } while (parkingSpotsCursor.moveToNext());
          }
-         
+
          Log.v(TAG, "dbquery 1 > " + parkingSpotsCursor.getColumnCount() + parkingSpotsCursor.getCount());
 
       }
-      
+
       return parkingLocations;
 
    }
 
-	public void dbquery(int limit, List<ParkingLocationDataEntry> parkingLocations ){
-		Log.v(TAG, "dbquery 1 ");
-		Cursor cursor = getReadableDatabase().rawQuery("select * from parking_info where _id LIMIT "+limit, null);
-		ParkingLocationDataEntry tLocationObj = null; 
-		tLocationObj = new ParkingLocationDataEntry();
-		if (cursor != null)
-		{
-			//"(_id INTEGER PRIMARY KEY, BlockName TEXT, Terminal_I TEXT, Lat FLOAT, Lon FLOAT);");
-			Log.v(TAG, "dbquery 1 ::" + cursor.getColumnCount() );
-			/* Check if our result was valid. */
-			if (cursor != null) {
-				/* Check if at least one Result was returned. */
-				if (cursor.moveToFirst()) {
-					int i = 0;
-					/* Loop through all Results */
-					do {
-						i++;
-						/* Retrieve the values of the Entry
-						 * the Cursor is pointing to. */
-						Long Id = (long) cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
-						float Lat = cursor.getFloat(cursor.getColumnIndexOrThrow("Lat"));
-						float Lon = cursor.getFloat(cursor.getColumnIndexOrThrow("Lon"));
-						Log.v(TAG, "dbquery :: " + Id + " Lat:: " + Lat + " Lon:: " + Lon);
-						tLocationObj.setId(Id);
-						tLocationObj.setLatitude(Lat);
-						tLocationObj.setLongitude(Lon);
-						parkingLocations.add(tLocationObj);
+   public void dbquery(int limit, List<ParkingLocationDataEntry> parkingLocations) {
+      Log.v(TAG, "dbquery 1 ");
+      Cursor cursor = getReadableDatabase().rawQuery("select * from parking_info where _id LIMIT " + limit, null);
+      ParkingLocationDataEntry tLocationObj = null;
+      tLocationObj = new ParkingLocationDataEntry();
+      if (cursor != null)
+      {
+         //"(_id INTEGER PRIMARY KEY, BlockName TEXT, Terminal_I TEXT, Lat FLOAT, Lon FLOAT);");
+         Log.v(TAG, "dbquery 1 ::" + cursor.getColumnCount());
+         /* Check if our result was valid. */
+         if (cursor != null) {
+            /* Check if at least one Result was returned. */
+            if (cursor.moveToFirst()) {
+               int i = 0;
+               /* Loop through all Results */
+               do {
+                  i++;
+                  /* Retrieve the values of the Entry
+                   * the Cursor is pointing to. */
+                  Long Id = (long) cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
+                  float Lat = cursor.getFloat(cursor.getColumnIndexOrThrow("Lat"));
+                  float Lon = cursor.getFloat(cursor.getColumnIndexOrThrow("Lon"));
+                  Log.v(TAG, "dbquery :: " + Id + " Lat:: " + Lat + " Lon:: " + Lon);
+                  tLocationObj.setId(Id);
+                  tLocationObj.setLatitude(Lat);
+                  tLocationObj.setLongitude(Lon);
+                  parkingLocations.add(tLocationObj);
 
-					} while (cursor.moveToNext());
-				}
-			}
-		}
-   // Add your public helper methods to access and get content from the database.
-   // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
-   // to you to create adapters for your views.
-	}
-	
-	public void dbquery(int distance,
-            double mlat, double mlon, int limit,
-            List<ParkingLocationDataEntry> parkingLocations) {
-        Log.v(TAG, "dbquery by distance 3 " + distance + "miles");
-        
-        //mlat = (float) Math.toRadians(mlat);
-        //mlon = (float) Math.toRadians(mlon);
-        ParkingLocationDataEntry tLocationObj = null;
-        tLocationObj = new ParkingLocationDataEntry();
-        List<ParkingLocationDataEntry> tempParkingSet = new ArrayList<ParkingLocationDataEntry>();
-        int iParkingObjs = 0;
-        double dist;
-        Cursor cursor = getReadableDatabase().rawQuery(
-                    //"select * from parking_info where _id > "+start+ " and _id < "+ end, null);
-            		"select * from parking_info", null);
-        if (cursor != null) {
-                Log.v(TAG, "dbquery got 500 elements :: " + cursor.getColumnCount());
-                /* Check if our result was valid. */
-                   if (cursor.moveToFirst()) {
-                      /* Loop through all Results */
-                        do {
-        
-                            /*
-                             * Retrieve the values of the Entry the Cursor is
-                             * pointing to.
-                             */
-                        	
-                            Long Id = (long) cursor.getInt(cursor
-                                    .getColumnIndexOrThrow("_id"));
-                            float dbLat = cursor.getFloat(cursor
-                                    .getColumnIndexOrThrow("Lat"));
-                            float dbLon = cursor.getFloat(cursor
-                                    .getColumnIndexOrThrow("Lon"));
-                            //Log.v(TAG, "dbquery :: " + Id + " Lat:: " + dbLat+ " Lon:: " + dbLon);
+               } while (cursor.moveToNext());
+            }
+         }
+      }
+      // Add your public helper methods to access and get content from the database.
+      // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
+      // to you to create adapters for your views.
+   }
 
-                            dist = distance((double)dbLat, (double)dbLon,mlat,mlon);
-                            Log.v(TAG, "dbquery :: " + Id + " Dist1:: " + dist+ " Distance:: " + distance);
-                            if (dist <= distance)
-                            {
-        
-                                                              
-                                int ilat = (int) (dbLat * 1E6);
-        						int ilng = (int) (dbLon * 1E6);
-        						GeoPoint point = new GeoPoint(ilat, ilng);
-        						
-        						ParkingLocationDataEntry tempLocationObj = null;
-        				        tempLocationObj = new ParkingLocationDataEntry();
-        				        tempLocationObj.setId(Id);
-        				        tempLocationObj.setLatitude( dbLat);
-        				        tempLocationObj.setLongitude(dbLon);
-        				        tempLocationObj.setGeoPoint(point);
-        				        tempLocationObj.setDistance(dist);
-                                Log.v(TAG, "dbquery :: " + Id + " Lat:: " + dbLat+ " Lon:: " + dbLon);
-                                tempParkingSet.add(tempLocationObj);
-                                iParkingObjs++;
-                            }
-                            dist = 0;
-                        } while (cursor.moveToNext()); 
-                    }
-                }
-        
-        
-        //Collections.sort(tempParkingSet, COMPARATOR);
-        ParkingLocationDataEntry[] arrayOfLocation = tempParkingSet.toArray(new ParkingLocationDataEntry[]{});
-        Arrays.sort(arrayOfLocation, new DistanceComparator());
-        int count=0;
-        for (int i = 0; i < arrayOfLocation.length; i++)
-        {
-        	Log.v(TAG, "here 1" + arrayOfLocation[i].getDistance() );
-        	
-			if (count >= limit )
-        		break;
-        	parkingLocations.add(arrayOfLocation[i]);
-        	count++;
-        }
-    }
-	//Below functions are helper functions to calculate distance
-	private double distance(double lat1, double lon1, double lat2, double lon2) {
-	      double theta = lon1 - lon2;
-	      double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-	      dist = Math.acos(dist);
-	      dist = rad2deg(dist);
-	      dist = dist * 60 * 1.1515;
-	       return (dist);
-	    }
+   public void dbquery(int distance,
+         double mlat, double mlon, int limit,
+         List<ParkingLocationDataEntry> parkingLocations) {
+      Log.v(TAG, "dbquery by distance 3 " + distance + "miles");
 
-	   private double deg2rad(double deg) {
-	      return (deg * Math.PI / 180.0);
-	    }
-	   private double rad2deg(double rad) {
-	      return (rad * 180.0 / Math.PI);
-	    }
-	 /*  private static Comparator<ParkingLocationDataEntry> COMPARATOR = new Comparator<ParkingLocationDataEntry>() {
-		   public double compare (ParkingLocationDataEntry obj1, ParkingLocationDataEntry obj2) {
-		   return  (obj1.getDistance() - obj2.getDistance());
-	   }
-	   };
-	   */
-	   
-	   
+      //mlat = (float) Math.toRadians(mlat);
+      //mlon = (float) Math.toRadians(mlon);
+      ParkingLocationDataEntry tLocationObj = null;
+      tLocationObj = new ParkingLocationDataEntry();
+      List<ParkingLocationDataEntry> tempParkingSet = new ArrayList<ParkingLocationDataEntry>();
+      int iParkingObjs = 0;
+      double dist;
+      Cursor cursor = getReadableDatabase().rawQuery(
+            //"select * from parking_info where _id > "+start+ " and _id < "+ end, null);
+            "select * from parking_info", null);
+      if (cursor != null) {
+         Log.v(TAG, "dbquery got 500 elements :: " + cursor.getColumnCount());
+         /* Check if our result was valid. */
+         if (cursor.moveToFirst()) {
+            /* Loop through all Results */
+            do {
+
+               /*
+                * Retrieve the values of the Entry the Cursor is
+                * pointing to.
+                */
+
+               Long Id = (long) cursor.getInt(cursor
+                     .getColumnIndexOrThrow("_id"));
+               float dbLat = cursor.getFloat(cursor
+                     .getColumnIndexOrThrow("Lat"));
+               float dbLon = cursor.getFloat(cursor
+                     .getColumnIndexOrThrow("Lon"));
+               //Log.v(TAG, "dbquery :: " + Id + " Lat:: " + dbLat+ " Lon:: " + dbLon);
+
+               dist = distance((double) dbLat, (double) dbLon, mlat, mlon);
+               Log.v(TAG, "dbquery :: " + Id + " Dist1:: " + dist + " Distance:: " + distance);
+               if (dist <= distance)
+               {
+
+                  int ilat = (int) (dbLat * 1E6);
+                  int ilng = (int) (dbLon * 1E6);
+                  GeoPoint point = new GeoPoint(ilat, ilng);
+
+                  ParkingLocationDataEntry tempLocationObj = null;
+                  tempLocationObj = new ParkingLocationDataEntry();
+                  tempLocationObj.setId(Id);
+                  tempLocationObj.setLatitude(dbLat);
+                  tempLocationObj.setLongitude(dbLon);
+                  tempLocationObj.setGeoPoint(point);
+                  tempLocationObj.setDistance(dist);
+                  Log.v(TAG, "dbquery :: " + Id + " Lat:: " + dbLat + " Lon:: " + dbLon);
+                  tempParkingSet.add(tempLocationObj);
+                  iParkingObjs++;
+               }
+               dist = 0;
+            } while (cursor.moveToNext());
+         }
+      }
+
+      //Collections.sort(tempParkingSet, COMPARATOR);
+      ParkingLocationDataEntry[] arrayOfLocation = tempParkingSet.toArray(new ParkingLocationDataEntry[]
+      {});
+      Arrays.sort(arrayOfLocation, new DistanceComparator());
+      int count = 0;
+      for (int i = 0; i < arrayOfLocation.length; i++)
+      {
+         Log.v(TAG, "here 1" + arrayOfLocation[i].getDistance());
+
+         if (count >= limit)
+            break;
+         parkingLocations.add(arrayOfLocation[i]);
+         count++;
+      }
+   }
+
+   //Below functions are helper functions to calculate distance
+   private double distance(double lat1, double lon1, double lat2, double lon2) {
+      double theta = lon1 - lon2;
+      double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+      dist = Math.acos(dist);
+      dist = rad2deg(dist);
+      dist = dist * 60 * 1.1515;
+      return (dist);
+   }
+
+   private double deg2rad(double deg) {
+      return (deg * Math.PI / 180.0);
+   }
+
+   private double rad2deg(double rad) {
+      return (rad * 180.0 / Math.PI);
+   }
+   /*  private static Comparator<ParkingLocationDataEntry> COMPARATOR = new Comparator<ParkingLocationDataEntry>() {
+      public double compare (ParkingLocationDataEntry obj1, ParkingLocationDataEntry obj2) {
+      return  (obj1.getDistance() - obj2.getDistance());
+     }
+     };
+     */
+
 }
 
+class DistanceComparator implements Comparator<ParkingLocationDataEntry> {
 
-class DistanceComparator implements Comparator<ParkingLocationDataEntry>{
-    
-	@Override
-    public int compare(ParkingLocationDataEntry obj1, ParkingLocationDataEntry obj2){
-   
-        /*
-         * parameter are of type Object, so we have to downcast it
-         * to Employee objects
-         */
-       
-        double dist1 = obj1.getDistance();        
-        double dist2 = obj2.getDistance();
-       
-        if(dist1 > dist2)
-            return 1;
-        else if(dist1 < dist2)
-            return -1;
-        else
-            return 0;    
-    }
+   @Override
+   public int compare(ParkingLocationDataEntry obj1, ParkingLocationDataEntry obj2) {
 
-  
+      /*
+       * parameter are of type Object, so we have to downcast it
+       * to Employee objects
+       */
+
+      double dist1 = obj1.getDistance();
+      double dist2 = obj2.getDistance();
+
+      if (dist1 > dist2)
+         return 1;
+      else if (dist1 < dist2)
+         return -1;
+      else
+         return 0;
+   }
+
 }
-
-

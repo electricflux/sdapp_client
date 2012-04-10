@@ -50,7 +50,7 @@ public class UpdateServerAsyncTask extends AsyncTask<List<BasicNameValuePair>, V
 			HttpPost httppost = 
 					new HttpPost(
 							ParkingConstants.serverUrl + 
-							"/submitPayment");
+							"/submitPaymentServlet");
 
 			/** Add your data */
 			List<BasicNameValuePair> nameValuePairs = arg0[0];
@@ -77,9 +77,9 @@ public class UpdateServerAsyncTask extends AsyncTask<List<BasicNameValuePair>, V
 			dialog.dismiss();
 
 		if (result == true)
-			Log.v(TAG,"Successfully registered.");
+			Log.v(TAG,"Successfully submitted payment.");
 		else
-			Log.v(TAG,"Could not register.");
+			Log.v(TAG,"Could not submit payment.");
 		/** Notify launching activity of login result */
 		this.notifierInterface.notifyResult(result);
 	}

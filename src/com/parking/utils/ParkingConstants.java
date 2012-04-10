@@ -7,4 +7,11 @@ public class ParkingConstants {
    public static final String MAP_LOCATION_UPDATE_INTENT = "com.parking.location.MAP_LOCATION_UPDATE_INTENT";
    public static final String PASSIVE_PROVIDER_PENDING_INTENT = "com.parking.location.PASSIVE_PROVIDER_PENDING_INTENT";
    public static final String PARKING_APP_DIRECOTRY = "easyPark";
+   
+   public static final class ParkingPaymentIntentParameters {
+	   public static final String amountPaid = "amountPaid";
+	   public static final String startTimestampMs = "startTimestampMs";
+	   public static final String endTimestampMs = "endTimestampMs";
+	   public static final String parkingSpotId ="parkingSpotId";
+   }
 }

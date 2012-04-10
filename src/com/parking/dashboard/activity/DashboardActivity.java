@@ -33,8 +33,8 @@ public class DashboardActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dashboard);
-        myContext = getApplicationContext();
-	    DashboardActivity.myContext = getApplicationContext();
+		myContext = getApplicationContext();
+		DashboardActivity.myContext = getApplicationContext();
 
 		//attach event handler to dash buttons
 		DashboardClickListener dBClickListener = new DashboardClickListener();
@@ -42,40 +42,40 @@ public class DashboardActivity extends Activity{
 		findViewById(R.id.dashboard_button_viewall).setOnClickListener(dBClickListener);
 		findViewById(R.id.dashboard_button_personalbests).setOnClickListener(dBClickListener);
 		//c. changes
-      findViewById(R.id.dashboard_button_parkandremind).setOnClickListener(dBClickListener);
-      findViewById(R.id.dashboard_button_towingcontact).setOnClickListener(dBClickListener);
-      findViewById(R.id.dashboard_button_parkingrules).setOnClickListener(dBClickListener);
+		findViewById(R.id.dashboard_button_parkandremind).setOnClickListener(dBClickListener);
+		findViewById(R.id.dashboard_button_towingcontact).setOnClickListener(dBClickListener);
+		findViewById(R.id.dashboard_button_parkingrules).setOnClickListener(dBClickListener);
 
-      //Initialize the DB here
-      if(createOrCopyDB()){
-         Toast.makeText(myContext, "Database Initialized!", Toast.LENGTH_SHORT).show();
-      }
-      else
-      {
-         Toast.makeText(myContext, "Failed to init DB!", Toast.LENGTH_SHORT).show();
-      }
-      
+		//Initialize the DB here
+		if(createOrCopyDB()){
+			Toast.makeText(myContext, "Database Initialized!", Toast.LENGTH_SHORT).show();
+		}
+		else
+		{
+			Toast.makeText(myContext, "Failed to init DB!", Toast.LENGTH_SHORT).show();
+		}
 
-   }
 
-   private boolean createOrCopyDB() {
+	}
 
-      DataBaseHelper myDbHelper = new DataBaseHelper(null);
-      myDbHelper = new DataBaseHelper(getAppContext());
-      boolean retVal = false;
-      
-      try {
-         retVal = myDbHelper.createDataBase();
-         
-      } catch (IOException ioe) {
-         Log.e(TAG, "FATAL: Unable to Create DB for QuickPark!");
-         retVal = false;
-         throw new Error("Unable to create database");
-      }
-      
-      myDbHelper.close();
-      return retVal;
-      
+	private boolean createOrCopyDB() {
+
+		DataBaseHelper myDbHelper = new DataBaseHelper(null);
+		myDbHelper = new DataBaseHelper(getAppContext());
+		boolean retVal = false;
+
+		try {
+			retVal = myDbHelper.createDataBase();
+
+		} catch (IOException ioe) {
+			Log.e(TAG, "FATAL: Unable to Create DB for QuickPark!");
+			retVal = false;
+			throw new Error("Unable to create database");
+		}
+
+		myDbHelper.close();
+		return retVal;
+
 
 	}
 
@@ -90,8 +90,8 @@ public class DashboardActivity extends Activity{
 			switch (v.getId()) {
 			case R.id.dashboard_button_find_parking:
 				i = new Intent(DashboardActivity.this, FindParkingTabs.class);
-//				ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
-//				mParkingLocationsAll.getParkingLocations(10, myDbHelper);
+				//	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
+				//	mParkingLocationsAll.getParkingLocations(10, myDbHelper);
 				break;
 			case R.id.dashboard_button_viewall:
 				i = new Intent(DashboardActivity.this, PayForSpot.class);
@@ -100,17 +100,19 @@ public class DashboardActivity extends Activity{
 			case R.id.dashboard_button_personalbests:
 				i = new Intent(DashboardActivity.this, PaymentHistory.class);
 				break;
-				
-         case R.id.dashboard_button_parkandremind:
-            i = new Intent(DashboardActivity.this, LocateMyCar.class);
-            break;
-        case R.id.dashboard_button_towingcontact:
-            i = new Intent(DashboardActivity.this, LocateMyCar.class);
-            break;
-        case R.id.dashboard_button_parkingrules:
-            i = new Intent(DashboardActivity.this, RulesandRegulations.class);
-            break;                  
-	
+
+			case R.id.dashboard_button_parkandremind:
+				Toast.makeText(
+						DashboardActivity.this, "Functionality coming soon" , Toast.LENGTH_SHORT);
+				//i = new Intent(DashboardActivity.this, LocateMyCar.class);
+				break;
+			case R.id.dashboard_button_towingcontact:
+				i = new Intent(DashboardActivity.this, LocateMyCar.class);
+				break;
+			case R.id.dashboard_button_parkingrules:
+				i = new Intent(DashboardActivity.this, RulesandRegulations.class);
+				break;                  
+
 			default:
 				break;
 			}

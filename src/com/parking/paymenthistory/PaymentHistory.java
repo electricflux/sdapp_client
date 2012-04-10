@@ -1,7 +1,6 @@
 
 package com.parking.paymenthistory;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -29,31 +28,20 @@ public class PaymentHistory extends ListActivity{
       linkToCursorAdapter();
       
       historyTable.close();
-      
-      
    }
 
    private void linkToCursorAdapter() {
       String[] from = new String[] {PurchaseDatabase.HISTORY_DURATION_COL, PurchaseDatabase.HISTORY_AMOUNT_PAID_COL};
       int[] to = new int[] {R.id.parkedDuration, R.id.parkedAmount};      
-      SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(this,
-                                                                    R.layout.paymenthistoryfragment,
-                                                                    historyCursor,
-                                                                    from,
-                                                                    to
-                                                                    );
+      SimpleCursorAdapter myCursorAdapter = 
+    		  new SimpleCursorAdapter(this,R.layout.paymenthistoryfragment,
+                                      historyCursor, from, to);
       this.setListAdapter(myCursorAdapter);
-      
-      
    }
 
    private void queryHistory() {
       
       historyCursor = historyTable.queryAllHistoryItems();
       startManagingCursor(historyCursor);
-      //historyCursor.
-      
    }
-
-    
 }

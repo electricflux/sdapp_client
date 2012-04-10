@@ -2,17 +2,22 @@ package com.parking.application;
 
 import android.accounts.Account;
 import android.app.Application;
+import android.content.Context;
+import android.telephony.TelephonyManager;
 
 public class ParkingApplication extends Application{
 	
 	private static Account accountLinkedToApplication = null;
 	private static boolean userAuthenticated = false;
 	private static String authToken = null;
+	private static String deviceId = null;
 	
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
+		TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+		deviceId = tManager.getDeviceId();
 	}
 	
 	public static void setAccount(Account account)
@@ -42,4 +47,7 @@ public class ParkingApplication extends Application{
 		return authToken;
 	}
 
+	public static String getDeviceId() {
+		return deviceId;
+	}
 }

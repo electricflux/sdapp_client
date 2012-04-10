@@ -33,8 +33,7 @@ public class RegisterUserActivity extends Activity implements AsyncTaskResultNot
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register_user);
 		
-		TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-		deviceId = tManager.getDeviceId();
+		deviceId = ParkingApplication.getDeviceId();
 		
 		userNameText = (EditText) findViewById(R.id.nUsername);
 		userNameText.setText(ParkingApplication.getAccount().name);

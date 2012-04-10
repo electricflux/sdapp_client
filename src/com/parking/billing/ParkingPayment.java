@@ -17,9 +17,13 @@
 package com.parking.billing;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
+import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -49,6 +53,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parking.application.ParkingApplication;
+import com.parking.auth.AsyncTaskResultNotifierInterface;
+import com.parking.auth.RegisterUserActivity;
+import com.parking.auth.RegisterUserAsyncTask;
 import com.parking.billing.BillingConstants.PurchaseState;
 import com.parking.billing.BillingConstants.ResponseCode;
 import com.parking.billing.BillingService.RequestPurchase;
@@ -123,23 +131,11 @@ public class ParkingPayment extends Activity implements OnClickListener,
     private enum Managed { MANAGED, UNMANAGED }
 
     /**
-     * A {@link ServerUpdateListener} is used to get callbacks when the payment is updated on the server
-     */
-    private class ServerUpdateListener implements IServerUpdateListener{
-
-      @Override
-      public void handleCallback(int responseCode) {
-         // TODO Auto-generated method stub
-         
-      }
-       
-    }
-    
-    /**
      * A {@link PurchaseObserver} is used to get callbacks when Android Market sends
      * messages to this application so that we can update the UI.
      */
-    private class ParkingPurchaseObserver extends PurchaseObserver {
+    private class ParkingPurchaseObserver extends PurchaseObserver 
+    		implements AsyncTaskResultNotifierInterface {
         public ParkingPurchaseObserver(Handler handler) {
             super(ParkingPayment.this, handler);
         }
@@ -184,15 +180,36 @@ public class ParkingPayment extends Activity implements OnClickListener,
 
         private void updateServer() {
 
-           //Send the Info to the Server
-           ServerUpdate serverUpdate = new ServerUpdate();
-           ServerUpdateListener serverUpdateListener = new ServerUpdateListener();
-           serverUpdate.registerListener(serverUpdateListener);
-           serverUpdate.updatePayment(parkingLocationObj);
-           
-           //Get Confirmation
-         
+        	List<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("username", 
+					ParkingApplication.getAccount().name));
+			nameValuePairs.add(new BasicNameValuePair("deviceId", 
+					ParkingApplication.getDeviceId()));
+			nameValuePairs.add(new BasicNameValuePair("isDevice", 
+					"true"));
+			nameValuePairs.add(new BasicNameValuePair("amountPaid",
+					"Add amount here"));
+			nameValuePairs.add(new BasicNameValuePair("startTimestamp",
+					"Add start timestamp here"));
+			nameValuePairs.add(new BasicNameValuePair("endTimestamp",
+					"Add end timestamp here"));
+			nameValuePairs.add(new BasicNameValuePair("parkingSpotId",
+					"Add parking spotId here"));
+			nameValuePairs.add(new BasicNameValuePair("licensePlateNumber", 
+					"Add license plate number here"));
+			new UpdateServerAsyncTask(
+					ParkingPurchaseObserver.this,ParkingPayment.this).
+					execute(nameValuePairs);
       }
+        
+
+		@Override
+		public void notifyResult(boolean result) {
+			if (result == true)
+				Log.v(TAG,"Submit payment succeeded.");
+			else
+				Log.v(TAG,"Submit payment failed.");
+		}
 
       @Override
         public void onRequestPurchaseResponse(RequestPurchase request,
@@ -237,6 +254,7 @@ public class ParkingPayment extends Activity implements OnClickListener,
                 }
             }
         }
+
     }
 
     private static class CatalogEntry {

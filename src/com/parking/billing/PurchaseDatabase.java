@@ -58,6 +58,7 @@ public class PurchaseDatabase {
     public static final String HISTORY_STARTTIME = "StartTime";
     public static final String HISTORY_DURATION_COL = "Duration";
     public static final String HISTORY_METERID_COL = "MeterId";
+    //TODO Add address 
     
     private static final String[] HISTORY_COLUMNS = {
         HISTORY_ORDER_ID_COL, HISTORY_PRODUCT_ID_COL, HISTORY_STATE_COL,
@@ -107,7 +108,7 @@ public class PurchaseDatabase {
        ContentValues values = new ContentValues();
        ParkingLocationDataEntry parkingSpotObj = ParkingPayment.parkingLocationObj; 
         
-        values.put(HISTORY_ORDER_ID_COL, orderId);
+        //values.put(HISTORY_ORDER_ID_COL, orderId);
         values.put(HISTORY_PRODUCT_ID_COL, productId);
         values.put(HISTORY_STATE_COL, state.ordinal());
         values.put(HISTORY_PURCHASE_TIME_COL, purchaseTime);
@@ -200,6 +201,15 @@ public class PurchaseDatabase {
     }
 
     /**
+     * Returns a cursor that can be used to read all the rows and columns of
+     * the "history items" table.
+     */
+    public Cursor queryAllHistoryItems() {
+        return mDb.query(PURCHASE_HISTORY_TABLE_NAME, HISTORY_COLUMNS, null,
+                null, null, null, null);
+    }
+    
+    /**
      * This is a standard helper class for constructing the database.
      */
     private class DatabaseHelper extends SQLiteOpenHelper {
@@ -229,7 +239,7 @@ public class PurchaseDatabase {
 
         private void createPurchaseTable(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE " + PURCHASE_HISTORY_TABLE_NAME + "(" +
-                    HISTORY_ORDER_ID_COL + " TEXT PRIMARY KEY, " +
+                    HISTORY_ORDER_ID_COL + " INTEGER AUTO PRIMARY KEY, " +
                     HISTORY_STATE_COL + " INTEGER, " +
                     HISTORY_PRODUCT_ID_COL + " TEXT, " +
                     HISTORY_DEVELOPER_PAYLOAD_COL + " TEXT, " +

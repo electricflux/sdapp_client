@@ -19,7 +19,6 @@
         android:scaleType="center"
         android:src="@drawable/home"
         android:layout_alignParentRight="true"
-        android:background="#f00" 
-        android:onClick="openHomePage"/>
+        android:background="#f00"/>
          
 </RelativeLayout>

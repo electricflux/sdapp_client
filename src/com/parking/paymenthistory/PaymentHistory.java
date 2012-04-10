@@ -1,18 +1,20 @@
 
 package com.parking.paymenthistory;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.parking.billing.PurchaseDatabase;
 import com.parking.dashboard.R;
 import com.parking.dashboard.activity.DashboardActivity;
+import com.parking.utils.IDashoard;
 
-public class PaymentHistory extends ListActivity{
+public class PaymentHistory extends ListActivity implements IDashoard{
    
    private PurchaseDatabase historyTable;
    private Cursor historyCursor;
@@ -53,6 +55,10 @@ public class PaymentHistory extends ListActivity{
       startManagingCursor(historyCursor);
       //historyCursor.
       
+   }
+   
+   public void openHomePage(View v){
+      Log.e("HomeButton", "OK");
    }
 
     

@@ -197,6 +197,7 @@ public class ParkingPayment extends Activity implements OnClickListener,
 					"Add parking spotId here"));
 			nameValuePairs.add(new BasicNameValuePair("licensePlateNumber", 
 					"Add license plate number here"));
+			
 			new UpdateServerAsyncTask(
 					ParkingPurchaseObserver.this,ParkingPayment.this).
 					execute(nameValuePairs);

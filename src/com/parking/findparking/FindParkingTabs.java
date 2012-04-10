@@ -9,6 +9,9 @@
  */
 package com.parking.findparking;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -16,8 +19,11 @@ import android.os.Bundle;
 import android.widget.TabHost;
 
 import com.parking.dashboard.R;
+import com.parking.datamanager.ParkingLocationDataEntry;
 
 public class FindParkingTabs extends TabActivity {
+	
+	public static List<ParkingLocationDataEntry> parkingLocations = new ArrayList<ParkingLocationDataEntry>();
 
    public void onCreate(Bundle savedInstanceState) {
 

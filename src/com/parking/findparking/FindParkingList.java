@@ -20,7 +20,7 @@ import com.parking.dbManager.DataBaseHelper;
 
 public class FindParkingList extends Activity implements OnClickListener{
    
-   private ArrayList<ParkingLocationDataEntry> parkingData = new ArrayList<ParkingLocationDataEntry>(); 
+   
    private MyParkingArrayAdapter aa = null;
    
    class updateList extends AsyncTask<Context, Integer, Integer>{
@@ -39,15 +39,15 @@ public class FindParkingList extends Activity implements OnClickListener{
       setContentView(R.layout.parkingspotslistview);
    
       
-      DataBaseHelper myDbHelper = new DataBaseHelper(DashboardActivity.myContext);
-      myDbHelper.openDataBase(); 
+//      DataBaseHelper myDbHelper = new DataBaseHelper(DashboardActivity.myContext);
+//      myDbHelper.openDataBase(); 
       //temp dummy
-      GeoPoint gp = new GeoPoint(0, 0);
-      myDbHelper.dbquery(gp, parkingData);
+      //GeoPoint gp = new GeoPoint(0, 0);
+      //myDbHelper.dbquery(gp, FindParkingTabs.parkingLocations);
       
       ListView psListView = (ListView) findViewById(R.id.pSlistView);
       int resID = R.layout.pspotlistrowlayout;
-      aa = new MyParkingArrayAdapter(this, resID, parkingData);
+      aa = new MyParkingArrayAdapter(this, resID, FindParkingTabs.parkingLocations);
       psListView.setAdapter(aa);
       
       

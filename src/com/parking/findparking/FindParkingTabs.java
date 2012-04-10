@@ -1,12 +1,3 @@
-/*
- * Copyright © 2011 QUALCOMM Incorporated. All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * QUALCOMM Incorporated ("Proprietary Information"). You shall not
- * disclose such Proprietary Information, and shall use it only in
- * accordance with the terms of the license agreement you entered into
- * with QUALCOMM Incorporated.
- */
 package com.parking.findparking;
 
 import java.util.ArrayList;
@@ -20,6 +11,7 @@ import android.widget.TabHost;
 
 import com.parking.dashboard.R;
 import com.parking.datamanager.ParkingLocationDataEntry;
+
 
 public class FindParkingTabs extends TabActivity {
 	
@@ -53,4 +45,5 @@ public class FindParkingTabs extends TabActivity {
 
       tabHost.setCurrentTab(0);
    }
+
 }

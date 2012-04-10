@@ -49,20 +49,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
       boolean retVal = true;
 
       //TODO Uncomment, commented so that the db can be replaced
-//      if (dbExist) {
-//         Log.v(TAG, "Database Exists, we can proceed");
-//      } else {
-         
-            try {
-            //Create empty DB & copy our database to the empty DB
-            this.getReadableDatabase();
-            retVal = copyDataBase();
+      //      if (dbExist) {
+      //         Log.v(TAG, "Database Exists, we can proceed");
+      //      } else {
 
-            } catch (IOException e) {
-               retVal = false;
-               throw new Error("Error copying database");
-            }
-//      }
+      try {
+         //Create empty DB & copy our database to the empty DB
+         this.getReadableDatabase();
+         retVal = copyDataBase();
+
+      } catch (IOException e) {
+         retVal = false;
+         throw new Error("Error copying database");
+      }
+      //      }
 
       return retVal;
    }
@@ -180,43 +180,42 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
    public List<ParkingLocationDataEntry> dbquery(GeoPoint gp, List<ParkingLocationDataEntry> parkingLocations) {
 
-      int lat, lng; 
+      int lat, lng;
       long meterId;
-      
+
       Log.v(TAG, "dbquery 0 ");
       String selection = "Lat LIKE '34.1%'";
       Cursor parkingSpotsCursor = myDataBase.query("parking_info", null, selection, null, null, null, null);
       if (parkingSpotsCursor != null)
       {
-         
-         if(parkingSpotsCursor.moveToFirst()){
-            do{
+
+         if (parkingSpotsCursor.moveToFirst()) {
+            do {
                ParkingLocationDataEntry pSpotInfo = new ParkingLocationDataEntry();
-               
+
                //Lat Lon
                lat = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndexOrThrow("Lat")) * 1E6);
                lng = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndexOrThrow("Lon")) * 1E6);
-               Log.e(TAG, " Lat: "+lat + " Lon: "+lng);
-               
+               Log.e(TAG, " Lat: " + lat + " Lon: " + lng);
+
                GeoPoint geoPoint = new GeoPoint(lat, lng);
                pSpotInfo.setGeoPoint(geoPoint);
                pSpotInfo.setLatitude(lat);
                pSpotInfo.setLongitude(lng);
-               
+
                //Meter Id
                meterId = (long) parkingSpotsCursor.getInt(parkingSpotsCursor.getColumnIndexOrThrow("MeterId"));
                pSpotInfo.setMeterID(meterId);
-               
-               
+
                parkingLocations.add(pSpotInfo);
-               
-            }while(parkingSpotsCursor.moveToNext());
+
+            } while (parkingSpotsCursor.moveToNext());
          }
-         
+
          Log.v(TAG, "dbquery 1 > " + parkingSpotsCursor.getColumnCount() + parkingSpotsCursor.getCount());
 
       }
-      
+
       return parkingLocations;
 
    }
@@ -372,28 +371,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 }
 
 
-class DistanceComparator implements Comparator<ParkingLocationDataEntry>{
-    
-	@Override
-    public int compare(ParkingLocationDataEntry obj1, ParkingLocationDataEntry obj2){
-   
-        /*
-         * parameter are of type Object, so we have to downcast it
-         * to Employee objects
-         */
-       
-        double dist1 = obj1.getDistance();        
-        double dist2 = obj2.getDistance();
-       
-        if(dist1 > dist2)
-            return 1;
-        else if(dist1 < dist2)
-            return -1;
-        else
-            return 0;    
-    }
+class DistanceComparator implements Comparator<ParkingLocationDataEntry> {
 
-  
+   @Override
+   public int compare(ParkingLocationDataEntry obj1, ParkingLocationDataEntry obj2) {
+
+      /*
+       * parameter are of type Object, so we have to downcast it
+       * to Employee objects
+       */
+
+      double dist1 = obj1.getDistance();
+      double dist2 = obj2.getDistance();
+
+      if (dist1 > dist2)
+         return 1;
+      else if (dist1 < dist2)
+         return -1;
+      else
+         return 0;
+   }
+
 }
-
-

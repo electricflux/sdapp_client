@@ -105,12 +105,6 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
 
-        <!-- In App Billing Test -->
-        <activity
-            android:name="com.parking.billing.ParkingPayment"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
-
          <!-- In App Billing Test -->
          <activity android:name="com.parking.billing.ParkingPayment"
                   android:theme="@android:style/Theme.NoTitleBar">

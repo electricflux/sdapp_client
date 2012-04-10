@@ -48,20 +48,11 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
 
    @Override
    protected boolean onTap(int index) {
-
-      
       OverlayItem item = overlays[index];
-//      AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-//      dialog.setTitle(item.getTitle());
-//      dialog.setMessage(item.getSnippet());
-//      dialog.show();
-
       Intent pspotInfo = new Intent(DashboardActivity.myContext, ParkingPayment.class); //ParkingSpotAndPaymentInformation.class);
       pspotInfo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       pspotInfo.putExtra("info", item.getSnippet());
-      
       DashboardActivity.myContext.startActivity(pspotInfo);
-      
       return true;
    }
 

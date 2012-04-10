@@ -28,8 +28,12 @@ public class ParkingLocationDataEntry {
 
    // Persistent
    private int duration;
+   
+   private long startTimestampMs;
+   
+   private long endTimestampMs;
 
-   // Persistent
+// Persistent
    private int type;
 
    // Persistent
@@ -47,51 +51,22 @@ public class ParkingLocationDataEntry {
    //Geopoint to simplify display
    private GeoPoint gpoint;
    
-   
-   
-//   public void setid(Long i) {
-//      id = i;
-//   }
-//
-//   public void setlatitude(float lat) {
-//      latitude = lat;
-//   }
-//
-//   public void setlongitude(float lon) {
-//      longitude = lon;
-//   }
-//
-//   public Long getid() {
-//      return id;
-//   }
-//
-//   public float getlatitude() {
-//      return latitude;
-//   }
-//
-//   public float getlongitude() {
-//      return longitude;
-//   }
-//
-//   public void setGeoPoint(GeoPoint geoPoint) {
-//      gpoint = geoPoint;
-//      
-//   }
-//
-//   public GeoPoint getGeoPoint() {
-//      return gpoint;
-//   }
-//
-//   public void setMeterId(Long meterId) {
-//      this.meterID = meterId; 
-//      
-//   }
-//
-//   public Long getMeterId() {
-//      return meterID;
-//   }
-//   
-   
+   public long getStartTimestampMs() {
+		return startTimestampMs;
+	}
+
+	public void setStartTimestampMs(long startTimestampMs) {
+		this.startTimestampMs = startTimestampMs;
+	}
+
+	public long getEndTimestampMs() {
+		return endTimestampMs;
+	}
+
+	public void setEndTimestampMs(long endTimestampMs) {
+		this.endTimestampMs = endTimestampMs;
+	}
+
 
    public Long getId() {
       return id;
@@ -196,7 +171,4 @@ public class ParkingLocationDataEntry {
    public void setGeoPoint(GeoPoint gpoint) {
       this.gpoint = gpoint;
    }
-   
-   
-
 }

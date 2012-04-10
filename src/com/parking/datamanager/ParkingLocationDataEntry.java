@@ -24,7 +24,7 @@ public class ParkingLocationDataEntry {
    private ParkingType parkingType;
 
    // Persistent
-   private int rate;
+   private float rate;
 
    // Persistent
    private int duration;
@@ -35,7 +35,7 @@ public class ParkingLocationDataEntry {
    private long endTimestampMs;
 
    // Persistent
-   private int type;
+   private String type;
 
    // Persistent
    private int quantity;
@@ -154,12 +154,12 @@ public class ParkingLocationDataEntry {
       this.parkingType = parkingType;
    }
 
-   public int getRate() {
+   public float getRate() {
       return rate;
    }
 
-   public void setRate(int rate) {
-      this.rate = rate;
+   public void setRate(float dbRate) {
+      this.rate = dbRate;
    }
 
    public int getDuration() {
@@ -170,12 +170,15 @@ public class ParkingLocationDataEntry {
       this.duration = duration;
    }
 
-   public int getType() {
+   public String getType() {
       return type;
    }
 
-   public void setType(int type) {
-      this.type = type;
+   public void setType(String dbType) {
+	  
+		  this.type = dbType;
+	  
+	  
    }
 
    public int getQuantity() {
@@ -219,7 +222,7 @@ public class ParkingLocationDataEntry {
    }
    
    public void setDistance(double distance){
-		distance = distance;
+		this.distance = distance;
 	}
 	public double getDistance (){
 		return distance;

@@ -50,8 +50,8 @@ public class LocationUtility {
       //TODO!
       //parkingObj.setParkingType(parkingSpotValues[6]);
       parkingObj.setQuantity(parkingSpotValues[7] == "null" ? 0 : Integer.parseInt(parkingSpotValues[7]));
-      parkingObj.setRate(parkingSpotValues[8] == "null" ? 0 : Integer.parseInt(parkingSpotValues[8]));
-      parkingObj.setType(parkingSpotValues[9] == "null" ? 0 : Integer.parseInt(parkingSpotValues[9]));
+      parkingObj.setRate(parkingSpotValues[8] == "null" ? 0 : Float.parseFloat(parkingSpotValues[8]));
+      parkingObj.setType(parkingSpotValues[9] == "null" ? "Unknown" : parkingSpotValues[9]);
       parkingObj.setLatitude(parkingSpotValues[10] == "null" ? 0 : Float.parseFloat(parkingSpotValues[10])); 
       parkingObj.setLongitude(parkingSpotValues[11] == "null" ? 0 : Float.parseFloat(parkingSpotValues[11]));
       

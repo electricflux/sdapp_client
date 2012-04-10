@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.R.string;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -290,10 +291,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                                     .getColumnIndexOrThrow("Lat"));
                             float dbLon = cursor.getFloat(cursor
                                     .getColumnIndexOrThrow("Lon"));
+                            float dbRate = cursor.getFloat(cursor
+                                    .getColumnIndexOrThrow("Rate"));
+                            String dbType = cursor.getString(cursor
+                                    .getColumnIndexOrThrow("Type"));
+                            int dbQuantity = cursor.getInt(cursor
+                                    .getColumnIndexOrThrow("Quantity"));
+                            
                             //Log.v(TAG, "dbquery :: " + Id + " Lat:: " + dbLat+ " Lon:: " + dbLon);
 
                             dist = distance((double)dbLat, (double)dbLon,mlat,mlon);
-                            Log.v(TAG, "dbquery :: " + Id + " Dist1:: " + dist+ " Distance:: " + distance);
+                            //Log.v(TAG, "dbquery :: " + Id + " Dist1:: " + dist+ " Distance:: " + distance);
                             if (dist <= distance)
                             {
         
@@ -309,7 +317,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         				        tempLocationObj.setLongitude(dbLon);
         				        tempLocationObj.setGeoPoint(point);
         				        tempLocationObj.setDistance(dist);
-                                Log.v(TAG, "dbquery :: " + Id + " Lat:: " + dbLat+ " Lon:: " + dbLon);
+        				        tempLocationObj.setRate(dbRate);
+        				        tempLocationObj.setType(dbType);
+        				        tempLocationObj.setQuantity(dbQuantity);
+                                //Log.v(TAG, "dbquery :: " + Id + " Lat:: " + dbLat+ " Lon:: " + dbLon+ " Dist:: " + dist);
                                 tempParkingSet.add(tempLocationObj);
                                 iParkingObjs++;
                             }
@@ -321,6 +332,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         
         //Collections.sort(tempParkingSet, COMPARATOR);
         ParkingLocationDataEntry[] arrayOfLocation = tempParkingSet.toArray(new ParkingLocationDataEntry[]{});
+       
         Arrays.sort(arrayOfLocation, new DistanceComparator());
         int count=0;
         for (int i = 0; i < arrayOfLocation.length; i++)

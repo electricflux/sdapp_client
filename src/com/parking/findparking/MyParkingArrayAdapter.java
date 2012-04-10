@@ -63,7 +63,7 @@ public class MyParkingArrayAdapter extends ArrayAdapter<ParkingLocationDataEntry
       address = LocationUtility.ConvertPointToLocation(parkingSingle.getGeoPoint(), geoCoder);
       
       addressText.setText(address);
-      infoText.setText(Integer.toString(parkingSingle.getRate()));
+      infoText.setText(Float.toString(parkingSingle.getRate()));
       
       return parkingSpotView;
       

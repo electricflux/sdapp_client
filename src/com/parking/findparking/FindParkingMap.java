@@ -46,7 +46,6 @@ public class FindParkingMap extends MapActivity{
 	private static Vector<ParkingSpots> parkingSpotsVector = new Vector<ParkingSpots>();
 	private Vector<GeoPoint> geoPointsVector = new Vector<GeoPoint>();
 	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
-	private List<ParkingLocationDataEntry> parkingLocations = new ArrayList<ParkingLocationDataEntry>();
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -63,9 +62,6 @@ public class FindParkingMap extends MapActivity{
 		setUpMapView();
 		setUpMapController();
 
-		updateCurrentUserLocation();
-		overlayParkingSpots();
-
 	}
 
 	private void overlayParkingSpots() {
@@ -80,10 +76,10 @@ public class FindParkingMap extends MapActivity{
 		//myDbHelper.dbquery(gp, parkingLocations);
 		
 		
-		parkingLocations = mParkingLocationsAll.getParkingLocations(2, 2, (float)32.71283, (float)-117.165695, myDbHelper);
+		FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
 
 		
-		Log.v(TAG, "NULLLLL" + parkingLocations.size());
+		Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
 		
 		
 		overlayTappableParkingSpots();
@@ -103,7 +99,7 @@ public class FindParkingMap extends MapActivity{
 		itemizedOverlays = new MapOverLays(drawable, this);
 
 		Log.v(TAG, "here ..4");
-		for (ParkingLocationDataEntry parkingSpot : parkingLocations) {
+		for (ParkingLocationDataEntry parkingSpot : FindParkingTabs.parkingLocations) {
 
 			
 			pSpotGeoPoint = parkingSpot.getGeoPoint();
@@ -201,16 +197,16 @@ public class FindParkingMap extends MapActivity{
 	public void onResume() {
 		super.onResume();
 		// parkingSpotsCursor.requery();
-		Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_SHORT)
-				.show();
+		updateCurrentUserLocation();
+		overlayParkingSpots();
+		
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
 		// parkingSpotsCursor.deactivate();
-		Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_SHORT)
-				.show();
+		
 	}
 
 	private static void createMarker() {

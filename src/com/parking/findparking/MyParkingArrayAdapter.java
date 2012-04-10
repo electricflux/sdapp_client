@@ -25,13 +25,13 @@ import com.parking.utils.ParkingConstants;
 public class MyParkingArrayAdapter extends ArrayAdapter<ParkingLocationDataEntry>{
    
    private int resource;
-   private ArrayList<ParkingLocationDataEntry> parkingData = new ArrayList<ParkingLocationDataEntry>(); 
+   private List<ParkingLocationDataEntry> parkingData = new ArrayList<ParkingLocationDataEntry>(); 
    private ParkingLocationDataEntry parkingSingle = new ParkingLocationDataEntry(); 
    
    public MyParkingArrayAdapter(Context context, int textViewResourceId, List<ParkingLocationDataEntry> objects) {
       super(context, textViewResourceId, objects);
       resource = textViewResourceId;
-      this.parkingData = (ArrayList<ParkingLocationDataEntry>) objects;
+      this.parkingData = (List<ParkingLocationDataEntry>) objects;
       
       
    }

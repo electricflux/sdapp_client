@@ -18,8 +18,8 @@ import com.parking.dashboard.R;
 import com.parking.dbManager.DataBaseHelper;
 import com.parking.findparking.FindParkingTabs;
 import com.parking.locatemycar.LocateMyCar;
-import com.parking.payforspot.PayForSpot;
 import com.parking.paymenthistory.PaymentHistory;
+import com.parking.towingcontacts.TowingContacts;
 import com.parking.rulesandregulations.RulesandRegulations;
 
 public class DashboardActivity extends Activity{
@@ -92,9 +92,6 @@ public class DashboardActivity extends Activity{
 				i = new Intent(DashboardActivity.this, FindParkingTabs.class);
 				//	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
 				//	mParkingLocationsAll.getParkingLocations(10, myDbHelper);
-				break;
-			case R.id.dashboard_button_viewall:
-				i = new Intent(DashboardActivity.this, PayForSpot.class);
 				break;
 
 			case R.id.dashboard_button_personalbests:

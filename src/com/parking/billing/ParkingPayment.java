@@ -192,7 +192,7 @@ OnItemSelectedListener {
 			nameValuePairs.add(new BasicNameValuePair("parkingSpotId",
 					parkingLocationObj.getId()+""));
 			nameValuePairs.add(new BasicNameValuePair("licensePlateNumber", 
-					""));
+					"Add license plate number here"));
 			new UpdateServerAsyncTask(
 					ParkingPurchaseObserver.this,ParkingPayment.this).
 					execute(nameValuePairs);

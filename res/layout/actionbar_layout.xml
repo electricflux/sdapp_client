@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ActionBar" >
- 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   style="@style/ActionBar" >
+    
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
@@ -9,5 +9,17 @@
         android:paddingLeft="15dip"
         android:scaleType="center"
         android:src="@drawable/facebook_logo" />
- 
-</LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:paddingLeft="15dip"
+        android:paddingRight="15dip"
+        android:scaleType="center"
+        android:src="@drawable/home"
+        android:layout_alignParentRight="true"
+        android:background="#f00" 
+        android:onClick="openHomePage"/>
+         
+</RelativeLayout>

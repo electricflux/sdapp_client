@@ -1,8 +1,5 @@
 package com.parking.auth;
 
-import com.parking.application.ParkingApplication;
-import com.parking.dashboard.R;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.ListActivity;
@@ -14,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class GetAccountListActivity extends ListActivity {
+import com.parking.application.ParkingApplication;
+import com.parking.dashboard.R;
+
+public class GetAccountListActivity extends ListActivity{
 	protected AccountManager accountManager;
 	protected Intent intent;
 	
@@ -43,4 +43,6 @@ public class GetAccountListActivity extends ListActivity {
 		startActivity(intent);
 		finish();
 	}
+
+
 }

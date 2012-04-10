@@ -20,8 +20,9 @@ import com.parking.findparking.FindParkingTabs;
 import com.parking.locatemycar.LocateMyCar;
 import com.parking.payforspot.PayForSpot;
 import com.parking.paymenthistory.PaymentHistory;
-import com.parking.towingcontacts.TowingContacts;
 import com.parking.rulesandregulations.RulesandRegulations;
+import com.parking.towingcontacts.TowingContacts;
+import com.parking.utils.Utility;
 
 public class DashboardActivity extends Activity{
 	private static final String TAG = DashboardActivity.class.getSimpleName();
@@ -133,4 +134,5 @@ public class DashboardActivity extends Activity{
 			Authenticator.authenticate(this.getBaseContext());
 		}
 	}
+
 }

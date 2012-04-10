@@ -6,7 +6,6 @@ import java.util.Locale;
 import java.util.Vector;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.location.Geocoder;
 import android.location.Location;
@@ -31,7 +30,7 @@ import com.parking.location.ParkingSpots;
 import com.parking.utils.LocationUtility;
 import com.parking.utils.ParkingConstants;
 
-public class FindParkingMap extends MapActivity {
+public class FindParkingMap extends MapActivity{
 
    private static final String TAG = "FindParkingMap";
    private static MapView mapView;
@@ -238,5 +237,6 @@ public class FindParkingMap extends MapActivity {
       mapController.animateTo(point); // mapController.setCenter(point);
 
    }
+
 
 }

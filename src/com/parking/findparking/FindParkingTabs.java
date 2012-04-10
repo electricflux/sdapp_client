@@ -17,7 +17,7 @@ import android.widget.TabHost;
 
 import com.parking.dashboard.R;
 
-public class FindParkingTabs extends TabActivity {
+public class FindParkingTabs extends TabActivity{
 
    public void onCreate(Bundle savedInstanceState) {
 
@@ -47,4 +47,5 @@ public class FindParkingTabs extends TabActivity {
 
       tabHost.setCurrentTab(0);
    }
+
 }

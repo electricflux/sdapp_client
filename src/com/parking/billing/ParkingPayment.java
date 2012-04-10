@@ -55,8 +55,6 @@ import android.widget.Toast;
 
 import com.parking.application.ParkingApplication;
 import com.parking.auth.AsyncTaskResultNotifierInterface;
-import com.parking.auth.RegisterUserActivity;
-import com.parking.auth.RegisterUserAsyncTask;
 import com.parking.billing.BillingConstants.PurchaseState;
 import com.parking.billing.BillingConstants.ResponseCode;
 import com.parking.billing.BillingService.RequestPurchase;
@@ -65,12 +63,13 @@ import com.parking.dashboard.R;
 import com.parking.dashboard.activity.DashboardActivity;
 import com.parking.datamanager.ParkingLocationDataEntry;
 import com.parking.utils.LocationUtility;
+import com.parking.utils.Utility;
 
 /**
  * A sample application that demonstrates in-app billing.
  */
 public class ParkingPayment extends Activity implements OnClickListener,
-        OnItemSelectedListener {
+        OnItemSelectedListener{
     private static final String TAG = "Dungeons";
 
     /**
@@ -659,4 +658,5 @@ public class ParkingPayment extends Activity implements OnClickListener,
             return view;
         }
     }
+
 }

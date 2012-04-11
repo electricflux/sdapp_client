@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Geocoder;
 import android.location.Location;
@@ -48,6 +49,9 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 	private static float minDistance = 1000;
 	private static LocationManager locationManager = null;
 	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
+	
+	private static boolean locationFixedToDowntown = false;
+	private static boolean staticDowntownMapPopulated = false;
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -57,13 +61,33 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 
 		myContext = getBaseContext();
 
+		/** 
+		 * Extract from intent whether this activity was launched 
+		 * only for viewing downtown spots.
+		 */
+		Intent intent = getIntent();
+		if ((intent != null) && 
+				(intent.hasExtra(
+						ParkingConstants.ParkingMapIntentParameters.LOCATION_FIXED_TO_DOWNTOWN)))
+			locationFixedToDowntown = intent.getBooleanExtra(
+					ParkingConstants.ParkingMapIntentParameters.LOCATION_FIXED_TO_DOWNTOWN,
+					false);
+
 		pLocationManger = new ParkingLocationManager(getApplicationContext());
-		
+
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,
-				minDistance, this);
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime,
-				minDistance, this);
+
+		/** 
+		 * Don't register for location updates if you are just displaying 
+		 * downtown data.
+		 */
+		if (locationFixedToDowntown)
+		{
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,
+					minDistance, this);
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime,
+					minDistance, this);
+		}
 
 		setUpLocationManager();
 		setUpMapView();
@@ -74,18 +98,20 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 	private void overlayParkingSpots() {
 
 		FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
-		
-		Log.v(TAG,"Size is " + FindParkingTabs.parkingLocations.size());
-		
-		//Async activity to get the parking stops from db
 
-		List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
-		ParkingLocationDataEntry nLoc = new ParkingLocationDataEntry();
-		//mGetLocationList = new GetLocationList();
-		nLoc.setLatitude((float)32.71283);
-		nLoc.setLongitude((float) -117.165695);
-		nLocList.add(nLoc);
-		//mGetLocationList.execute(nLocList);
+		Log.v(TAG,"Size is " + FindParkingTabs.parkingLocations.size());
+
+		if (locationFixedToDowntown && (false == staticDowntownMapPopulated))
+		{
+			List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
+			ParkingLocationDataEntry nLoc = new ParkingLocationDataEntry();
+			nLoc.setLatitude((float) ParkingConstants.DOWNTOWN_FIXED_LATITUDE);
+			nLoc.setLongitude((float) ParkingConstants.DOWNTOWN_FIXED_LONGITUDE);
+			nLocList.add(nLoc);
+			mGetLocationList = new GetLocationList(getBaseContext(), mapView, this);
+			mGetLocationList.execute(nLocList);
+			staticDowntownMapPopulated = true;
+		}
 	}
 
 	private void updateCurrentUserLocation() {
@@ -147,28 +173,28 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		// parkingSpotsCursor.close();
-		locationManager.removeUpdates(this);
-
+		if (locationFixedToDowntown)
+		{
+			locationManager.removeUpdates(this);
+		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		// parkingSpotsCursor.requery();
 		updateCurrentUserLocation();
-		
+
 		/** Open database connection here */
 		myDbHelper = new DataBaseHelper(myContext);
 		myDbHelper.openDataBase();
-		
+
 		overlayParkingSpots();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		
+
 		/** close database connection here */
 		myDbHelper.close();
 		myDbHelper = null;
@@ -210,7 +236,7 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 	private static void showNearbyParkingSpots(Location currentNewLocation) {
 
 		parkingSpotsVector = DBInterface
-		.getNearByParkingSpots(currentNewLocation);
+				.getNearByParkingSpots(currentNewLocation);
 
 	}
 
@@ -242,9 +268,6 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 
 		if (mGetLocationList  == null){
 			mGetLocationList = new GetLocationList(getBaseContext(), mapView, this);
-			Log.v(TAG, "Created mGetLocationList ");
-
-			Log.v(TAG, "Did not start Aynctask "+mGetLocationList.getStatus()   );
 			mGetLocationList.execute(nLocList);
 		}
 	}

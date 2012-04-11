@@ -14,4 +14,13 @@ public class ParkingConstants {
 	   public static final String endTimestampMs = "endTimestampMs";
 	   public static final String parkingSpotId ="parkingSpotId";
    }
+   
+   public static final class ParkingMapIntentParameters {
+	   public static final String LOCATION_FIXED_TO_DOWNTOWN = 
+			   "locationFixedToDowntown";
+   }
+   
+   public static final float DOWNTOWN_FIXED_LATITUDE = 32.71283f;
+   public static final float DOWNTOWN_FIXED_LONGITUDE = -117.165695f;
+
 }

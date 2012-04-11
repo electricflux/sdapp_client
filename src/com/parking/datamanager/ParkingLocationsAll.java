@@ -52,7 +52,6 @@ public class ParkingLocationsAll {
 
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
-
 		}
 		int i = 0;
 		ParkingLocationDataEntry mParkingLocationDataEntry = new ParkingLocationDataEntry();
@@ -68,7 +67,6 @@ public class ParkingLocationsAll {
 				Long Id = mParkingLocationDataEntry.getId();
 				float Lat = mParkingLocationDataEntry.getLatitude();
 				float Lon = mParkingLocationDataEntry.getLongitude();
-
 			}
 		}
 		return parkingLocations;

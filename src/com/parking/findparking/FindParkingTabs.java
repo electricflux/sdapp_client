@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.parking.dashboard.R;
 import com.parking.dashboard.activity.DashboardActivity;
 import com.parking.datamanager.ParkingLocationDataEntry;
+import com.parking.findparking.FindParkingMapActivity;
 
 
 public class FindParkingTabs extends TabActivity {

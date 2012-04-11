@@ -51,7 +51,6 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
 		return overlays.get(i);
 
 	}
-
 	@Override
 	protected boolean onTap(int index) {
 		OverlayItem item = overlays.get(index);

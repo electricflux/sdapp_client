@@ -97,7 +97,7 @@ public class DashboardActivity extends Activity{
 				break;
 			case R.id.dashboard_button_parkandremind:
 				Toast.makeText(
-						DashboardActivity.this, "Functionality coming soon" , Toast.LENGTH_SHORT);
+						DashboardActivity.this, "Functionality coming soon" , Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.dashboard_button_towingcontact:
 				i = new Intent(DashboardActivity.this, TowingContacts.class);

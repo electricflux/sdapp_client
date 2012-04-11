@@ -49,7 +49,7 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 	private static float minDistance = 1000;
 	private static LocationManager locationManager = null;
 	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
-	
+
 	private boolean locationFixedToDowntown = false;
 	private boolean staticDowntownMapPopulated = false;
 
@@ -96,25 +96,21 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 	}
 
 	private void overlayParkingSpots() {
-		if (locationFixedToDowntown && (false == staticDowntownMapPopulated))
-		{
-			List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
-			ParkingLocationDataEntry nLoc = new ParkingLocationDataEntry();
-			nLoc.setLatitude((float) ParkingConstants.DOWNTOWN_FIXED_LATITUDE);
-			nLoc.setLongitude((float) ParkingConstants.DOWNTOWN_FIXED_LONGITUDE);
-			nLocList.add(nLoc);
-			
-			/** Center map to downtown */
-			GeoPoint gp = 
-					new GeoPoint((int)(nLoc.getLatitude()*1E6) ,
-							(int)(nLoc.getLongitude()*1E6));
-			mapView.getController().setCenter(gp); 
-			mapView.getController().animateTo(gp);
-			
-			mGetLocationList = new GetLocationList(getBaseContext(), mapView, this);
-			mGetLocationList.execute(nLocList);
-			staticDowntownMapPopulated = true;
-		}
+		List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
+		ParkingLocationDataEntry nLoc = new ParkingLocationDataEntry();
+		nLoc.setLatitude((float) ParkingConstants.DOWNTOWN_FIXED_LATITUDE);
+		nLoc.setLongitude((float) ParkingConstants.DOWNTOWN_FIXED_LONGITUDE);
+		nLocList.add(nLoc);
+
+		/** Center map to downtown */
+		GeoPoint gp = 
+				new GeoPoint((int)(nLoc.getLatitude()*1E6) ,
+						(int)(nLoc.getLongitude()*1E6));
+		mapView.getController().setCenter(gp); 
+		mapView.getController().animateTo(gp);
+
+		mGetLocationList = new GetLocationList(getBaseContext(), mapView, this);
+		mGetLocationList.execute(nLocList);
 	}
 
 	private void updateCurrentUserLocation() {
@@ -185,12 +181,17 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateCurrentUserLocation();
 
 		/** Open database connection here */
 		myDbHelper = new DataBaseHelper(myContext);
 
-		overlayParkingSpots();
+		if (false == locationFixedToDowntown)
+			updateCurrentUserLocation();
+		else if (locationFixedToDowntown && (false == staticDowntownMapPopulated))
+		{
+			overlayParkingSpots();
+			staticDowntownMapPopulated = true;
+		}
 	}
 
 	@Override

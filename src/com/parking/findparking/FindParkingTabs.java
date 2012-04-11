@@ -7,9 +7,12 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.parking.dashboard.R;
+import com.parking.dashboard.activity.DashboardActivity;
 import com.parking.datamanager.ParkingLocationDataEntry;
 
 
@@ -44,6 +47,12 @@ public class FindParkingTabs extends TabActivity {
       tabHost.addTab(spec);
 
       tabHost.setCurrentTab(0);
+   }
+   
+   public void mapRefresh(View v){
+      
+      Toast.makeText(DashboardActivity.myContext, "Refreshing Map...", Toast.LENGTH_LONG).show();
+      
    }
 
 }

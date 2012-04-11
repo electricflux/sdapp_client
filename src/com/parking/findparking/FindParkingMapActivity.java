@@ -27,21 +27,14 @@ import com.parking.auth.AsyncTaskResultNotifierInterface;
 import com.parking.dashboard.R;
 import com.parking.datamanager.DBInterface;
 import com.parking.datamanager.ParkingLocationDataEntry;
-<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
-=======
 import com.parking.datamanager.ParkingLocationsAll;
 import com.parking.dbManager.DataBaseHelper;
->>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java
 import com.parking.location.ParkingLocationManager;
 import com.parking.location.ParkingSpots;
 import com.parking.utils.LocationUtility;
 import com.parking.utils.ParkingConstants;
 
-<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
-public class FindParkingMap extends MapActivity implements LocationListener, AsyncTaskResultNotifierInterface {
-=======
-public class FindParkingMapActivity extends MapActivity {
->>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java
+public class FindParkingMapActivity extends MapActivity implements LocationListener, AsyncTaskResultNotifierInterface {
 
 	private static final String TAG = "FindParkingMap";
 	private static MapView mapView;
@@ -57,6 +50,8 @@ public class FindParkingMapActivity extends MapActivity {
 	private GetLocationList mGetLocationList = null;
 	private static long minTime = 1000;
 	private static float minDistance = 1000;
+	private static LocationManager locationManager = null;
+	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -87,7 +82,7 @@ public class FindParkingMapActivity extends MapActivity {
 		
 		Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
 		
-		overlayTappableParkingSpots();
+		//overlayTappableParkingSpots();
 
 		//Async activity to get the parking stops from db
 
@@ -97,13 +92,13 @@ public class FindParkingMapActivity extends MapActivity {
 		nLoc.setLatitude((float)32.71283);
 		nLoc.setLongitude((float) -117.165695);
 		nLocList.add(nLoc);
-<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
-		//mGetLocationList.execute(nLocList);
-
-=======
-		GetLocationList mGetLocationList = new GetLocationList();
-		mGetLocationList.execute(nLocList);
->>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java
+//<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
+//		//mGetLocationList.execute(nLocList);
+//
+//=======
+//		GetLocationList mGetLocationList = new GetLocationList();
+//		mGetLocationList.execute(nLocList);
+//>>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java
 	}
 
 	private void updateCurrentUserLocation() {
@@ -304,7 +299,7 @@ public class FindParkingMapActivity extends MapActivity {
 		// TODO Auto-generated method stub
 
 	}
-<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
+//<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
 
 	@Override
 	public void notifyResult(boolean result) {
@@ -312,6 +307,6 @@ public class FindParkingMapActivity extends MapActivity {
 	}
 
 }
-=======
-}
->>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java
+//=======
+//}
+//>>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java

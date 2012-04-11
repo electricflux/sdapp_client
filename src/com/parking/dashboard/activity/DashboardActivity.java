@@ -6,22 +6,21 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-import android.net.Uri;
+
 import com.parking.application.ParkingApplication;
 import com.parking.auth.Authenticator;
 import com.parking.dashboard.R;
 import com.parking.dbManager.DataBaseHelper;
-import com.parking.findparking.FindParkingTabs;
-import com.parking.locatemycar.LocateMyCar;
+import com.parking.findparking.LocationSelectorActivity;
 import com.parking.paymenthistory.PaymentHistory;
 import com.parking.rulesandregulations.RulesandRegulations;
 import com.parking.towingcontacts.TowingContacts;
-import com.parking.utils.Utility;
 
 public class DashboardActivity extends Activity{
 	private static final String TAG = DashboardActivity.class.getSimpleName();
@@ -90,9 +89,8 @@ public class DashboardActivity extends Activity{
 			Intent i = null;
 			switch (v.getId()) {
 			case R.id.dashboard_button_find_parking:
-				i = new Intent(DashboardActivity.this, FindParkingTabs.class);
-				//	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
-				//	mParkingLocationsAll.getParkingLocations(10, myDbHelper);
+			   i = new Intent(DashboardActivity.this, LocationSelectorActivity.class);
+				//i = new Intent(DashboardActivity.this, FindParkingTabs.class);
 				break;
 
 			case R.id.dashboard_button_personalbests:

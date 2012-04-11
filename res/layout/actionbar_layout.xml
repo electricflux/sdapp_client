@@ -17,7 +17,6 @@
         android:paddingLeft="15dip"
         android:paddingRight="15dip"
         android:scaleType="center"
-        android:layout_alignParentRight="true"
-        android:background="#f00"/>
+        android:layout_alignParentRight="true"/>
          
 </RelativeLayout>

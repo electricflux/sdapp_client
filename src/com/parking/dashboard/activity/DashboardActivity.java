@@ -16,11 +16,11 @@ import com.parking.application.ParkingApplication;
 import com.parking.auth.Authenticator;
 import com.parking.dashboard.R;
 import com.parking.dbManager.DataBaseHelper;
-import com.parking.findparking.FindParkingTabs;
 import com.parking.paymenthistory.PaymentHistory;
 import com.parking.rulesandregulations.RulesandRegulations;
 import com.parking.towingcontacts.TowingContacts;
 import com.parking.utils.AppPreferences;
+import com.parking.findparking.LocationSelectorActivity;
 
 public class DashboardActivity extends Activity{
 	private static final String TAG = DashboardActivity.class.getSimpleName();
@@ -81,7 +81,7 @@ public class DashboardActivity extends Activity{
 			Intent i = null;
 			switch (v.getId()) {
 			case R.id.dashboard_button_find_parking:
-				i = new Intent(DashboardActivity.this, FindParkingTabs.class);
+			   i = new Intent(DashboardActivity.this, LocationSelectorActivity.class);
 				break;
 
 			case R.id.dashboard_button_personalbests:

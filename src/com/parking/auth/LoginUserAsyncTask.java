@@ -11,16 +11,16 @@ import org.apache.http.client.params.ClientPNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parking.application.ParkingApplication;
 import com.parking.utils.AppPreferences;
 import com.parking.utils.ParkingConstants;
 import com.sdapp.domain.json.LicensePlateJsonObject;
-
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 
 public class LoginUserAsyncTask extends AsyncTask<String, Void, Boolean> {
 

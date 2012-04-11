@@ -83,6 +83,11 @@
             android:name="com.parking.rulesandregulations.RulesandRegulations"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+        <activity
+            android:name="com.parking.findparking.LocationSelectorActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+   
 
         <!-- In App Billing Test -->
         <activity

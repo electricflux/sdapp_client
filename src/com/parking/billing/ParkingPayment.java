@@ -17,6 +17,7 @@
 package com.parking.billing;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -61,6 +62,7 @@ import com.parking.dashboard.activity.DashboardActivity;
 import com.parking.datamanager.ParkingLocationDataEntry;
 import com.parking.utils.AppPreferences;
 import com.parking.utils.LocationUtility;
+import com.parking.utils.ParkingConstants;
 
 public class ParkingPayment extends Activity implements OnClickListener,
 OnItemSelectedListener {
@@ -81,7 +83,7 @@ OnItemSelectedListener {
 	private CatalogAdapter mCatalogAdapter;
 
 	//Parking data that comes in from the previous activity
-	public static ParkingLocationDataEntry parkingLocationObj = null;
+	public static ParkingLocationDataEntry parkingLocationObj = new ParkingLocationDataEntry();
 	public int nLeastCountTime = 15;
 
 	private ParkingPurchaseObserver mParkingPurchaseObserver;

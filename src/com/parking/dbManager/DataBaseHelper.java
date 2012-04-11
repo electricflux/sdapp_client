@@ -7,11 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.R.string;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -297,7 +295,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                             {
         
                                                               
-                                int ilat = (int) (dbLat * 1E6);
+                        int ilat = (int) (dbLat * 1E6);
         						int ilng = (int) (dbLon * 1E6);
         						GeoPoint point = new GeoPoint(ilat, ilng);
         						
@@ -329,11 +327,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int count=0;
         for (int i = 0; i < arrayOfLocation.length; i++)
         {
-<<<<<<< HEAD
-=======
-        	//Log.v(TAG, "here 1" + arrayOfLocation[i].getDistance() );
-        	
->>>>>>> 53f712fe2d87bab20361cae3717f50c394627b95
 			if (count >= limit )
         		break;
         	parkingLocations.add(arrayOfLocation[i]);

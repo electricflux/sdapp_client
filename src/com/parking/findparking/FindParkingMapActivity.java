@@ -4,8 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
-
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Geocoder;

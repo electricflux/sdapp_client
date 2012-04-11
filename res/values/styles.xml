@@ -13,5 +13,44 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:background">#dedede</item>
     </style>
+    
+      <!-- Styles -->
+   <style name="Dialog">
+      <item name="android:background">#222</item>
+   </style>
+   
+   <style name="Dialog.WithStandardPadding">
+      <item name="android:paddingLeft">15dp</item>
+      <item name="android:paddingTop">15dp</item>
+      <item name="android:paddingRight">15dp</item>
+      <item name="android:paddingBottom">15dp</item>
+   </style>
+   
+   <style name="Text">
+   </style>
+   
+   <style name="Text.DialogText">
+      <item name="android:textColor">@android:color/white</item>
+      <item name="android:textStyle">bold</item>
+      <item name="android:typeface">sans</item>
+      <item name="android:gravity">center</item>
+   </style>
+
+   <style name="Text.DialogText.Title">
+      <item name="android:textSize">20sp</item>
+   </style>
+
+   <style name="Text.DialogText.Main">
+      <item name="android:textSize">14sp</item>
+   </style>
+
+   <style name="Button">
+   </style>
+
+   <style name="Button.Dialog">
+      <item name="android:textColor">@android:color/black</item>
+      <item name="android:textSize">16sp</item>
+   </style>
+   
 </resources>    
 

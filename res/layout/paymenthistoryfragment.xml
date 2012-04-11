@@ -14,7 +14,7 @@
       android:id="@+id/parkedTime"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="18dip"
+      android:textSize="16dip"
       android:text="7:45pm"
       android:layout_weight="1"
       android:textColor="#000" />
@@ -22,7 +22,7 @@
       android:id="@+id/parkedDuration"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="18dip"
+      android:textSize="16dip"
       android:text="15"
       android:textColor="#000" />
       
@@ -30,7 +30,7 @@
       android:id="@+id/parkedDurationSuffix"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="18dip"
+      android:textSize="16dip"
       android:textColor="#000"
       android:text="min"
       android:layout_weight="1" />
@@ -39,14 +39,14 @@
       android:id="@+id/parkedDurationSuffix"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="18dip"
+      android:textSize="16dip"
       android:textColor="#000"
       android:text="$" />   
    <TextView
       android:id="@+id/parkedAmount"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="18dip"
+      android:textSize="16dip"
       android:text="0"
 
       android:layout_weight="1"
@@ -57,7 +57,7 @@
       android:id="@+id/parkedAddress"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="16dip"
+      android:textSize="14dip"
       android:text="Address"
       android:textColor="#000" />
       

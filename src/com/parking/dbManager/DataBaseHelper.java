@@ -210,7 +210,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                parkingLocations.add(pSpotInfo);
 
             } while (parkingSpotsCursor.moveToNext());
+            parkingSpotsCursor.close();
          }
+         
 
          Log.v(TAG, "dbquery 1 > " + parkingSpotsCursor.getColumnCount() + parkingSpotsCursor.getCount());
 
@@ -249,6 +251,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 						parkingLocations.add(tLocationObj);
 
 					} while (cursor.moveToNext());
+					cursor.close();
 				}
 			}
 		}
@@ -325,6 +328,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                             }
                             dist = 0;
                         } while (cursor.moveToNext()); 
+                        cursor.close();
                     }
                 }
         

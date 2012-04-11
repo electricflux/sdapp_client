@@ -16,7 +16,7 @@ import com.parking.dashboard.activity.DashboardActivity;
 import com.parking.datamanager.ParkingLocationDataEntry;
 import com.parking.dbManager.DataBaseHelper;
 
-public class FindParkingList extends Activity implements OnClickListener{
+public class FindParkingListActivity extends Activity implements OnClickListener{
    
    
    private MyParkingArrayAdapter aa = null;

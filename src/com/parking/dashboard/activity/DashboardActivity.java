@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-
+import android.net.Uri;
 import com.parking.application.ParkingApplication;
 import com.parking.auth.Authenticator;
 import com.parking.dashboard.R;
@@ -98,7 +98,17 @@ public class DashboardActivity extends Activity{
 			case R.id.dashboard_button_personalbests:
 				i = new Intent(DashboardActivity.this, PaymentHistory.class);
 				break;
-
+				//Added to locate my car
+			case R.id.dashboard_button_viewall:
+			//i = new Intent(DashboardActivity.this, LocateMyCar.class);
+			//TODO: Provide lat lon from SharedPreference
+			double lat = 32.71283;
+			double lon = -117.165695;
+			Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
+			Uri.parse("http://maps.google.com/maps?daddr="+lat+","+lon+""));
+			intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+			startActivity(intent);
+			break;
 			case R.id.dashboard_button_parkandremind:
 				Toast.makeText(
 						DashboardActivity.this, "Functionality coming soon" , Toast.LENGTH_SHORT);

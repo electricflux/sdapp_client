@@ -26,7 +26,7 @@
         <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Login Using Google"
+        android:text="Please select a Google account to login"
         android:background="#ffffff"
         android:textColor="#ff0000"
         android:textSize="21dp"

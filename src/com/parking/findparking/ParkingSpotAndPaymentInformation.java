@@ -96,7 +96,7 @@ public class ParkingSpotAndPaymentInformation extends Activity{
    protected void onCreate(Bundle savedInstanceState) {
       
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.pspot_and_payment_info);
+      setContentView(R.layout.parkingpayment);
       Intent starterIntent = getIntent();
       Bundle bundle = starterIntent.getExtras();
       String all = bundle.getString("info");

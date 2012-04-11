@@ -6,6 +6,5 @@
    
     <include layout="@layout/actionbar_layout"/>    
     <include layout="@layout/dashboard_fragment_layout"/>
-    <include layout="@layout/footer_layout"/>
     
 </LinearLayout>

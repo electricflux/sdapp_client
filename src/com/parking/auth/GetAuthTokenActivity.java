@@ -63,7 +63,6 @@ public class GetAuthTokenActivity extends Activity implements AsyncTaskResultNot
 		 * Verify if the user is registered
 		 */
 		new LoginUserAsyncTask(this,this).execute("");
-		/**new GetCookieTask().execute(auth_token);*/
 	}
 
 	@Override
@@ -88,50 +87,4 @@ public class GetAuthTokenActivity extends Activity implements AsyncTaskResultNot
         if (requestCode == RegisterActivityIdentifier)
         	finish();
     }
-
-	/**
-	 * Unused code as of now
-	 */
-/*	private class GetCookieTask extends AsyncTask<String, Void, Boolean> {
-		protected Boolean doInBackground(String... tokens) {
-			try {
-				*//** Don't follow redirects *//*
-				http_client.getParams().setBooleanParameter(ClientPNames.HANDLE_REDIRECTS, false);
-
-				HttpGet http_get = 
-						new HttpGet(
-								ParkingConstants.serverUrl + 
-								"/_ah/login?continue=http://localhost/&auth=" + 
-								tokens[0]);
-				HttpResponse response;
-				response = http_client.execute(http_get);
-				Log.v(TAG,"Respone is "+response.getStatusLine().getStatusCode());
-				
-				if(response.getStatusLine().getStatusCode() != 302)
-					return false;
-
-				for(Cookie cookie : http_client.getCookieStore().getCookies()) {
-					Log.v(TAG,"Cookie found: "+cookie.getExpiryDate().toLocaleString());
-					Log.v(TAG,"Cookie found: "+cookie.getName());
-					*//** SACSID cookie because we are using https to authenticate with appspot *//*
-					if(cookie.getName().equals("SACSID"))
-					{
-						return true;
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				http_client.getParams().setBooleanParameter(ClientPNames.HANDLE_REDIRECTS, true);
-			}
-			return false;
-		}
-
-		protected void onPostExecute(Boolean result) {
-			if (result == true)
-				Log.v(TAG,"Successfully authenticated and found cookie.");
-			else
-				Log.v(TAG,"Could not find the cookie.");
-		}
-	}*/
 }

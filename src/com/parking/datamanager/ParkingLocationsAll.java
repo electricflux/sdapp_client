@@ -63,7 +63,7 @@ public class ParkingLocationsAll {
         ParkingLocationDataEntry mParkingLocationDataEntry = new ParkingLocationDataEntry();
         if (parkingLocations != null) {
             /* Check if at least one Result was returned. */
-            while (i < limit) {
+            while (i < parkingLocations.size()) {
                 mParkingLocationDataEntry = parkingLocations.get(i);
                 i++;
                 /* Loop through all Results */

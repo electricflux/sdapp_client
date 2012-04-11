@@ -52,6 +52,10 @@ public class GetAccountListActivity extends ListActivity{
 		startActivity(intent);
 		finish();
 	}
-
-
+	
+	/** Disable back-button press on login activity */
+	@Override
+	public void onBackPressed() {
+	   return;
+	}
 }

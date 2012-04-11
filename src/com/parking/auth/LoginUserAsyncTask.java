@@ -11,8 +11,11 @@ import org.apache.http.client.params.ClientPNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parking.application.ParkingApplication;
+import com.parking.utils.AppPreferences;
 import com.parking.utils.ParkingConstants;
+import com.sdapp.domain.json.LicensePlateJsonObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -68,7 +71,16 @@ public class LoginUserAsyncTask extends AsyncTask<String, Void, Boolean> {
 			Log.v(TAG,response.getStatusLine().toString());
 
 			if(response.getStatusLine().getStatusCode() == 200)
+			{
+				/** Extract JSON user message from user response */
+				ObjectMapper objectMapper = new ObjectMapper();
+				LicensePlateJsonObject licensePlate = 
+						objectMapper.readValue(
+								response.getEntity().getContent(), LicensePlateJsonObject.class);
 				result = true;
+				AppPreferences.getInstance().setLicensePlateString(
+						licensePlate.getLicensePlateList().toUpperCase());
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

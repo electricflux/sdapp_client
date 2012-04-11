@@ -6,6 +6,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -105,7 +106,7 @@ public class DashboardActivity extends Activity{
 			double lat = 32.71283;
 			double lon = -117.165695;
 			Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
-			Uri.parse("http://maps.google.com/maps?daddr="+lat+","+lon+""));
+			Uri.parse("http://maps.google.com/maps?saddr=current+location&daddr="+lat+","+lon+""));
 			intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 			startActivity(intent);
 			break;

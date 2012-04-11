@@ -105,7 +105,7 @@ public class DashboardActivity extends Activity{
 				//i = new Intent(DashboardActivity.this, LocateMyCar.class);
 				break;
 			case R.id.dashboard_button_towingcontact:
-				i = new Intent(DashboardActivity.this, LocateMyCar.class);
+				i = new Intent(DashboardActivity.this, TowingContacts.class);
 				break;
 			case R.id.dashboard_button_parkingrules:
 				i = new Intent(DashboardActivity.this, RulesandRegulations.class);

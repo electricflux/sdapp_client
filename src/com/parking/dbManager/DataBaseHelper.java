@@ -340,7 +340,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int count=0;
         for (int i = 0; i < arrayOfLocation.length; i++)
         {
-        	Log.v(TAG, "here 1" + arrayOfLocation[i].getDistance() );
+        	//Log.v(TAG, "here 1" + arrayOfLocation[i].getDistance() );
         	
 			if (count >= limit )
         		break;

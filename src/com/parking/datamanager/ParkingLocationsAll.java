@@ -73,8 +73,8 @@ public class ParkingLocationsAll {
                 Long Id = mParkingLocationDataEntry.getId();
                 float Lat = mParkingLocationDataEntry.getLatitude();
                 float Lon = mParkingLocationDataEntry.getLongitude();
-                Log.v(TAG, i + "ParkingLocationsAll :: " + Id + " Lat:: " + Lat
-                        + " Lon:: " + Lon);
+//                Log.v(TAG, i + "ParkingLocationsAll :: " + Id + " Lat:: " + Lat
+//                        + " Lon:: " + Lon);
 
             }
         }

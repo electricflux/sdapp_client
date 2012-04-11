@@ -295,8 +295,6 @@ OnItemSelectedListener {
 
 		String addressToDisplay  = 
 				(parkingLocationObj.getParkingType() == null) ? "Not known" : ""+parkingLocationObj.getParkingType();
-
-		parkingLocationObj = LocationUtility.convertStringToObject(all);
 		textAll.setText( "Details...\n"
 				+ "MeterId: " + parkingLocationObj.getMeterID() + "\n"
 				+ "Address: " + parkingLocationObj.getAddress() + "\n"

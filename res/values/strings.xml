@@ -50,9 +50,10 @@
     <string name="android_test_item_unavailable">android.test.item unavailable</string>
     <string name="android_test_refunded">android.test.refunded</string>
     
-    <string name="locations_prompt">District And Address</string>
+    <string name="locations_prompt">Please select a location</string>
     <string-array name="locations_array">
-      <item>District, Address</item>
+      <item>Available Locations</item>
+      <item>Current Location</item>
 		<item>Downtown, 225 BROADWAY, SUITE 1100</item>
 		<item>Mid-City, 3727 EL CAJON BLVD</item>   
 		<item>Uptown, 3108 FIFTH AVE., SUITE B</item>
@@ -60,5 +61,6 @@
 		<item>Pacific Beach, 1503 Garnet Ave</item>   
 		<item>La Jolla, 1150 Silverado St. Ste 221</item>
     </string-array>
+    <string name="availableLocations">Choose San Diego Downtown or Current Location. Datasets for other districts coming soon</string>
     
 </resources>

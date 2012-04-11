@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, PainlessParkingActivity!</string>
-    <string name="app_name">PainlessParking</string>
+    <string name="hello">Hello World, This is quickpark!</string>
+    <string name="app_name">quickpark</string>
     <string name="activity_findparking">Find Parking</string>
     <string name="activity_locatemycar">Locate My Car</string>
     <string name="activity_paymenthistory">Payment History</string>

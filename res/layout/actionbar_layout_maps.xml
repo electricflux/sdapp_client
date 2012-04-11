@@ -17,7 +17,9 @@
         android:paddingLeft="15dip"
         android:paddingRight="15dip"
         android:scaleType="center"
+        android:src="@drawable/refresh"
         android:layout_alignParentRight="true"
-        android:background="#f00"/>
+        android:background="#f00"
+        android:onClick="mapRefresh"/>
          
 </RelativeLayout>

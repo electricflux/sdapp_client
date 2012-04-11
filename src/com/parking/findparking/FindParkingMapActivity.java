@@ -6,7 +6,6 @@ import java.util.Locale;
 import java.util.Vector;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.location.Geocoder;
 import android.location.Location;
@@ -25,218 +24,245 @@ import com.google.android.maps.OverlayItem;
 import com.parking.dashboard.R;
 import com.parking.datamanager.DBInterface;
 import com.parking.datamanager.ParkingLocationDataEntry;
+import com.parking.datamanager.ParkingLocationsAll;
 import com.parking.dbManager.DataBaseHelper;
 import com.parking.location.ParkingLocationManager;
 import com.parking.location.ParkingSpots;
 import com.parking.utils.LocationUtility;
 import com.parking.utils.ParkingConstants;
 
+<<<<<<< HEAD
 public class FindParkingMapActivity extends MapActivity {
+=======
+public class FindParkingMap extends MapActivity{
 
-   private static final String TAG = "FindParkingMap";
-   private static MapView mapView;
-   private static MapController mapController;
-   private static MapOverLays itemizedOverlays;
-   private static Context myContext;
+	private static final String TAG = "FindParkingMap";
+	private static MapView mapView;
+	private static MapController mapController;
+	private static MapOverLays itemizedOverlays;
+	private static Context myContext;
 
-   private LocationManager locationManager;
-   private ParkingLocationManager pLocationManger = null;
+	private LocationManager locationManager;
+	private ParkingLocationManager pLocationManger = null;
 
-   private static boolean onCreateCompleted = false;
-   private static Vector<ParkingSpots> parkingSpotsVector = new Vector<ParkingSpots>();
-   private Vector<GeoPoint> geoPointsVector = new Vector<GeoPoint>();
+	private static boolean onCreateCompleted = false;
+	private static Vector<ParkingSpots> parkingSpotsVector = new Vector<ParkingSpots>();
+	private Vector<GeoPoint> geoPointsVector = new Vector<GeoPoint>();
+	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
 
-   private List<ParkingLocationDataEntry> parkingLocations = new ArrayList<ParkingLocationDataEntry>();
+	@Override
+	public void onCreate(Bundle bundle) {
 
-   public void onCreate(Bundle bundle) {
+		super.onCreate(bundle);
+		setContentView(R.layout.findparking);
 
-      super.onCreate(bundle);
-      setContentView(R.layout.findparking);
+		myContext = getBaseContext();
 
-      myContext = getBaseContext();
+		pLocationManger = new ParkingLocationManager(getApplicationContext());
+		
+		
+		setUpLocationManager();
+		setUpMapView();
+		setUpMapController();
 
-      pLocationManger = new ParkingLocationManager(getApplicationContext());
-      setUpLocationManager();
-      setUpMapView();
-      setUpMapController();
+	}
 
-      updateCurrentUserLocation();
-      overlayParkingSpots();
+	private void overlayParkingSpots() {
+		// String parkingURI = parkingSpotsProvider.CONTENT_URI;
+		String selection = "";
 
-   }
+		// Temporary Dummy
+		GeoPoint gp = new GeoPoint(0, 0);
 
-   private void overlayParkingSpots() {
-      //String parkingURI = parkingSpotsProvider.CONTENT_URI;
-      String selection = "";
-      
-      //Temporary Dummy 
-      GeoPoint gp = new GeoPoint(0, 0);
+		DataBaseHelper myDbHelper = new DataBaseHelper(myContext);
+		myDbHelper.openDataBase();
+		//myDbHelper.dbquery(gp, parkingLocations);
+		
+		
+		FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
+>>>>>>> cad28dc1257977c696a343bd025b858939a337b4
 
-      DataBaseHelper myDbHelper = new DataBaseHelper(myContext);
-      myDbHelper.openDataBase(); 
-      myDbHelper.dbquery(gp, parkingLocations);
+		
+		Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
+		
+		
+		overlayTappableParkingSpots();
 
-      //NearbyParkingSpotsOverlay pso = new NearbyParkingSpotsOverlay(parkingLocations);
-      //mapView.getOverlays().add(pso);
+		//myDbHelper.close();
 
-      overlayTappableParkingSpots();
+	}
 
-      myDbHelper.close();
+	private void overlayTappableParkingSpots() {
 
-   }
+		String address = "No Associated Address";
+		GeoPoint pSpotGeoPoint = null;
+		OverlayItem overlayitem = null;
+		String sPpotInfo = "No Info Available";
+		Drawable drawable = this.getResources().getDrawable(
+				R.drawable.map_marker_blue);// map_marker_black);
+		itemizedOverlays = new MapOverLays(drawable, this);
 
-   private void overlayTappableParkingSpots() {
+		Log.v(TAG, "here ..4");
+		for (ParkingLocationDataEntry parkingSpot : FindParkingTabs.parkingLocations) {
 
-      String address = "No Associated Address";
-      GeoPoint pSpotGeoPoint = null;
-      OverlayItem overlayitem = null;
-      String sSppotInfo = "No Info Available";
-      
-      for (ParkingLocationDataEntry parkingSpot : parkingLocations) {
+			
+			pSpotGeoPoint = parkingSpot.getGeoPoint();
+			address = "empty";//convertPointToLocation(pSpotGeoPoint);
+			sPpotInfo = LocationUtility.convertObjToString(parkingSpot);
+			//sPpotInfo = "empty string";
+			overlayitem = new OverlayItem(pSpotGeoPoint, address, sPpotInfo);
+			itemizedOverlays.addOverlay(overlayitem);
+		}	
+			mapView.getOverlays().add(itemizedOverlays);
+	//		Toast.makeText(getBaseContext(), address, Toast.LENGTH_SHORT).show();
+	 		mapView.postInvalidate();
+			
+		
+	}
 
-         pSpotGeoPoint = parkingSpot.getGeoPoint();
-         address   = convertPointToLocation(pSpotGeoPoint);
-         
-         //Add address it to the object
-         parkingSpot.setAddress(address);
-         sSppotInfo = LocationUtility.convertObjToString(parkingSpot); 
-         
-         overlayitem = new OverlayItem(pSpotGeoPoint, address, sSppotInfo);
-         itemizedOverlays.addOverlay(overlayitem);
+//	private String convertObjToString(ParkingLocationDataEntry parkingSpot) {
+//		String pSpotInfo = Float.toString(parkingSpot.getLatitude()) + ","
+//				+ Float.toString(parkingSpot.getLongitude()) + ","
+//				+ parkingSpot.getMeterID();
+//		return pSpotInfo;
+//	}
 
-      }
+	private void updateCurrentUserLocation() {
 
-      mapView.getOverlays().add(itemizedOverlays);
-      mapView.postInvalidate();
+		List<Overlay> mapsOverLays = mapView.getOverlays();
 
-   }
+		Toast.makeText(getApplicationContext(), "Updating Location...",
+				Toast.LENGTH_LONG).show();
+		Drawable userLocationBlueMarker = this.getResources().getDrawable(
+				R.drawable.map_marker_blue);// map_marker_black);
+		// private Drawable parkingLocationMarkers =
+		// this.getResources().getDrawable(R.drawable.parking_spot_marker);
 
-   private void updateCurrentUserLocation() {
+		itemizedOverlays = new MapOverLays(userLocationBlueMarker, this);
+		// updateMapWithLastKnownLocation(pLocationManger.getLastKnownLocation());
 
-      List<Overlay> mapsOverLays = mapView.getOverlays();
+		// Gives the blue 'google' location marker
+		final MyLocationOverlay myLocOverlay = new MyLocationOverlay(this,
+				mapView);
+		mapView.getOverlays().add(myLocOverlay);
+		myLocOverlay.enableCompass();
+		myLocOverlay.enableMyLocation();
+		myLocOverlay.runOnFirstFix(new Runnable() {
+			public void run() {
+				mapView.getController().animateTo(myLocOverlay.getMyLocation());
+			}
+		});
 
-      Toast.makeText(getApplicationContext(), "Updating Location...", Toast.LENGTH_LONG).show();
-      Drawable userLocationBlueMarker = this.getResources().getDrawable(R.drawable.map_marker_blue);// map_marker_black);
-      //private Drawable parkingLocationMarkers = this.getResources().getDrawable(R.drawable.parking_spot_marker);
+	}
 
-      itemizedOverlays = new MapOverLays(userLocationBlueMarker, this);
-      //updateMapWithLastKnownLocation(pLocationManger.getLastKnownLocation());
+	private void setUpLocationManager() {
 
-      //Gives the blue 'google' location marker
-      final MyLocationOverlay myLocOverlay = new MyLocationOverlay(this, mapView);
-      mapView.getOverlays().add(myLocOverlay);
-      myLocOverlay.enableCompass();
-      myLocOverlay.enableMyLocation();
-      myLocOverlay.runOnFirstFix(new Runnable() {
-         public void run() {
-            mapView.getController().animateTo(myLocOverlay.getMyLocation());
-         }
-      });
+		pLocationManger.setUpLocationServices();
 
-   }
+	}
 
-   private void setUpLocationManager() {
+	private void setUpMapView() {
 
-      pLocationManger.setUpLocationServices();
+		mapView = (MapView) findViewById(R.id.mapview);
+		mapView.setBuiltInZoomControls(true);
+		mapView.setSatellite(false);
+		mapView.setStreetView(true);
 
-   }
+	}
 
-   private void setUpMapView() {
+	private void setUpMapController() {
+		mapController = mapView.getController();
+		mapController.setZoom(19); // Zoom 1 is world view
 
-      mapView = (MapView) findViewById(R.id.mapview);
-      mapView.setBuiltInZoomControls(true);
-      mapView.setSatellite(false);
-      mapView.setStreetView(true);
+	}
 
-   }
+	public static void updateMapWithLastKnownLocation(Location location) {
 
-   private void setUpMapController() {
-      mapController = mapView.getController();
-      mapController.setZoom(17); // Zoom 1 is world view
+		Log.e(ParkingConstants.TAG, "Map Update!");
 
-   }
+		int lat = (int) (location.getLatitude() * 1E6);
+		int lng = (int) (location.getLongitude() * 1E6);
+		GeoPoint point = new GeoPoint(lat, lng);
+		createMarker();
+		mapController.animateTo(point); // mapController.setCenter(point);
 
-   public static void updateMapWithLastKnownLocation(Location location) {
+	}
 
-      Log.e(ParkingConstants.TAG, "Map Update!");
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		// parkingSpotsCursor.close();
+		Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT)
+				.show();
 
-      int lat = (int) (location.getLatitude() * 1E6);
-      int lng = (int) (location.getLongitude() * 1E6);
-      GeoPoint point = new GeoPoint(lat, lng);
-      createMarker();
-      mapController.animateTo(point); // mapController.setCenter(point);
+	}
 
-   }
+	@Override
+	public void onResume() {
+		super.onResume();
+		// parkingSpotsCursor.requery();
+		updateCurrentUserLocation();
+		overlayParkingSpots();
+		
+	}
 
-   @Override
-   public void onDestroy() {
-      super.onDestroy();
-//      parkingSpotsCursor.close();
-      Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT).show();
+	@Override
+	public void onPause() {
+		super.onPause();
+		// parkingSpotsCursor.deactivate();
+		
+	}
 
-   }
+	private static void createMarker() {
+		String address = "Not found";
+		GeoPoint p = mapView.getMapCenter();
+		address = convertPointToLocation(p);
 
-   @Override
-   public void onResume() {
-      super.onResume();
-      //parkingSpotsCursor.requery();
-      Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_SHORT).show();
-   }
+		OverlayItem overlayitem = new OverlayItem(p, address, "My Location P ");
 
-   @Override
-   public void onPause() {
-      super.onPause();
-      //parkingSpotsCursor.deactivate();
-      Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_SHORT).show();
-   }
+		itemizedOverlays.addOverlay(overlayitem);
 
-   private static void createMarker() {
-      String address = "Not found";
-      GeoPoint p = mapView.getMapCenter();
-      address = convertPointToLocation(p);
+		mapView.getOverlays().add(itemizedOverlays);
+		mapView.postInvalidate();
 
-      OverlayItem overlayitem = new OverlayItem(p, address, "My Location P ");
+	}
 
-      itemizedOverlays.addOverlay(overlayitem);
+	public static String convertPointToLocation(GeoPoint point) {
+		String address = "";
+		Geocoder geoCoder = new Geocoder(myContext, Locale.getDefault());
+		return LocationUtility.ConvertPointToLocation(point, geoCoder);
+	//	return address;
+	}
 
-      mapView.getOverlays().add(itemizedOverlays);
-      mapView.postInvalidate();
+	@Override
+	protected boolean isRouteDisplayed() {
+		return false;
+	}
 
-   }
+	public static void updateMapWithNewLocation(Location currentNewLocation) {
 
-   public static String convertPointToLocation(GeoPoint point) {
-      String address = "";
-      Geocoder geoCoder = new Geocoder(myContext, Locale.getDefault());
-      return LocationUtility.ConvertPointToLocation(point, geoCoder);
-   }
+		// TODO Remove previous overlay, update with new one.
+		// updateNewLocationOnMap(currentNewLocation);
+		showNearbyParkingSpots(currentNewLocation);
 
-   @Override
-   protected boolean isRouteDisplayed() {
-      return false;
-   }
+	}
 
-   public static void updateMapWithNewLocation(Location currentNewLocation) {
+	private static void showNearbyParkingSpots(Location currentNewLocation) {
 
-      //TODO Remove previous overlay, update with new one.
-      //updateNewLocationOnMap(currentNewLocation);
-      showNearbyParkingSpots(currentNewLocation);
+		parkingSpotsVector = DBInterface
+				.getNearByParkingSpots(currentNewLocation);
 
-   }
+	}
 
-   private static void showNearbyParkingSpots(Location currentNewLocation) {
+	private static void updateNewLocationOnMap(Location currentNewLocation) {
+		Log.e(ParkingConstants.TAG, "Map Update!");
+		int lat = (int) (currentNewLocation.getLatitude() * 1E6);
+		int lng = (int) (currentNewLocation.getLongitude() * 1E6);
+		GeoPoint point = new GeoPoint(lat, lng);
+		createMarker();
+		mapController.animateTo(point); // mapController.setCenter(point);
 
-      parkingSpotsVector = DBInterface.getNearByParkingSpots(currentNewLocation);
+	}
 
-   }
-
-   private static void updateNewLocationOnMap(Location currentNewLocation) {
-      Log.e(ParkingConstants.TAG, "Map Update!");
-      int lat = (int) (currentNewLocation.getLatitude() * 1E6);
-      int lng = (int) (currentNewLocation.getLongitude() * 1E6);
-      GeoPoint point = new GeoPoint(lat, lng);
-      createMarker();
-      mapController.animateTo(point); // mapController.setCenter(point);
-
-   }
 
 }

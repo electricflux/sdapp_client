@@ -38,7 +38,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,8 +54,6 @@ import android.widget.Toast;
 
 import com.parking.application.ParkingApplication;
 import com.parking.auth.AsyncTaskResultNotifierInterface;
-import com.parking.auth.RegisterUserActivity;
-import com.parking.auth.RegisterUserAsyncTask;
 import com.parking.billing.BillingConstants.PurchaseState;
 import com.parking.billing.BillingConstants.ResponseCode;
 import com.parking.billing.BillingService.RequestPurchase;
@@ -70,7 +67,7 @@ import com.parking.utils.LocationUtility;
  * A sample application that demonstrates in-app billing.
  */
 public class ParkingPayment extends Activity implements OnClickListener,
-OnItemSelectedListener {
+   OnItemSelectedListener {
 	private static final String TAG = ParkingPayment.class.getSimpleName();
 
 	/**
@@ -536,10 +533,8 @@ OnItemSelectedListener {
 			/** Update the object */
 			parkingLocationObj.setDuration(mDurationTotalTimeMinutes);
 			parkingLocationObj.setQuantity(mTimePeriods);
-			parkingLocationObj.setStartTimestampMs(
-					System.currentTimeMillis());
-			parkingLocationObj.setEndTimestampMs(
-					System.currentTimeMillis() + 
+			parkingLocationObj.setStartTimestampMs(System.currentTimeMillis());
+			parkingLocationObj.setEndTimestampMs(System.currentTimeMillis() + 
 					mDurationTotalTimeMinutes*NUM_MILLIS_IN_A_MINUTE);
 
 			if (!mBillingService.requestPurchase(mSku, mPayloadContents)) {

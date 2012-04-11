@@ -24,17 +24,18 @@ public class ParkingLocationDataEntry {
    private ParkingType parkingType;
 
    // Persistent
-   private int rate;
+   private float rate;
 
    // Persistent
    private int duration;
+   
    
    private long startTimestampMs;
    
    private long endTimestampMs;
 
-// Persistent
-   private int type;
+   // Persistent
+   private String type;
 
    // Persistent
    private int quantity;
@@ -51,22 +52,67 @@ public class ParkingLocationDataEntry {
    //Geopoint to simplify display
    private GeoPoint gpoint;
    
-   public long getStartTimestampMs() {
-		return startTimestampMs;
-	}
+ //Distance from users current location. This value is dynamically populated after reading from DB
+	double distance;
+   
+   
+//   public void setid(Long i) {
+//      id = i;
+//   }
+//
+//   public void setlatitude(float lat) {
+//      latitude = lat;
+//   }
+//
+//   public void setlongitude(float lon) {
+//      longitude = lon;
+//   }
+//
+//   public Long getid() {
+//      return id;
+//   }
+//
+//   public float getlatitude() {
+//      return latitude;
+//   }
+//
+//   public float getlongitude() {
+//      return longitude;
+//   }
+//
+//   public void setGeoPoint(GeoPoint geoPoint) {
+//      gpoint = geoPoint;
+//      
+//   }
+//
+//   public GeoPoint getGeoPoint() {
+//      return gpoint;
+//   }
+//
+//   public void setMeterId(Long meterId) {
+//      this.meterID = meterId; 
+//      
+//   }
+//
+//   public Long getMeterId() {
+//      return meterID;
+//   }
+//   
+	 public long getStartTimestampMs() {
+		 return startTimestampMs;
+		 }
 
-	public void setStartTimestampMs(long startTimestampMs) {
-		this.startTimestampMs = startTimestampMs;
-	}
+		 public void setStartTimestampMs(long startTimestampMs) {
+		 this.startTimestampMs = startTimestampMs;
+		 }
 
-	public long getEndTimestampMs() {
-		return endTimestampMs;
-	}
+		 public long getEndTimestampMs() {
+		 return endTimestampMs;
+		 }
 
-	public void setEndTimestampMs(long endTimestampMs) {
-		this.endTimestampMs = endTimestampMs;
-	}
-
+		 public void setEndTimestampMs(long endTimestampMs) {
+		 this.endTimestampMs = endTimestampMs;
+		 }
 
    public Long getId() {
       return id;
@@ -108,12 +154,12 @@ public class ParkingLocationDataEntry {
       this.parkingType = parkingType;
    }
 
-   public int getRate() {
+   public float getRate() {
       return rate;
    }
 
-   public void setRate(int rate) {
-      this.rate = rate;
+   public void setRate(float dbRate) {
+      this.rate = dbRate;
    }
 
    public int getDuration() {
@@ -124,12 +170,15 @@ public class ParkingLocationDataEntry {
       this.duration = duration;
    }
 
-   public int getType() {
+   public String getType() {
       return type;
    }
 
-   public void setType(int type) {
-      this.type = type;
+   public void setType(String dbType) {
+	  
+		  this.type = dbType;
+	  
+	  
    }
 
    public int getQuantity() {
@@ -171,4 +220,12 @@ public class ParkingLocationDataEntry {
    public void setGeoPoint(GeoPoint gpoint) {
       this.gpoint = gpoint;
    }
+   
+   public void setDistance(double distance){
+		this.distance = distance;
+	}
+	public double getDistance (){
+		return distance;
+	}
+
 }

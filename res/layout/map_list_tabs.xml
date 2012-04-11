@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
     android:orientation="vertical">
-<include layout="@layout/actionbar_layout"/> 
+<include layout="@layout/actionbar_layout_maps"/> 
 
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/tabhost"

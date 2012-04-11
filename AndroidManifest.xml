@@ -38,6 +38,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+=======
+
+>>>>>>> cad28dc1257977c696a343bd025b858939a337b4
         <activity
             android:name="com.parking.paymenthistory.PaymentHistory"
             android:theme="@android:style/Theme.NoTitleBar" >
@@ -103,17 +107,17 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
 
-        <!-- In App Billing Test -->
-        <activity
-            android:name="com.parking.billing.ParkingPayment"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
+         <!-- In App Billing Test -->
+         <activity android:name="com.parking.billing.ParkingPayment"
+                  android:theme="@android:style/Theme.NoTitleBar">
+         </activity>
+         
+         <uses-library android:name="com.google.android.maps" />
+      
+         <service android:name="com.parking.billing.BillingService" />
+         
+         <receiver android:name="com.parking.billing.BillingReceiver">
 
-        <uses-library android:name="com.google.android.maps" />
-
-        <service android:name="com.parking.billing.BillingService" />
-
-        <receiver android:name="com.parking.billing.BillingReceiver" >
             <intent-filter>
                 <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
                 <action android:name="com.android.vending.billing.RESPONSE_CODE" />

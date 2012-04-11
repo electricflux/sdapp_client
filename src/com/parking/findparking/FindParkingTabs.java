@@ -1,23 +1,24 @@
-/*
- * Copyright © 2011 QUALCOMM Incorporated. All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * QUALCOMM Incorporated ("Proprietary Information"). You shall not
- * disclose such Proprietary Information, and shall use it only in
- * accordance with the terms of the license agreement you entered into
- * with QUALCOMM Incorporated.
- */
 package com.parking.findparking;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.parking.dashboard.R;
+import com.parking.dashboard.activity.DashboardActivity;
+import com.parking.datamanager.ParkingLocationDataEntry;
+
 
 public class FindParkingTabs extends TabActivity {
+	
+	public static List<ParkingLocationDataEntry> parkingLocations = new ArrayList<ParkingLocationDataEntry>();
 
    public void onCreate(Bundle savedInstanceState) {
 
@@ -47,4 +48,11 @@ public class FindParkingTabs extends TabActivity {
 
       tabHost.setCurrentTab(0);
    }
+   
+   public void mapRefresh(View v){
+      
+      Toast.makeText(DashboardActivity.myContext, "Refreshing Map...", Toast.LENGTH_LONG).show();
+      
+   }
+
 }

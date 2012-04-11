@@ -14,99 +14,76 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ */
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/screen_background"
+    android:orientation="vertical"
     android:paddingLeft="6dip"
-    android:paddingRight="6dip"
-    android:background="@color/screen_background">
+    android:paddingRight="6dip" >
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dip"
-        android:textColor="@android:color/black"
+        android:text="@string/spot_details"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold"
-        android:text="@string/spot_details" />
-        
-       <TextView
-        android:id="@+id/parkingAllDetailsTextView" 
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/parkingAllDetailsTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dip"
-        android:textColor="@android:color/black"
+        android:text="@string/spot_details"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold"
-        android:text="@string/spot_details" />
-                
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/billing_supported"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/error_message" />
 
-    <LinearLayout
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <Spinner
-            android:id="@+id/item_choices"
-            android:layout_width="0dip"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:prompt="@string/select_item" />
-        <Button
-            android:id="@+id/buy_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pay_here" />
-            
-        <!-- The developer payload seems to be null all the time     
-        <Button
-            android:id="@+id/payload_edit_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_payload" />
-         -->
-             
-    </LinearLayout>
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dip"
-        android:textColor="@android:color/black"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold"
-        android:text="@string/payment_history" />
-    <ListView
-        android:id="@+id/owned_items"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="4dip"
-        android:paddingBottom="4dip">
-    </ListView>
+        android:stretchColumns="0" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dip"
-        android:textColor="@android:color/black"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold"
-        android:text="@string/recent_transactions" />
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/log"
+        <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:bufferType="spannable"
-            android:textColor="@android:color/black" />
-    </ScrollView>
+            android:orientation="horizontal" >
+
+            <Spinner
+                android:id="@+id/license_plate_choices"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:prompt="@string/select_license_plate_prompt" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <Spinner
+                android:id="@+id/item_choices"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:prompt="@string/select_item" />
+
+            <Button
+                android:id="@+id/buy_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pay_now" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>

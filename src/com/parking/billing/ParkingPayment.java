@@ -33,11 +33,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
-import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,12 +45,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.maps.GeoPoint;
 import com.parking.application.ParkingApplication;
 import com.parking.auth.AsyncTaskResultNotifierInterface;
 import com.parking.billing.BillingConstants.PurchaseState;
@@ -61,13 +59,11 @@ import com.parking.billing.BillingService.RestoreTransactions;
 import com.parking.dashboard.R;
 import com.parking.dashboard.activity.DashboardActivity;
 import com.parking.datamanager.ParkingLocationDataEntry;
+import com.parking.utils.AppPreferences;
 import com.parking.utils.LocationUtility;
 
-/**
- * A sample application that demonstrates in-app billing.
- */
 public class ParkingPayment extends Activity implements OnClickListener,
-   OnItemSelectedListener {
+OnItemSelectedListener {
 	private static final String TAG = ParkingPayment.class.getSimpleName();
 
 	/**
@@ -93,13 +89,9 @@ public class ParkingPayment extends Activity implements OnClickListener,
 
 	private BillingService mBillingService;
 	private Button mBuyButton;
-	private Button mEditPayloadButton;
-	private TextView mLogTextView;
 	private Spinner mSelectItemSpinner;
-	private ListView mOwnedItemsTable;
-	private SimpleCursorAdapter mOwnedItemsAdapter;
+	private Spinner mSelectLicensePlateSpinner;
 	private PurchaseDatabase mPurchaseDatabase;
-	private Cursor mOwnedItemsCursor;
 	private Set<String> mOwnedItems = new HashSet<String>();
 
 	/**
@@ -120,7 +112,7 @@ public class ParkingPayment extends Activity implements OnClickListener,
 	 * purchased multiple times (such as poker chips). It is up to the
 	 * application to keep track of UNMANAGED products for the user.
 	 */
-	private enum Managed { MANAGED, UNMANAGED }
+	public enum Managed { MANAGED, UNMANAGED }
 
 	/**
 	 * A {@link PurchaseObserver} is used to get callbacks when Android Market sends
@@ -154,9 +146,11 @@ public class ParkingPayment extends Activity implements OnClickListener,
 			}
 
 			if (developerPayload == null) {
-				logProductActivity(itemId, purchaseState.toString());
+				//TODO: print purchase state
+				//logProductActivity(itemId, purchaseState.toString());
 			} else {
-				logProductActivity(itemId, purchaseState + "\n\t" + developerPayload);
+				//TODO: print purchase state
+				//logProductActivity(itemId, purchaseState + "\n\t" + developerPayload);
 			}
 
 			if (purchaseState == PurchaseState.PURCHASED) {
@@ -167,7 +161,6 @@ public class ParkingPayment extends Activity implements OnClickListener,
 
 			}
 			mCatalogAdapter.setOwnedItems(mOwnedItems);
-			mOwnedItemsCursor.requery();
 		}
 
 		private void updateServer() {
@@ -181,7 +174,7 @@ public class ParkingPayment extends Activity implements OnClickListener,
 			nameValuePairs.add(new BasicNameValuePair("isDevice", 
 					"true"));
 			nameValuePairs.add(new BasicNameValuePair("amountPaid",
-					""));
+					Float.toString(parkingLocationObj.getAmountPaid())));
 			nameValuePairs.add(new BasicNameValuePair("startTimestamp",
 					parkingLocationObj.getStartTimestampMs()+""));
 			nameValuePairs.add(new BasicNameValuePair("endTimestamp",
@@ -189,7 +182,7 @@ public class ParkingPayment extends Activity implements OnClickListener,
 			nameValuePairs.add(new BasicNameValuePair("parkingSpotId",
 					parkingLocationObj.getId()+""));
 			nameValuePairs.add(new BasicNameValuePair("licensePlateNumber", 
-					"Add license plate number here"));
+					(String) mSelectLicensePlateSpinner.getSelectedItem()));
 			new UpdateServerAsyncTask(
 					ParkingPurchaseObserver.this,ParkingPayment.this).
 					execute(nameValuePairs);
@@ -214,17 +207,14 @@ public class ParkingPayment extends Activity implements OnClickListener,
 				if (BillingConstants.DEBUG) {
 					Log.i(TAG, "purchase was successfully sent to server");
 				}
-				logProductActivity(request.mProductId, "sending purchase request");
 			} else if (responseCode == ResponseCode.RESULT_USER_CANCELED) {
 				if (BillingConstants.DEBUG) {
 					Log.i(TAG, "user canceled purchase");
 				}
-				logProductActivity(request.mProductId, "dismissed purchase dialog");
 			} else {
 				if (BillingConstants.DEBUG) {
 					Log.i(TAG, "purchase failed");
 				}
-				logProductActivity(request.mProductId, "request purchase returned " + responseCode);
 			}
 		}
 
@@ -250,18 +240,6 @@ public class ParkingPayment extends Activity implements OnClickListener,
 
 	}
 
-	private static class CatalogEntry {
-		public String sku;
-		public int nameId;
-		public Managed managed;
-
-		public CatalogEntry(String sku, int nameId, Managed managed) {
-			this.sku = sku;
-			this.nameId = nameId;
-			this.managed = managed;
-		}
-	}
-
 	/** An array of product list entries for the products that can be purchased. */
 	private static final CatalogEntry[] CATALOG = new CatalogEntry[] {
 		new CatalogEntry("android.test.purchased", R.string.min15, Managed.UNMANAGED),
@@ -280,6 +258,9 @@ public class ParkingPayment extends Activity implements OnClickListener,
 
 	private static final long NUM_MILLIS_IN_A_MINUTE = 60*1000;
 
+	private static final float FLAT_PARKING_SPOT_RATE_PER_MINUTE = 
+			0.16f;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -296,15 +277,28 @@ public class ParkingPayment extends Activity implements OnClickListener,
 		//Get on the spot selected 
 		Intent starterIntent = getIntent();
 		Bundle bundle = starterIntent.getExtras();
-		String all = bundle.getString("info");
+
 		TextView textAll = (TextView) findViewById(R.id.parkingAllDetailsTextView);
+
+		/** Create parkingLocationObj */
+		String all = bundle.getString("info");
+		parkingLocationObj = LocationUtility.convertStringToObject(all);
+
+		/** Use the object to populate fields */
+		String locAddress = "Address unavailable";
+		Geocoder geoCoder = new Geocoder(DashboardActivity.myContext, Locale.getDefault());
+		GeoPoint gp = new GeoPoint((int)(parkingLocationObj.getLatitude()*1E6),(int)(parkingLocationObj.getLongitude()*1E6));
+		locAddress = LocationUtility.ConvertPointToLocation(gp, geoCoder);
+		parkingLocationObj.setAddress(locAddress);
+
+		String addressToDisplay  = 
+				(parkingLocationObj.getParkingType() == null) ? "Not known" : ""+parkingLocationObj.getParkingType();
 
 		parkingLocationObj = LocationUtility.convertStringToObject(all);
 		textAll.setText( "Details...\n"
-				+ "Lat:     " + parkingLocationObj.getLatitude()   +"\n" 
-				+ "Lon:     " + parkingLocationObj.getLongitude()  +"\n"
-				+ "MeterId: " + parkingLocationObj.getMeterID()    +"\n"
-				+ "Address: " + parkingLocationObj.getAddress()    +"\n"
+				+ "MeterId: " + parkingLocationObj.getMeterID() + "\n"
+				+ "Address: " + parkingLocationObj.getAddress() + "\n"
+				+ "Type:" + addressToDisplay + "\n"
 				);
 
 		setupWidgets();
@@ -417,46 +411,21 @@ public class ParkingPayment extends Activity implements OnClickListener,
 	 * Sets up the UI.
 	 */
 	private void setupWidgets() {
-		mLogTextView = (TextView) findViewById(R.id.log);
-
 		mBuyButton = (Button) findViewById(R.id.buy_button);
 		mBuyButton.setEnabled(false);
 		mBuyButton.setOnClickListener(this);
 
-		//The Payload doesnt seem to do anythign!!
-		//mEditPayloadButton = (Button) findViewById(R.id.payload_edit_button);
-		//mEditPayloadButton.setEnabled(false);
-		//mEditPayloadButton.setOnClickListener(this);
+		mSelectLicensePlateSpinner = (Spinner) findViewById(R.id.license_plate_choices);
+		ArrayAdapter<String> spinnerArrayAdapter = 
+				new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, 
+						AppPreferences.getInstance().getLicensePlateList());
+		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mSelectLicensePlateSpinner.setAdapter(spinnerArrayAdapter);
 
 		mSelectItemSpinner = (Spinner) findViewById(R.id.item_choices);
 		mCatalogAdapter = new CatalogAdapter(this, CATALOG);
 		mSelectItemSpinner.setAdapter(mCatalogAdapter);
 		mSelectItemSpinner.setOnItemSelectedListener(this);
-
-		mOwnedItemsCursor = mPurchaseDatabase.queryAllPurchasedItems();
-		startManagingCursor(mOwnedItemsCursor);
-		String[] from = new String[] { PurchaseDatabase.PURCHASED_PRODUCT_ID_COL,
-				PurchaseDatabase.PURCHASED_QUANTITY_COL
-		};
-		int[] to = new int[] { R.id.item_name, R.id.item_quantity };
-		mOwnedItemsAdapter = new SimpleCursorAdapter(this, R.layout.item_row,
-				mOwnedItemsCursor, from, to);
-		mOwnedItemsTable = (ListView) findViewById(R.id.owned_items);
-		mOwnedItemsTable.setAdapter(mOwnedItemsAdapter);
-	}
-
-	private void prependLogEntry(CharSequence cs) {
-		SpannableStringBuilder contents = new SpannableStringBuilder(cs);
-		contents.append('\n');
-		contents.append(mLogTextView.getText());
-		mLogTextView.setText(contents);
-	}
-
-	private void logProductActivity(String product, String activity) {
-		SpannableStringBuilder contents = new SpannableStringBuilder();
-		contents.append(Html.fromHtml("<b>" + product + "</b>: "));
-		contents.append(activity);
-		prependLogEntry(contents);
 	}
 
 	/**
@@ -531,7 +500,10 @@ public class ParkingPayment extends Activity implements OnClickListener,
 			}
 
 			/** Update the object */
+			parkingLocationObj.setAmountPaid(
+					mDurationTotalTimeMinutes*FLAT_PARKING_SPOT_RATE_PER_MINUTE);
 			parkingLocationObj.setDuration(mDurationTotalTimeMinutes);
+			parkingLocationObj.setRate(FLAT_PARKING_SPOT_RATE_PER_MINUTE);
 			parkingLocationObj.setQuantity(mTimePeriods);
 			parkingLocationObj.setStartTimestampMs(System.currentTimeMillis());
 			parkingLocationObj.setEndTimestampMs(System.currentTimeMillis() + 
@@ -540,48 +512,7 @@ public class ParkingPayment extends Activity implements OnClickListener,
 			if (!mBillingService.requestPurchase(mSku, mPayloadContents)) {
 				showDialog(DIALOG_BILLING_NOT_SUPPORTED_ID);
 			}
-		} else if (v == mEditPayloadButton) {
-			showPayloadEditDialog();
-		}
-	}
-
-	/**
-	 * Displays the dialog used to edit the payload dialog.
-	 */
-	private void showPayloadEditDialog() {
-		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-		final View view = View.inflate(this, R.layout.edit_payload, null);
-		final TextView payloadText = (TextView) view.findViewById(R.id.payload_text);
-		if (mPayloadContents != null) {
-			payloadText.setText(mPayloadContents);
-		}
-
-		dialog.setView(view);
-		dialog.setPositiveButton(
-				R.string.edit_payload_accept,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						mPayloadContents = payloadText.getText().toString();
-					}
-				});
-		dialog.setNegativeButton(
-				R.string.edit_payload_clear,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						if (dialog != null) {
-							mPayloadContents = null;
-							dialog.cancel();
-						}
-					}
-				});
-		dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-			public void onCancel(DialogInterface dialog) {
-				if (dialog != null) {
-					dialog.cancel();
-				}
-			}
-		});
-		dialog.show();
+		} 
 	}
 
 	/**
@@ -599,55 +530,5 @@ public class ParkingPayment extends Activity implements OnClickListener,
 	}
 
 	public void onNothingSelected(AdapterView<?> arg0) {
-	}
-
-	/**
-	 * An adapter used for displaying a catalog of products.  If a product is
-	 * managed by Android Market and already purchased, then it will be "grayed-out" in
-	 * the list and not selectable.
-	 */
-	private static class CatalogAdapter extends ArrayAdapter<String> {
-		private CatalogEntry[] mCatalog;
-		private Set<String> mOwnedItems = new HashSet<String>();
-
-		public CatalogAdapter(Context context, CatalogEntry[] catalog) {
-			super(context, android.R.layout.simple_spinner_item);
-			mCatalog = catalog;
-			for (CatalogEntry element : catalog) {
-				add(context.getString(element.nameId));
-			}
-			setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		}
-
-		public void setOwnedItems(Set<String> ownedItems) {
-			mOwnedItems = ownedItems;
-			notifyDataSetChanged();
-		}
-
-		@Override
-		public boolean areAllItemsEnabled() {
-			// Return false to have the adapter call isEnabled()
-			return false;
-		}
-
-		@Override
-		public boolean isEnabled(int position) {
-			// If the item at the given list position is not purchasable,
-			// then prevent the list item from being selected.
-			CatalogEntry entry = mCatalog[position];
-			if (entry.managed == Managed.MANAGED && mOwnedItems.contains(entry.sku)) {
-				return false;
-			}
-			return true;
-		}
-
-		@Override
-		public View getDropDownView(int position, View convertView, ViewGroup parent) {
-			// If the item at the given list position is not purchasable, then
-			// "gray out" the list item.
-			View view = super.getDropDownView(position, convertView, parent);
-			view.setEnabled(isEnabled(position));
-			return view;
-		}
 	}
 }

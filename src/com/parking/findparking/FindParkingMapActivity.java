@@ -27,12 +27,21 @@ import com.parking.auth.AsyncTaskResultNotifierInterface;
 import com.parking.dashboard.R;
 import com.parking.datamanager.DBInterface;
 import com.parking.datamanager.ParkingLocationDataEntry;
+<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
+=======
+import com.parking.datamanager.ParkingLocationsAll;
+import com.parking.dbManager.DataBaseHelper;
+>>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java
 import com.parking.location.ParkingLocationManager;
 import com.parking.location.ParkingSpots;
 import com.parking.utils.LocationUtility;
 import com.parking.utils.ParkingConstants;
 
+<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
 public class FindParkingMap extends MapActivity implements LocationListener, AsyncTaskResultNotifierInterface {
+=======
+public class FindParkingMapActivity extends MapActivity {
+>>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java
 
 	private static final String TAG = "FindParkingMap";
 	private static MapView mapView;
@@ -40,10 +49,9 @@ public class FindParkingMap extends MapActivity implements LocationListener, Asy
 	private static MapOverLays itemizedOverlays;
 	private static Context myContext;
 
-	private LocationManager locationManager;
 	private ParkingLocationManager pLocationManger = null;
+	private DataBaseHelper myDbHelper = null;
 
-	private static boolean onCreateCompleted = false;
 	private static Vector<ParkingSpots> parkingSpotsVector = new Vector<ParkingSpots>();
 	private Vector<GeoPoint> geoPointsVector = new Vector<GeoPoint>();
 	private GetLocationList mGetLocationList = null;
@@ -75,6 +83,12 @@ public class FindParkingMap extends MapActivity implements LocationListener, Asy
 	@SuppressWarnings({ "null", "unchecked" })
 	private void overlayParkingSpots() {
 
+		FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
+		
+		Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
+		
+		overlayTappableParkingSpots();
+
 		//Async activity to get the parking stops from db
 
 		List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
@@ -83,8 +97,13 @@ public class FindParkingMap extends MapActivity implements LocationListener, Asy
 		nLoc.setLatitude((float)32.71283);
 		nLoc.setLongitude((float) -117.165695);
 		nLocList.add(nLoc);
+<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
 		//mGetLocationList.execute(nLocList);
 
+=======
+		GetLocationList mGetLocationList = new GetLocationList();
+		mGetLocationList.execute(nLocList);
+>>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java
 	}
 
 	private void updateCurrentUserLocation() {
@@ -161,6 +180,11 @@ public class FindParkingMap extends MapActivity implements LocationListener, Asy
 		super.onResume();
 		// parkingSpotsCursor.requery();
 		updateCurrentUserLocation();
+		
+		/** Open database connection here */
+		myDbHelper = new DataBaseHelper(myContext);
+		myDbHelper.openDataBase();
+		
 		overlayParkingSpots();
 
 
@@ -169,8 +193,10 @@ public class FindParkingMap extends MapActivity implements LocationListener, Asy
 	@Override
 	public void onPause() {
 		super.onPause();
-		// parkingSpotsCursor.deactivate();
-
+		
+		/** close database connection here */
+		myDbHelper.close();
+		myDbHelper = null;
 	}
 
 	private static void createMarker() {
@@ -278,6 +304,7 @@ public class FindParkingMap extends MapActivity implements LocationListener, Asy
 		// TODO Auto-generated method stub
 
 	}
+<<<<<<< HEAD:src/com/parking/findparking/FindParkingMap.java
 
 	@Override
 	public void notifyResult(boolean result) {
@@ -285,3 +312,6 @@ public class FindParkingMap extends MapActivity implements LocationListener, Asy
 	}
 
 }
+=======
+}
+>>>>>>> 1659d79f5dd0a7fd02b2ee0e1d3fef612188247e:src/com/parking/findparking/FindParkingMapActivity.java

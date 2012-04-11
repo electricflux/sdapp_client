@@ -31,7 +31,7 @@ public class FindParkingTabs extends TabActivity {
       Intent intent; // Reusable Intent for each tab
 
       // Create an Intent to launch an Activity for the tab (to be reused)
-      intent = new Intent().setClass(this, FindParkingMap.class);
+      intent = new Intent().setClass(this, FindParkingMapActivity.class);
 
       // Initialize a TabSpec for each tab and add it to the TabHost
       spec = tabHost.newTabSpec("map").setIndicator("Map",
@@ -40,7 +40,7 @@ public class FindParkingTabs extends TabActivity {
       tabHost.addTab(spec);
 
       // Do the same for the other tab
-      intent = new Intent().setClass(this, FindParkingList.class);   
+      intent = new Intent().setClass(this, FindParkingListActivity.class);   
       spec = tabHost.newTabSpec("list").setIndicator("List",
             res.getDrawable(R.drawable.tab_list))
             .setContent(intent);

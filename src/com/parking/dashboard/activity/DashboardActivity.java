@@ -12,15 +12,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-
 import com.parking.application.ParkingApplication;
 import com.parking.auth.Authenticator;
 import com.parking.dashboard.R;
 import com.parking.dbManager.DataBaseHelper;
-import com.parking.findparking.LocationSelectorActivity;
 import com.parking.paymenthistory.PaymentHistory;
 import com.parking.rulesandregulations.RulesandRegulations;
 import com.parking.towingcontacts.TowingContacts;
+import com.parking.utils.AppPreferences;
+import com.parking.findparking.LocationSelectorActivity;
 
 public class DashboardActivity extends Activity{
 	private static final String TAG = DashboardActivity.class.getSimpleName();
@@ -47,15 +47,7 @@ public class DashboardActivity extends Activity{
 		findViewById(R.id.dashboard_button_parkingrules).setOnClickListener(dBClickListener);
 
 		//Initialize the DB here
-		if(createOrCopyDB()){
-			Toast.makeText(myContext, "Database Initialized!", Toast.LENGTH_SHORT).show();
-		}
-		else
-		{
-			Toast.makeText(myContext, "Failed to init DB!", Toast.LENGTH_SHORT).show();
-		}
-
-
+		createOrCopyDB();
 	}
 
 	private boolean createOrCopyDB() {
@@ -90,27 +82,22 @@ public class DashboardActivity extends Activity{
 			switch (v.getId()) {
 			case R.id.dashboard_button_find_parking:
 			   i = new Intent(DashboardActivity.this, LocationSelectorActivity.class);
-				//i = new Intent(DashboardActivity.this, FindParkingTabs.class);
 				break;
 
 			case R.id.dashboard_button_personalbests:
 				i = new Intent(DashboardActivity.this, PaymentHistory.class);
 				break;
-				//Added to locate my car
 			case R.id.dashboard_button_viewall:
-			//i = new Intent(DashboardActivity.this, LocateMyCar.class);
-			//TODO: Provide lat lon from SharedPreference
-			double lat = 32.71283;
-			double lon = -117.165695;
-			Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
-			Uri.parse("http://maps.google.com/maps?saddr=current+location&daddr="+lat+","+lon+""));
-			intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-			startActivity(intent);
-			break;
+				double lat = AppPreferences.getInstance().getLastPaidLocationLatitude();
+				double lon = AppPreferences.getInstance().getLastPaidLocationLongitude();
+				Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
+						Uri.parse("http://maps.google.com/maps?daddr="+lat+","+lon+""));
+				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+				startActivity(intent);
+				break;
 			case R.id.dashboard_button_parkandremind:
 				Toast.makeText(
 						DashboardActivity.this, "Functionality coming soon" , Toast.LENGTH_SHORT);
-				//i = new Intent(DashboardActivity.this, LocateMyCar.class);
 				break;
 			case R.id.dashboard_button_towingcontact:
 				i = new Intent(DashboardActivity.this, TowingContacts.class);

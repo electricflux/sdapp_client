@@ -194,9 +194,16 @@ OnItemSelectedListener {
 		@Override
 		public void notifyResult(boolean result) {
 			if (result == true)
+			{
 				Log.v(TAG,"Submit payment succeeded.");
+				Toast.makeText(ParkingPayment.this, "Payment succeeded", Toast.LENGTH_SHORT);
+				finish();
+			}
 			else
+			{
 				Log.v(TAG,"Submit payment failed.");
+				Toast.makeText(ParkingPayment.this, "Payment failed. Please try again.", Toast.LENGTH_SHORT);
+			}
 		}
 
 		@Override
@@ -291,14 +298,17 @@ OnItemSelectedListener {
 		Geocoder geoCoder = new Geocoder(DashboardActivity.myContext, Locale.getDefault());
 		GeoPoint gp = new GeoPoint((int)(parkingLocationObj.getLatitude()*1E6),(int)(parkingLocationObj.getLongitude()*1E6));
 		locAddress = LocationUtility.ConvertPointToLocation(gp, geoCoder);
+		Log.v(TAG,"Setting address to: "+locAddress);
 		parkingLocationObj.setAddress(locAddress);
 
-		String addressToDisplay  = 
-				(parkingLocationObj.getParkingType() == null) ? "Not known" : ""+parkingLocationObj.getParkingType();
+
+		String typeToDisplay  = 
+				parkingLocationObj.getType() == null ? "Not known" : ""+parkingLocationObj.getType();
+
 		textAll.setText( "Details...\n"
 				+ "MeterId: " + parkingLocationObj.getMeterID() + "\n"
 				+ "Address: " + parkingLocationObj.getAddress() + "\n"
-				+ "Type:" + addressToDisplay + "\n"
+				+ "Type:" + typeToDisplay + "\n"
 				);
 
 		setupWidgets();
@@ -491,7 +501,7 @@ OnItemSelectedListener {
 	}
 
 	/**
-	 * Called when a button is pressed.
+	 * Called when the Pay Now button is pressed
 	 */
 	public void onClick(View v) {
 		if (v == mBuyButton) {
@@ -509,6 +519,13 @@ OnItemSelectedListener {
 			parkingLocationObj.setEndTimestampMs(System.currentTimeMillis() + 
 					mDurationTotalTimeMinutes*NUM_MILLIS_IN_A_MINUTE);
 
+			/** Set latitude and longitude in application preferences */
+			AppPreferences.getInstance().setLastPaidLocationLatitude(
+					parkingLocationObj.getLatitude());
+			AppPreferences.getInstance().setLastPaidLocationLongitude(
+					parkingLocationObj.getLongitude());
+			
+			/** Sanity check */
 			if (!mBillingService.requestPurchase(mSku, mPayloadContents)) {
 				showDialog(DIALOG_BILLING_NOT_SUPPORTED_ID);
 			}

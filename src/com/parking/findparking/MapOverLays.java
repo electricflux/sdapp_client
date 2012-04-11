@@ -1,12 +1,3 @@
-/*
- * Copyright © 2011 QUALCOMM Incorporated. All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * QUALCOMM Incorporated ("Proprietary Information"). You shall not
- * disclose such Proprietary Information, and shall use it only in
- * accordance with the terms of the license agreement you entered into
- * with QUALCOMM Incorporated.
- */
 package com.parking.findparking;
 
 import java.util.ArrayList;
@@ -51,22 +42,13 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
 		return overlays.get(i);
 
 	}
-
 	@Override
 	protected boolean onTap(int index) {
-
-
-
 		OverlayItem item = overlays.get(index);
-		// AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-		// dialog.setTitle(item.getTitle());
-		// dialog.setMessage(item.getSnippet());
-		// dialog.show();
-
-		Log.v(TAG, "here 1 ...");
 		Intent pspotInfo = new Intent(DashboardActivity.myContext, ParkingPayment.class); //ParkingSpotAndPaymentInformation.class);
 		pspotInfo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		pspotInfo.putExtra("info", item.getSnippet());
+		Log.v(TAG,"Passing snippet: "+item.getSnippet());
 		DashboardActivity.myContext.startActivity(pspotInfo);
 		return true;
 	}

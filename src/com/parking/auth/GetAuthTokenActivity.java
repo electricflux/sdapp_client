@@ -63,7 +63,6 @@ public class GetAuthTokenActivity extends Activity implements AsyncTaskResultNot
 		 * Verify if the user is registered
 		 */
 		new LoginUserAsyncTask(this,this).execute("");
-		/**new GetCookieTask().execute(auth_token);*/
 	}
 
 	@Override

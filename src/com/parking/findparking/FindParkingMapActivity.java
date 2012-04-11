@@ -31,10 +31,7 @@ import com.parking.location.ParkingSpots;
 import com.parking.utils.LocationUtility;
 import com.parking.utils.ParkingConstants;
 
-<<<<<<< HEAD
 public class FindParkingMapActivity extends MapActivity {
-=======
-public class FindParkingMap extends MapActivity{
 
 	private static final String TAG = "FindParkingMap";
 	private static MapView mapView;
@@ -44,6 +41,7 @@ public class FindParkingMap extends MapActivity{
 
 	private LocationManager locationManager;
 	private ParkingLocationManager pLocationManger = null;
+	private DataBaseHelper myDbHelper = null;
 
 	private static boolean onCreateCompleted = false;
 	private static Vector<ParkingSpots> parkingSpotsVector = new Vector<ParkingSpots>();
@@ -74,17 +72,12 @@ public class FindParkingMap extends MapActivity{
 		// Temporary Dummy
 		GeoPoint gp = new GeoPoint(0, 0);
 
-		DataBaseHelper myDbHelper = new DataBaseHelper(myContext);
-		myDbHelper.openDataBase();
 		//myDbHelper.dbquery(gp, parkingLocations);
 		
 		
 		FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
->>>>>>> cad28dc1257977c696a343bd025b858939a337b4
-
 		
 		Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
-		
 		
 		overlayTappableParkingSpots();
 
@@ -202,6 +195,11 @@ public class FindParkingMap extends MapActivity{
 		super.onResume();
 		// parkingSpotsCursor.requery();
 		updateCurrentUserLocation();
+		
+		/** Open database connection here */
+		myDbHelper = new DataBaseHelper(myContext);
+		myDbHelper.openDataBase();
+		
 		overlayParkingSpots();
 		
 	}
@@ -209,7 +207,10 @@ public class FindParkingMap extends MapActivity{
 	@Override
 	public void onPause() {
 		super.onPause();
-		// parkingSpotsCursor.deactivate();
+		
+		/** close database connection here */
+		myDbHelper.close();
+		myDbHelper = null;
 		
 	}
 

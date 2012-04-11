@@ -38,10 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-=======
 
->>>>>>> cad28dc1257977c696a343bd025b858939a337b4
         <activity
             android:name="com.parking.paymenthistory.PaymentHistory"
             android:theme="@android:style/Theme.NoTitleBar" >

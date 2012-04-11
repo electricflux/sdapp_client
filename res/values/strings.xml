@@ -39,6 +39,7 @@
     <string name="edit_payload_clear">No Payload</string>
     <string name="payment_history">Payment History</string>
     <string name="recent_transactions">Recent activity</string>
+    <string name="select_license_plate_prompt">Select License Plate</string>
 
     <string name="two_handed_sword">Two-handed sword</string>
     <string name="potions">Potions</string>

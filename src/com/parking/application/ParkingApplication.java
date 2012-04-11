@@ -1,5 +1,7 @@
 package com.parking.application;
 
+import com.parking.utils.AppPreferences;
+
 import android.accounts.Account;
 import android.app.Application;
 import android.content.Context;
@@ -18,6 +20,7 @@ public class ParkingApplication extends Application{
 		super.onCreate();
 		TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 		deviceId = tManager.getDeviceId();
+		AppPreferences.initialize(getApplicationContext());
 	}
 	
 	public static void setAccount(Account account)

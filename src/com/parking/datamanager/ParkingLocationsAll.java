@@ -11,7 +11,6 @@ import com.parking.dbManager.DataBaseHelper;
 
 public class ParkingLocationsAll {
 
-	private static final String TAG = "ParkingLocationsAll";
 	private List<ParkingLocationDataEntry> parkingLocations = new LinkedList<ParkingLocationDataEntry>();
 
 	public List<ParkingLocationDataEntry>  getParkingLocations(int limit, DataBaseHelper myDbHelper){
@@ -22,9 +21,7 @@ public class ParkingLocationsAll {
 			myDbHelper.close();
 
 		} catch (SQLException sqle) {
-
-			throw sqle;
-
+			sqle.printStackTrace();
 		}
 		int i = 0;
 		ParkingLocationDataEntry mParkingLocationDataEntry = new ParkingLocationDataEntry();
@@ -39,46 +36,42 @@ public class ParkingLocationsAll {
 				Long Id =  mParkingLocationDataEntry.getId();
 				float Lat = mParkingLocationDataEntry.getLatitude();
 				float Lon = mParkingLocationDataEntry.getLongitude();
-				Log.v(TAG, i + "ParkingLocationsAll :: " + Id + " Lat:: " + Lat + " Lon:: " + Lon);
 
 			}
 		}
 		return parkingLocations;
 	}
-	
+
 	public List<ParkingLocationDataEntry> getParkingLocations(int distance, int limit, float mlat, float mlon,
-            DataBaseHelper myDbHelper) {
-        try {
+			DataBaseHelper myDbHelper) {
+		try {
 
-            myDbHelper.openDataBase();
-            myDbHelper.dbquery(distance, mlat, mlon, limit, parkingLocations);
-            myDbHelper.close();
+			myDbHelper.openDataBase();
+			myDbHelper.dbquery(distance, mlat, mlon, limit, parkingLocations);
+			myDbHelper.close();
 
-        } catch (SQLException sqle) {
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
 
-            throw sqle;
+		}
+		int i = 0;
+		ParkingLocationDataEntry mParkingLocationDataEntry = new ParkingLocationDataEntry();
+		if (parkingLocations != null) {
+			/* Check if at least one Result was returned. */
+			while (i < limit) {
+				mParkingLocationDataEntry = parkingLocations.get(i);
+				i++;
+				/* Loop through all Results */
+				/*
+				 * Retrieve the values of the Entry the Cursor is pointing to.
+				 */
+				Long Id = mParkingLocationDataEntry.getId();
+				float Lat = mParkingLocationDataEntry.getLatitude();
+				float Lon = mParkingLocationDataEntry.getLongitude();
 
-        }
-        int i = 0;
-        ParkingLocationDataEntry mParkingLocationDataEntry = new ParkingLocationDataEntry();
-        if (parkingLocations != null) {
-            /* Check if at least one Result was returned. */
-            while (i < limit) {
-                mParkingLocationDataEntry = parkingLocations.get(i);
-                i++;
-                /* Loop through all Results */
-                /*
-                 * Retrieve the values of the Entry the Cursor is pointing to.
-                 */
-                Long Id = mParkingLocationDataEntry.getId();
-                float Lat = mParkingLocationDataEntry.getLatitude();
-                float Lon = mParkingLocationDataEntry.getLongitude();
-                Log.v(TAG, i + "ParkingLocationsAll :: " + Id + " Lat:: " + Lat
-                        + " Lon:: " + Lon);
-
-            }
-        }
-        return parkingLocations;
-    }
+			}
+		}
+		return parkingLocations;
+	}
 
 }

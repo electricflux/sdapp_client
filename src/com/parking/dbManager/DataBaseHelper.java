@@ -25,7 +25,8 @@ import com.parking.datamanager.ParkingLocationDataEntry;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-   private static final String TAG = "DataBaseHelper";
+   private static final String TAG = 
+		   DataBaseHelper.class.getSimpleName();
 
    //The Android's default system path of your application database.
    private static final String DB_PATH = "/data/data/com.parking.dashboard/databases/";
@@ -146,26 +147,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
    }
 
    public void openDataBase() throws SQLException {
-
-      //Open the database
-      Log.v(TAG, "openDataBase::1 ");
       String myPath = DB_PATH + DB_NAME;
       myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-      //Log.v(TAG, "openDataBase 2 ");
-
-      if (myDataBase != null)
-         Log.v(TAG, "openDataBase NOT NULL ");
-
    }
 
    @Override
    public synchronized void close() {
-
-      Log.v(TAG, "Closing DB");
       if (myDataBase != null)
          myDataBase.close();
+      
       super.close();
-
    }
 
    @Override
@@ -196,7 +187,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                //Lat Lon
                lat = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndexOrThrow("Lat")) * 1E6);
                lng = (int) (parkingSpotsCursor.getDouble(parkingSpotsCursor.getColumnIndexOrThrow("Lon")) * 1E6);
-               Log.e(TAG, " Lat: " + lat + " Lon: " + lng);
 
                GeoPoint geoPoint = new GeoPoint(lat, lng);
                pSpotInfo.setGeoPoint(geoPoint);
@@ -244,7 +234,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 						Long Id = (long) cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
 						float Lat = cursor.getFloat(cursor.getColumnIndexOrThrow("Lat"));
 						float Lon = cursor.getFloat(cursor.getColumnIndexOrThrow("Lon"));
-						Log.v(TAG, "dbquery :: " + Id + " Lat:: " + Lat + " Lon:: " + Lon);
 						tLocationObj.setId(Id);
 						tLocationObj.setLatitude(Lat);
 						tLocationObj.setLongitude(Lon);
@@ -340,8 +329,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int count=0;
         for (int i = 0; i < arrayOfLocation.length; i++)
         {
-        	Log.v(TAG, "here 1" + arrayOfLocation[i].getDistance() );
-        	
 			if (count >= limit )
         		break;
         	parkingLocations.add(arrayOfLocation[i]);

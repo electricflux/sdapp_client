@@ -70,7 +70,7 @@ public class FindParkingMapActivity extends MapActivity {
 
 		FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
 		
-		Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
+		Log.v(TAG,"Size is " + FindParkingTabs.parkingLocations.size());
 		
 		overlayTappableParkingSpots();
 
@@ -95,7 +95,6 @@ public class FindParkingMapActivity extends MapActivity {
 				R.drawable.map_marker_blue);// map_marker_black);
 		itemizedOverlays = new MapOverLays(drawable, this);
 
-		Log.v(TAG, "here ..4");
 		for (ParkingLocationDataEntry parkingSpot : FindParkingTabs.parkingLocations) {
 
 
@@ -268,19 +267,16 @@ public class FindParkingMapActivity extends MapActivity {
 		@Override
 		protected Boolean doInBackground(
 				List<ParkingLocationDataEntry>... arg0) {
-			Log.v( TAG, "doInBackground()" );
 
 			/** Add your data */
 			List<ParkingLocationDataEntry> nLocList = arg0[0];
 			ParkingLocationDataEntry nLoc;
 
-			Log.v( TAG, "doInBackground()" + nLocList.size());
 			nLoc = nLocList.get(0);
 
 			DataBaseHelper myDbHelper = new DataBaseHelper(myContext);
 			//FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
 			FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)nLoc.getLatitude(), (float)nLoc.getLongitude(), myDbHelper);
-			Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
 
 			overlayTappableParkingSpots();
 			return true;

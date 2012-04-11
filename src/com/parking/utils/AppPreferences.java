@@ -43,6 +43,30 @@ public class AppPreferences {
          Log.v(TAG,"Set license plate string to : "+getLicensePlateString());
      }
      
+     public void setLastPaidLocationLatitude(float lat) {
+    	 Editor prefsEditor;
+    	 prefsEditor = appSharedPrefs.edit();
+         prefsEditor.putFloat("last_paid_location_latitude", lat);
+         prefsEditor.commit();
+     }
+     
+     public void setLastPaidLocationLongitude(float longitude) {
+    	 Editor prefsEditor;
+    	 prefsEditor = appSharedPrefs.edit();
+         prefsEditor.putFloat("last_paid_location_longitude", longitude);
+         prefsEditor.commit();
+     }
+     
+     public float getLastPaidLocationLatitude() 
+     {
+         return appSharedPrefs.getFloat("last_paid_location_latitude", 0.0f);
+     }
+     
+     public float getLastPaidLocationLongitude() 
+     {
+         return appSharedPrefs.getFloat("last_paid_location_longitude", 0.0f);
+     }
+     
      public ArrayList<String> getLicensePlateList()
      {
     	 String[] list = getLicensePlateString().split(";");

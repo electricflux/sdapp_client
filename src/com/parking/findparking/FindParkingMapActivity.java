@@ -38,6 +38,7 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 	private static MapView mapView;
 	private static MapController mapController;
 	private static MapOverLays itemizedOverlays;
+	private static MapOverLays myItemizedOverlays;
 	private static Context myContext;
 
 	private ParkingLocationManager pLocationManger = null;
@@ -46,7 +47,7 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 	private static Vector<ParkingSpots> parkingSpotsVector = new Vector<ParkingSpots>();
 	private GetLocationList mGetLocationList = null;
 	private static long minTime = 1000;
-	private static float minDistance = 1000;
+	private static float minDistance = 300;
 	private static LocationManager locationManager = null;
 	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
 
@@ -92,6 +93,12 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 		setUpLocationManager();
 		setUpMapView();
 		setUpMapController();
+		
+		if (false == locationFixedToDowntown)
+		{
+			updateCurrentUserLocation();
+			Log.v(TAG, "updateCurrentUserLocation");
+		}
 
 	}
 
@@ -120,7 +127,7 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 		Drawable userLocationBlueMarker = this.getResources().getDrawable(
 				R.drawable.map_marker_blue);// map_marker_black);
 
-		itemizedOverlays = new MapOverLays(userLocationBlueMarker, this);
+		myItemizedOverlays = new MapOverLays(userLocationBlueMarker, this);
 
 		// Gives the blue 'google' location marker
 		final MyLocationOverlay myLocOverlay = new MyLocationOverlay(this,
@@ -186,7 +193,10 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 		myDbHelper = new DataBaseHelper(myContext);
 
 		if (false == locationFixedToDowntown)
-			updateCurrentUserLocation();
+		{
+			//updateCurrentUserLocation();
+			Log.v(TAG, "here");
+		}
 		else if (locationFixedToDowntown && (false == staticDowntownMapPopulated))
 		{
 			overlayParkingSpots();
@@ -260,19 +270,23 @@ public class FindParkingMapActivity extends MapActivity implements LocationListe
 		int lng = (int) (location.getLongitude() * 1E6);
 		GeoPoint point = new GeoPoint(lat, lng);
 		//createMarker();
-		mapController.animateTo(point); // mapController.setCenter(point);
-		Log.v(TAG, "Loc" + location.getLatitude() +  location.getLongitude() );
+		
+		Log.v(TAG, "Loc change call back : " + location.getLatitude() +  location.getLongitude() );
 
-		List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
-		ParkingLocationDataEntry nLoc = new ParkingLocationDataEntry();
-		nLoc.setLatitude((float)location.getLatitude());
-		nLoc.setLongitude((float)location.getLongitude());
-		nLocList.add(nLoc);
+		
 
 		if (mGetLocationList  == null){
+			mapController.animateTo(point); // mapController.setCenter(point);	
+			List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
+			ParkingLocationDataEntry nLoc = new ParkingLocationDataEntry();
+			nLoc.setLatitude((float)location.getLatitude());
+			nLoc.setLongitude((float)location.getLongitude());
+			nLocList.add(nLoc);
 			mGetLocationList = new GetLocationList(getBaseContext(), mapView, this);
 			mGetLocationList.execute(nLocList);
 		}
+		else
+			Log.v(TAG,"Async task still running");
 	}
 
 	@Override

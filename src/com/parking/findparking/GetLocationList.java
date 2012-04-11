@@ -98,7 +98,7 @@ public class GetLocationList extends AsyncTask<List<ParkingLocationDataEntry>, V
 			Drawable drawable = myContext.getResources().getDrawable(
 					R.drawable.map_marker_blue);// map_marker_black);
 			itemizedOverlays = new MapOverLays(drawable, myContext);
-
+			Log.v(TAG, "Parked item size" + FindParkingTabs.parkingLocations.size());
 			for (ParkingLocationDataEntry parkingSpot : FindParkingTabs.parkingLocations) {
 				pSpotGeoPoint = parkingSpot.getGeoPoint();
 				address = "empty";//convertPointToLocation(pSpotGeoPoint);

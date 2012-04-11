@@ -22,7 +22,7 @@ public class ParkingConstants {
 
 	public static final float DOWNTOWN_FIXED_LATITUDE = 32.71283f;
 	public static final float DOWNTOWN_FIXED_LONGITUDE = -117.165695f;
-	public static final int DISTANCE_RADIUS = 50;
-	public static final int MAX_NUM_POINTS = 200;
+	public static final int DISTANCE_RADIUS = 25;
+	public static final int MAX_NUM_POINTS = 100;
 
 }

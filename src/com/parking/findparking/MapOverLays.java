@@ -19,7 +19,7 @@ public class MapOverLays extends ItemizedOverlay<OverlayItem> {
 
 	private static final String TAG = "MapOverLays";
 	private Context mContext;
-	private static int maxNum = 10;
+	
 	private ArrayList<OverlayItem> overlays ;
 	private int index = 0;
 	private boolean full = false;

@@ -259,10 +259,6 @@ OnItemSelectedListener {
 		new CatalogEntry("android.test.purchased", R.string.hr1min30, Managed.UNMANAGED),
 		new CatalogEntry("android.test.purchased", R.string.hr1min45, Managed.UNMANAGED),
 		new CatalogEntry("android.test.purchased", R.string.hr2, Managed.UNMANAGED),
-
-		new CatalogEntry("android.test.canceled", R.string.android_test_canceled, Managed.UNMANAGED),
-		new CatalogEntry("android.test.refunded", R.string.android_test_refunded, Managed.UNMANAGED),
-		new CatalogEntry("android.test.item_unavailable", R.string.android_test_item_unavailable, Managed.UNMANAGED),
 	};
 
 	private static final long NUM_MILLIS_IN_A_MINUTE = 60*1000;

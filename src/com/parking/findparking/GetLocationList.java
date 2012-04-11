@@ -16,6 +16,7 @@ import com.parking.datamanager.ParkingLocationDataEntry;
 import com.parking.datamanager.ParkingLocationsAll;
 import com.parking.dbManager.DataBaseHelper;
 import com.parking.utils.LocationUtility;
+import com.parking.utils.ParkingConstants;
 
 public class GetLocationList extends AsyncTask<List<ParkingLocationDataEntry>, Void, Boolean >
 {
@@ -44,12 +45,19 @@ public class GetLocationList extends AsyncTask<List<ParkingLocationDataEntry>, V
 
 		Log.v( TAG, "doInBackground()" + nLocList.size());
 		nLoc = nLocList.get(0);
+		
+		Log.v(TAG,"Get Location List executing with lat: "+nLoc.getLatitude() +
+			  " and longitude : "+nLoc.getLongitude());
 
 		DataBaseHelper myDbHelper = new DataBaseHelper(myContext);
-		//FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
-		FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(50, 200, (float)nLoc.getLatitude(), (float)nLoc.getLongitude(), myDbHelper);
-		Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
-
+		FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(
+				ParkingConstants.DISTANCE_RADIUS, 
+				ParkingConstants.MAX_NUM_POINTS, 
+				(float)nLoc.getLatitude(), 
+				(float)nLoc.getLongitude(), 
+				myDbHelper);
+		
+		Log.v(TAG,"Got "+FindParkingTabs.parkingLocations.size()+" spots to render on map");
 		overlayTappableParkingSpots();
 		return true;
 	}
@@ -91,19 +99,14 @@ public class GetLocationList extends AsyncTask<List<ParkingLocationDataEntry>, V
 					R.drawable.map_marker_blue);// map_marker_black);
 			itemizedOverlays = new MapOverLays(drawable, myContext);
 
-			Log.v(TAG, "here ..4");
 			for (ParkingLocationDataEntry parkingSpot : FindParkingTabs.parkingLocations) {
-
-
 				pSpotGeoPoint = parkingSpot.getGeoPoint();
 				address = "empty";//convertPointToLocation(pSpotGeoPoint);
 				sPpotInfo = LocationUtility.convertObjToString(parkingSpot);
-				//sPpotInfo = "empty string";
 				overlayitem = new OverlayItem(pSpotGeoPoint, address, sPpotInfo);
 				itemizedOverlays.addOverlay(overlayitem);
 			}
 			mapView.getOverlays().add(itemizedOverlays);
-			// Toast.makeText(getBaseContext(), address, Toast.LENGTH_SHORT).show();
 			mapView.postInvalidate();
 		}
 

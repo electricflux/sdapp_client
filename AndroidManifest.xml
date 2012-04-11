@@ -90,11 +90,13 @@
             android:name="com.parking.billing.ParkingPayment"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        <activity android:name="com.parking.auth.GetAccountListActivity" >
+        <activity 
+            android:name="com.parking.auth.GetAuthTokenActivity" 
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        <activity android:name="com.parking.auth.GetAuthTokenActivity" >
-        </activity>
-        <activity android:name="com.parking.auth.RegisterUserActivity" >
+        <activity 
+            android:name="com.parking.auth.RegisterUserActivity" 
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name="com.parking.rulesandregulations.RulesandRegulations"
@@ -106,8 +108,9 @@
         </activity>
 
          <!-- In App Billing Test -->
-         <activity android:name="com.parking.billing.ParkingPayment"
-                  android:theme="@android:style/Theme.NoTitleBar">
+         <activity 
+             android:name="com.parking.billing.ParkingPayment"
+             android:theme="@android:style/Theme.NoTitleBar">
          </activity>
          
          <uses-library android:name="com.google.android.maps" />

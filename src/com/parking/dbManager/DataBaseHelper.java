@@ -329,6 +329,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int count=0;
         for (int i = 0; i < arrayOfLocation.length; i++)
         {
+<<<<<<< HEAD
+=======
+        	//Log.v(TAG, "here 1" + arrayOfLocation[i].getDistance() );
+        	
+>>>>>>> 53f712fe2d87bab20361cae3717f50c394627b95
 			if (count >= limit )
         		break;
         	parkingLocations.add(arrayOfLocation[i]);

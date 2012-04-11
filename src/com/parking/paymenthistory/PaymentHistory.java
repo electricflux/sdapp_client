@@ -32,11 +32,11 @@ public class PaymentHistory extends ListActivity{
 
    private void linkToCursorAdapter() {
       String[] from = new String[] {PurchaseDatabase.HISTORY_ADDRESS_COL, 
-                                    PurchaseDatabase.HISTORY_DURATION_COL, 
                                     PurchaseDatabase.HISTORY_STARTTIME,
+                                    PurchaseDatabase.HISTORY_DURATION_COL,
                                     PurchaseDatabase.HISTORY_AMOUNT_PAID_COL 
                                     };
-      int[] to = new int[] {R.id.parkedAmount,
+      int[] to = new int[] {R.id.parkedAddress,
                             R.id.parkedTime,
                             R.id.parkedDuration, 
                             R.id.parkedAmount};

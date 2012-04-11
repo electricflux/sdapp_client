@@ -3,14 +3,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dip" >
-   <TextView
-      android:id="@+id/parkedAddress"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="16dip"
-      android:text="Address" />
-      
+        android:paddingLeft="12dip"
+        android:background="#fff">
 <LinearLayout 
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -20,23 +14,52 @@
       android:id="@+id/parkedTime"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="12dip"
+      android:textSize="18dip"
       android:text="7:45pm"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      android:textColor="#000" />
    <TextView
       android:id="@+id/parkedDuration"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="12dip"
-      android:text="2 hr"
+      android:textSize="18dip"
+      android:text="15"
+      android:textColor="#000" />
+      
+   <TextView
+      android:id="@+id/parkedDurationSuffix"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="18dip"
+      android:textColor="#000"
+      android:text="min"
       android:layout_weight="1" />
+      
+      <TextView
+      android:id="@+id/parkedDurationSuffix"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="18dip"
+      android:textColor="#000"
+      android:text="$" />   
    <TextView
       android:id="@+id/parkedAmount"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="12dip"
-      android:text="$0"
-      android:gravity="right"
-      android:layout_weight="1" />
+      android:textSize="18dip"
+      android:text="0"
+
+      android:layout_weight="1"
+      android:textColor="#000" />
    </LinearLayout>
+   
+      <TextView
+      android:id="@+id/parkedAddress"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="16dip"
+      android:text="Address"
+      android:textColor="#000" />
+      
+   
 </LinearLayout>

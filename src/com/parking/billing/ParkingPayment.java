@@ -17,6 +17,7 @@
 package com.parking.billing;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +34,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,6 +55,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.maps.GeoPoint;
 import com.parking.application.ParkingApplication;
 import com.parking.auth.AsyncTaskResultNotifierInterface;
 import com.parking.billing.BillingConstants.PurchaseState;
@@ -62,6 +66,7 @@ import com.parking.dashboard.R;
 import com.parking.dashboard.activity.DashboardActivity;
 import com.parking.datamanager.ParkingLocationDataEntry;
 import com.parking.utils.LocationUtility;
+import com.parking.utils.ParkingConstants;
 
 /**
  * A sample application that demonstrates in-app billing.
@@ -85,7 +90,7 @@ public class ParkingPayment extends Activity implements OnClickListener,
 	private CatalogAdapter mCatalogAdapter;
 
 	//Parking data that comes in from the previous activity
-	public static ParkingLocationDataEntry parkingLocationObj = null;
+	public static ParkingLocationDataEntry parkingLocationObj = new ParkingLocationDataEntry();
 	public int nLeastCountTime = 15;
 
 	private ParkingPurchaseObserver mParkingPurchaseObserver;
@@ -300,11 +305,17 @@ public class ParkingPayment extends Activity implements OnClickListener,
 		TextView textAll = (TextView) findViewById(R.id.parkingAllDetailsTextView);
 
 		parkingLocationObj = LocationUtility.convertStringToObject(all);
-		textAll.setText( "Details...\n"
-				+ "Lat:     " + parkingLocationObj.getLatitude()   +"\n" 
-				+ "Lon:     " + parkingLocationObj.getLongitude()  +"\n"
-				+ "MeterId: " + parkingLocationObj.getMeterID()    +"\n"
-				+ "Address: " + parkingLocationObj.getAddress()    +"\n"
+		
+      String locAddress = "Address unavailable";
+      Geocoder geoCoder = new Geocoder(DashboardActivity.myContext, Locale.getDefault());
+      GeoPoint gp = new GeoPoint((int)(parkingLocationObj.getLatitude() * 1E6), (int)(parkingLocationObj.getLongitude() * 1E6));
+      locAddress = LocationUtility.ConvertPointToLocation(gp, geoCoder);
+      parkingLocationObj.setAddress(locAddress);
+      
+		textAll.setText( 
+				"MeterId: " + parkingLocationObj.getMeterID()    +"\n"
+				+ "Address: " + parkingLocationObj.getAddress()  +"\n"
+				+ "Type: " + parkingLocationObj.getParkingType() +"\n"
 				);
 
 		setupWidgets();

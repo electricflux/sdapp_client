@@ -305,7 +305,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                             {
         
                                                               
-                                int ilat = (int) (dbLat * 1E6);
+                        int ilat = (int) (dbLat * 1E6);
         						int ilng = (int) (dbLon * 1E6);
         						GeoPoint point = new GeoPoint(ilat, ilng);
         						

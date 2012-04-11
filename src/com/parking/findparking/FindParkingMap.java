@@ -1,12 +1,9 @@
 package com.parking.findparking;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
-
-import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -30,7 +27,6 @@ import com.parking.datamanager.DBInterface;
 import com.parking.datamanager.ParkingLocationDataEntry;
 import com.parking.datamanager.ParkingLocationsAll;
 import com.parking.dbManager.DataBaseHelper;
-import com.parking.findparking.FindParkingMap.GetLocationList;
 import com.parking.location.ParkingLocationManager;
 import com.parking.location.ParkingSpots;
 import com.parking.utils.LocationUtility;

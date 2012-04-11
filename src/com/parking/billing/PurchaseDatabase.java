@@ -124,9 +124,10 @@ public class PurchaseDatabase {
            values.put(HISTORY_LON_COL, parkingSpotObj.getLongitude());
            values.put(HISTORY_RATE_COL, parkingSpotObj.getRate());
            
+           String add = parkingSpotObj.getAddress();
            //TODO, calculate the amount paid
-           values.put(HISTORY_AMOUNT_PAID_COL, "0");
-           values.put(HISTORY_STARTTIME, new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date(purchaseTime*1000)));
+           values.put(HISTORY_AMOUNT_PAID_COL, parkingSpotObj.getQuantity() * parkingSpotObj.getRate());
+           values.put(HISTORY_STARTTIME, new java.text.SimpleDateFormat("d MMM ''yy, h:mm a").format(new java.util.Date(System.currentTimeMillis())));
            values.put(HISTORY_DURATION_COL, parkingSpotObj.getDuration());
            values.put(HISTORY_METERID_COL, parkingSpotObj.getMeterID());
            values.put(HISTORY_ADDRESS_COL, parkingSpotObj.getAddress());

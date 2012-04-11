@@ -58,6 +58,8 @@ public class PurchaseDatabase {
     public static final String HISTORY_STARTTIME = "StartTime";
     public static final String HISTORY_DURATION_COL = "Duration";
     public static final String HISTORY_METERID_COL = "MeterId";
+    public static final String HISTORY_ADDRESS_COL = "Address";
+    
     //TODO Add address 
     
     private static final String[] HISTORY_COLUMNS = {
@@ -66,7 +68,8 @@ public class PurchaseDatabase {
         HISTORY_IDX_COL, HISTORY_METERID_COL,  
         HISTORY_LAT_COL, HISTORY_LON_COL, 
         HISTORY_RATE_COL, HISTORY_AMOUNT_PAID_COL, 
-        HISTORY_STARTTIME, HISTORY_DURATION_COL 
+        HISTORY_STARTTIME, HISTORY_DURATION_COL,
+        HISTORY_ADDRESS_COL
         
     };
 
@@ -123,9 +126,10 @@ public class PurchaseDatabase {
            
            //TODO, calculate the amount paid
            values.put(HISTORY_AMOUNT_PAID_COL, "0");
-           values.put(HISTORY_STARTTIME, purchaseTime);
+           values.put(HISTORY_STARTTIME, new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date(purchaseTime*1000)));
            values.put(HISTORY_DURATION_COL, parkingSpotObj.getDuration());
            values.put(HISTORY_METERID_COL, parkingSpotObj.getMeterID());
+           values.put(HISTORY_ADDRESS_COL, parkingSpotObj.getAddress());
         }
         mDb.replace(PURCHASE_HISTORY_TABLE_NAME, null /* nullColumnHack */, values);
     }
@@ -251,6 +255,7 @@ public class PurchaseDatabase {
                     HISTORY_AMOUNT_PAID_COL + " FLOAT, " +
                     HISTORY_STARTTIME + " TEXT, " +
                     HISTORY_DURATION_COL + " INTEGER, " +
+                    HISTORY_ADDRESS_COL + " TEXT, " +
                     HISTORY_METERID_COL + " TEXT)");
             db.execSQL("CREATE TABLE " + PURCHASED_ITEMS_TABLE_NAME + "(" +
                     PURCHASED_ORDER_ID_COL + " AUTO PRIMARY KEY, " +

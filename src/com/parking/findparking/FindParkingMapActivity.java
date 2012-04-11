@@ -1,15 +1,17 @@
 package com.parking.findparking;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
+
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,11 +41,9 @@ public class FindParkingMapActivity extends MapActivity {
 	private static MapOverLays itemizedOverlays;
 	private static Context myContext;
 
-	private LocationManager locationManager;
 	private ParkingLocationManager pLocationManger = null;
 	private DataBaseHelper myDbHelper = null;
 
-	private static boolean onCreateCompleted = false;
 	private static Vector<ParkingSpots> parkingSpotsVector = new Vector<ParkingSpots>();
 	private Vector<GeoPoint> geoPointsVector = new Vector<GeoPoint>();
 	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
@@ -57,32 +57,32 @@ public class FindParkingMapActivity extends MapActivity {
 		myContext = getBaseContext();
 
 		pLocationManger = new ParkingLocationManager(getApplicationContext());
-		
-		
+
+
 		setUpLocationManager();
 		setUpMapView();
 		setUpMapController();
 
 	}
 
+	@SuppressWarnings({ "null", "unchecked" })
 	private void overlayParkingSpots() {
-		// String parkingURI = parkingSpotsProvider.CONTENT_URI;
-		String selection = "";
 
-		// Temporary Dummy
-		GeoPoint gp = new GeoPoint(0, 0);
-
-		//myDbHelper.dbquery(gp, parkingLocations);
-		
-		
 		FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
 		
 		Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
 		
 		overlayTappableParkingSpots();
 
-		//myDbHelper.close();
+		//Async activity to get the parking stops from db
 
+		List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
+		ParkingLocationDataEntry nLoc = new ParkingLocationDataEntry();
+		nLoc.setLatitude((float)32.71283);
+		nLoc.setLongitude((float) -117.165695);
+		nLocList.add(nLoc);
+		GetLocationList mGetLocationList = new GetLocationList();
+		mGetLocationList.execute(nLocList);
 	}
 
 	private void overlayTappableParkingSpots() {
@@ -98,27 +98,27 @@ public class FindParkingMapActivity extends MapActivity {
 		Log.v(TAG, "here ..4");
 		for (ParkingLocationDataEntry parkingSpot : FindParkingTabs.parkingLocations) {
 
-			
+
 			pSpotGeoPoint = parkingSpot.getGeoPoint();
 			address = "empty";//convertPointToLocation(pSpotGeoPoint);
 			sPpotInfo = LocationUtility.convertObjToString(parkingSpot);
 			//sPpotInfo = "empty string";
 			overlayitem = new OverlayItem(pSpotGeoPoint, address, sPpotInfo);
 			itemizedOverlays.addOverlay(overlayitem);
-		}	
-			mapView.getOverlays().add(itemizedOverlays);
-	//		Toast.makeText(getBaseContext(), address, Toast.LENGTH_SHORT).show();
-	 		mapView.postInvalidate();
-			
-		
+		}
+		mapView.getOverlays().add(itemizedOverlays);
+		// Toast.makeText(getBaseContext(), address, Toast.LENGTH_SHORT).show();
+		mapView.postInvalidate();
+
+
 	}
 
-//	private String convertObjToString(ParkingLocationDataEntry parkingSpot) {
-//		String pSpotInfo = Float.toString(parkingSpot.getLatitude()) + ","
-//				+ Float.toString(parkingSpot.getLongitude()) + ","
-//				+ parkingSpot.getMeterID();
-//		return pSpotInfo;
-//	}
+	// private String convertObjToString(ParkingLocationDataEntry parkingSpot) {
+	// String pSpotInfo = Float.toString(parkingSpot.getLatitude()) + ","
+	// + Float.toString(parkingSpot.getLongitude()) + ","
+	// + parkingSpot.getMeterID();
+	// return pSpotInfo;
+	// }
 
 	private void updateCurrentUserLocation() {
 
@@ -185,8 +185,6 @@ public class FindParkingMapActivity extends MapActivity {
 	public void onDestroy() {
 		super.onDestroy();
 		// parkingSpotsCursor.close();
-		Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT)
-				.show();
 
 	}
 
@@ -201,7 +199,7 @@ public class FindParkingMapActivity extends MapActivity {
 		myDbHelper.openDataBase();
 		
 		overlayParkingSpots();
-		
+
 	}
 
 	@Override
@@ -211,7 +209,6 @@ public class FindParkingMapActivity extends MapActivity {
 		/** close database connection here */
 		myDbHelper.close();
 		myDbHelper = null;
-		
 	}
 
 	private static void createMarker() {
@@ -232,7 +229,7 @@ public class FindParkingMapActivity extends MapActivity {
 		String address = "";
 		Geocoder geoCoder = new Geocoder(myContext, Locale.getDefault());
 		return LocationUtility.ConvertPointToLocation(point, geoCoder);
-	//	return address;
+		// return address;
 	}
 
 	@Override
@@ -251,7 +248,7 @@ public class FindParkingMapActivity extends MapActivity {
 	private static void showNearbyParkingSpots(Location currentNewLocation) {
 
 		parkingSpotsVector = DBInterface
-				.getNearByParkingSpots(currentNewLocation);
+		.getNearByParkingSpots(currentNewLocation);
 
 	}
 
@@ -265,5 +262,56 @@ public class FindParkingMapActivity extends MapActivity {
 
 	}
 
+	protected class GetLocationList extends AsyncTask<List<ParkingLocationDataEntry>, Void, Boolean >
+	{
 
+		@Override
+		protected Boolean doInBackground(
+				List<ParkingLocationDataEntry>... arg0) {
+			Log.v( TAG, "doInBackground()" );
+
+			/** Add your data */
+			List<ParkingLocationDataEntry> nLocList = arg0[0];
+			ParkingLocationDataEntry nLoc;
+
+			Log.v( TAG, "doInBackground()" + nLocList.size());
+			nLoc = nLocList.get(0);
+
+			DataBaseHelper myDbHelper = new DataBaseHelper(myContext);
+			//FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)32.71283, (float)-117.165695, myDbHelper);
+			FindParkingTabs.parkingLocations = mParkingLocationsAll.getParkingLocations(2, 200, (float)nLoc.getLatitude(), (float)nLoc.getLongitude(), myDbHelper);
+			Log.v(TAG, "NULLLLL" + FindParkingTabs.parkingLocations.size());
+
+			overlayTappableParkingSpots();
+			return true;
+		}
+
+		// -- gets called just before thread begins
+		@Override
+		protected void onPreExecute()
+		{
+			Log.v( TAG, "onPreExecute()" );
+			super.onPreExecute();
+
+		}
+
+		// -- called if the cancel button is pressed
+		@Override
+		protected void onCancelled()
+		{
+			super.onCancelled();
+			Log.i( TAG, "onCancelled()" );
+		}
+
+		// // -- called as soon as doInBackground method completes
+		// // -- notice that the third param gets passed to this method
+		// @Override
+		// protected void onPostExecute( String result )
+		// {
+		// super.onPostExecute(result);
+		// Log.v( TAG, "onPostExecute(): " + result );
+		// }
+
+
+	}
 }

@@ -9,15 +9,5 @@
         android:paddingLeft="15dip"
         android:scaleType="center"
         android:src="@drawable/facebook_logo" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:clickable="true"
-        android:paddingLeft="15dip"
-        android:paddingRight="15dip"
-        android:scaleType="center"
-        android:layout_alignParentRight="true"
-        android:background="#f00"/>
          
 </RelativeLayout>

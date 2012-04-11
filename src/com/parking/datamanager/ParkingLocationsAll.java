@@ -63,7 +63,7 @@ public class ParkingLocationsAll {
         ParkingLocationDataEntry mParkingLocationDataEntry = new ParkingLocationDataEntry();
         if (parkingLocations != null) {
             /* Check if at least one Result was returned. */
-            while (i < limit) {
+            while (i < parkingLocations.size()) {
                 mParkingLocationDataEntry = parkingLocations.get(i);
                 i++;
                 /* Loop through all Results */
@@ -73,8 +73,8 @@ public class ParkingLocationsAll {
                 Long Id = mParkingLocationDataEntry.getId();
                 float Lat = mParkingLocationDataEntry.getLatitude();
                 float Lon = mParkingLocationDataEntry.getLongitude();
-                Log.v(TAG, i + "ParkingLocationsAll :: " + Id + " Lat:: " + Lat
-                        + " Lon:: " + Lon);
+//                Log.v(TAG, i + "ParkingLocationsAll :: " + Id + " Lat:: " + Lat
+//                        + " Lon:: " + Lon);
 
             }
         }

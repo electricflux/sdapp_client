@@ -7,6 +7,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.parking.application.ParkingApplication;
 import com.parking.dashboard.R;
+import com.parking.utils.AppPreferences;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -71,7 +72,9 @@ public class RegisterUserActivity extends Activity implements AsyncTaskResultNot
 					clearButton.performClick();
 					return;
 				}
-					
+				AppPreferences.getInstance().setLicensePlateString(
+						licensePlateNumbersText.getText().toString());
+				
 				List<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("username", 
 						ParkingApplication.getAccount().name));

@@ -72,7 +72,10 @@ public class RegisterUserActivity extends Activity implements AsyncTaskResultNot
 					clearButton.performClick();
 					return;
 				}
+
 				AppPreferences.getInstance().setLicensePlateString(licensePlateNumbersString);
+
+
 				List<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("username", 
 						ParkingApplication.getAccount().name));

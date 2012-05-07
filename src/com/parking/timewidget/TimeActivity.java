@@ -79,11 +79,15 @@ public class TimeActivity extends Activity{
                 int curHours = c.get(Calendar.HOUR_OF_DAY);
                 int curMinutes = c.get(Calendar.MINUTE);
         
-                hours.setCurrentItem(curHours);
-                mins.setCurrentItem(curMinutes);
+                //hours.setCurrentItem(curHours);
+                //mins.setCurrentItem(curMinutes);
+                hours.setCurrentItem(0);
+                mins.setCurrentItem(0);
         
-                picker.setCurrentHour(curHours);
-                picker.setCurrentMinute(curMinutes);
+                //picker.setCurrentHour(curHours);
+                //picker.setCurrentMinute(curMinutes);
+                picker.setCurrentHour(0);
+                picker.setCurrentMinute(0);
         
                 // add listeners
                 addChangingListener(mins, "min");
@@ -93,8 +97,8 @@ public class TimeActivity extends Activity{
                         public void onChanged(WheelView wheel, int oldValue, int newValue) {
                                 if (!timeScrolled) {
                                         timeChanged = true;
-                                        picker.setCurrentHour(hours.getCurrentItem());
-                                        picker.setCurrentMinute(mins.getCurrentItem());
+                                        picker.setCurrentHour(0);
+                                        picker.setCurrentMinute(0);
                                         timeChanged = false;
                                 }
                         }
@@ -166,7 +170,12 @@ public class TimeActivity extends Activity{
         							//do nothing?
         							return ;
         						}
+        						if (false == AppPreferences.getInstance().getGuestLogin())
         						setupAlarm(true);
+        						else {
+        							Toast.makeText(TimeActivity.this, "Setting only a reminder because you are using Guest Account", Toast.LENGTH_LONG).show();
+        							setupAlarm(false);
+        						}
         						
 
         				}
@@ -227,7 +236,7 @@ public class TimeActivity extends Activity{
         	PendingIntent pendingIntent = PendingIntent.getBroadcast(TimeActivity.this, 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 			AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 			alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),   pendingIntent);
-			Toast.makeText(TimeActivity.this, "Alarm set to go after: " + timeInSec + "", Toast.LENGTH_LONG).show();//every 10 minutes i want to print the toast
+			Toast.makeText(TimeActivity.this, "Alarm set to go after: " + timeInSec/60 + "mins", Toast.LENGTH_LONG).show();//every 10 minutes i want to print the toast
 			Log.v(TAG, "Wait time in seconds: " + timeInSec);
 			 
 			if (payActivityLaunch) {

@@ -56,6 +56,12 @@ public class AppPreferences {
          prefsEditor.putFloat("last_paid_location_longitude", longitude);
          prefsEditor.commit();
      }
+     public void setGuestLogin(boolean guest) {
+    	 Editor prefsEditor;
+    	 prefsEditor = appSharedPrefs.edit();
+         prefsEditor.putBoolean("guest_login", guest);
+         prefsEditor.commit();
+     }
      
      public float getLastPaidLocationLatitude() 
      {
@@ -65,6 +71,11 @@ public class AppPreferences {
      public float getLastPaidLocationLongitude() 
      {
          return appSharedPrefs.getFloat("last_paid_location_longitude", 0.0f);
+     }
+     
+     public boolean getGuestLogin() 
+     {
+         return appSharedPrefs.getBoolean("guest_login", false);
      }
      
      public ArrayList<String> getLicensePlateList()

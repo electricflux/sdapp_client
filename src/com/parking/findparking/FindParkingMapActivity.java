@@ -38,7 +38,7 @@ import com.parking.location.ParkingSpots;
 import com.parking.utils.LocationUtility;
 import com.parking.utils.ParkingConstants;
 
-public class FindParkingMapActivity extends MapActivity implements AsyncTaskResultNotifierInterface, LocationListener {
+public class FindParkingMapActivity extends MapActivity implements AsyncTaskResultNotifierInterface {
 
 	private static final String TAG = "FindParkingMap";
 	ParkMapView mMapView;
@@ -57,7 +57,7 @@ public class FindParkingMapActivity extends MapActivity implements AsyncTaskResu
 	
 	private static LocationManager locationManager = null;
 	ParkingLocationsAll mParkingLocationsAll = new ParkingLocationsAll();
-	public MyLocationOverlay myLocOverlay ;
+	public DerivedMyLocationOverlay myLocOverlay ;
 	private boolean locationFixedToDowntown = false;
 	private boolean staticDowntownMapPopulated = false;
 
@@ -191,7 +191,7 @@ public class FindParkingMapActivity extends MapActivity implements AsyncTaskResu
 		Toast.makeText(getApplicationContext(), "Updating Location...",
 				Toast.LENGTH_LONG).show();
 
-		myLocOverlay = new MyLocationOverlay(this,
+		myLocOverlay = new DerivedMyLocationOverlay(this,
 				mMapView);
 		// Gives the blue 'google' location marker
 		
@@ -351,7 +351,41 @@ public class FindParkingMapActivity extends MapActivity implements AsyncTaskResu
 			}	
 		}
 		
+		public class DerivedMyLocationOverlay extends MyLocationOverlay {
+			Context myContext;
+			public DerivedMyLocationOverlay(Context arg0, MapView arg1) {
+				super(arg0, arg1);
+				myContext = arg0;
+				// TODO Auto-generated constructor stub
+			}
 
+			public void onLocationChanged(Location location) {
+				int lat = (int) (location.getLatitude() * 1E6);
+				int lng = (int) (location.getLongitude() * 1E6);
+				GeoPoint point = new GeoPoint(lat, lng);
+				//createMarker();
+				Toast.makeText(getApplicationContext(), "Location changed called",
+						Toast.LENGTH_LONG).show();		
+				Log.v(TAG, "Loc change call back : " + location.getLatitude() +  location.getLongitude() );
+				if (mGetLocationList  == null){
+					mapController.animateTo(point); // mapController.setCenter(point);	
+					List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
+					ParkingLocationDataEntry nLoc = new ParkingLocationDataEntry();
+					nLoc.setLatitude((float)location.getLatitude());
+					nLoc.setLongitude((float)location.getLongitude());
+					nLocList.add(nLoc);
+					mGetLocationList = new GetLocationList(getBaseContext(), mMapView, FindParkingMapActivity.this);
+					mGetLocationList.execute(nLocList);
+				}
+				else
+					Log.v(TAG,"Async task still running");
+				
+				
+			}
+			
+			
+		}
+		
 	public static String convertPointToLocation(GeoPoint point) {
 		Geocoder geoCoder = new Geocoder(myContext, Locale.getDefault());
 		return LocationUtility.ConvertPointToLocation(point, geoCoder);
@@ -364,43 +398,7 @@ public class FindParkingMapActivity extends MapActivity implements AsyncTaskResu
 
 	
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void onLocationChanged(Location location) {
-		int lat = (int) (location.getLatitude() * 1E6);
-		int lng = (int) (location.getLongitude() * 1E6);
-		GeoPoint point = new GeoPoint(lat, lng);
-		//createMarker();
-		Toast.makeText(getApplicationContext(), "Location changed called",
-				Toast.LENGTH_LONG).show();		
-		Log.v(TAG, "Loc change call back : " + location.getLatitude() +  location.getLongitude() );
-		if (mGetLocationList  == null){
-			mapController.animateTo(point); // mapController.setCenter(point);	
-			List<ParkingLocationDataEntry> nLocList = new LinkedList<ParkingLocationDataEntry>();
-			ParkingLocationDataEntry nLoc = new ParkingLocationDataEntry();
-			nLoc.setLatitude((float)location.getLatitude());
-			nLoc.setLongitude((float)location.getLongitude());
-			nLocList.add(nLoc);
-			mGetLocationList = new GetLocationList(getBaseContext(), mMapView, this);
-			mGetLocationList.execute(nLocList);
-		}
-		else
-			Log.v(TAG,"Async task still running");
-		
-		
-	}
 
-	@Override
-	public void onProviderDisabled(String provider) {
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-	}
 	@Override
 	public void notifyResult(boolean result) {
 		//dismissDialog(0);

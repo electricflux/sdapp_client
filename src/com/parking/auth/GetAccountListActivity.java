@@ -16,6 +16,8 @@ import android.widget.ListView;
 
 import com.parking.application.ParkingApplication;
 import com.parking.dashboard.R;
+import com.parking.dashboard.activity.DashboardActivity;
+import com.parking.utils.AppPreferences;
 
 public class GetAccountListActivity extends ListActivity{
 	protected AccountManager accountManager;
@@ -36,21 +38,34 @@ public class GetAccountListActivity extends ListActivity{
         
         accountManager = AccountManager.get(getApplicationContext());
 		accounts = accountManager.getAccountsByType("com.google");
+		
 		ArrayList<String> accountNameArray = new ArrayList<String>(accounts.length);
 		for(int i=0; i<accounts.length; i++)
 		{
 			accountNameArray.add(accounts[i].name);
 		}
+		accountNameArray.add("Guest Login");
 		this.setListAdapter(new ArrayAdapter(this, R.layout.listitem, accountNameArray)); 
     }
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		//We do position -1 to get the position in the array (array starts from zero).
+		Intent intent;
+		if ("Guest Login" == l.getItemAtPosition(position)){
+			ParkingApplication.setUserAuthenticated(true);
+			AppPreferences.getInstance().setGuestLogin(true);
+			intent = new Intent(this, DashboardActivity.class );
+			startActivity(intent);
+			finish();
+			return;
+		}
 		ParkingApplication.setAccount(accounts[position-1]);
-		Intent intent = new Intent(this, GetAuthTokenActivity.class);
+		
+		intent = new Intent(this, GetAuthTokenActivity.class);
 		startActivity(intent);
 		finish();
+					
 	}
 	
 	/** Disable back-button press on login activity */

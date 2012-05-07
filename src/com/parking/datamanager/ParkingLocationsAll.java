@@ -12,12 +12,12 @@ public class ParkingLocationsAll {
 
 	private List<ParkingLocationDataEntry> parkingLocations = new LinkedList<ParkingLocationDataEntry>();
 
-	public List<ParkingLocationDataEntry>  getParkingLocations(int limit, DataBaseHelper myDbHelper)
+	public List<ParkingLocationDataEntry>  getAllParkingLocations(DataBaseHelper myDbHelper)
 	{
 		try {
 
 			myDbHelper.openDataBase();
-			myDbHelper.dbquery(limit, parkingLocations);
+			myDbHelper.dbquery(parkingLocations);
 			myDbHelper.close();
 
 		} catch (SQLException sqle) {

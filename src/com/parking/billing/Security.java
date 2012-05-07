@@ -123,8 +123,9 @@ public class Security {
         if (BillingConstants.DEBUG) {
             Log.i(TAG, "signedData: " + signedData);
         }
-        //boolean verified = false;
-        boolean verified = true;
+        
+        boolean verified = false;
+        
         if (!TextUtils.isEmpty(signature)) {
             /**
              * Compute your public key (that you got from the Android Market publisher site).
@@ -139,8 +140,10 @@ public class Security {
              * Generally, encryption keys / passwords should only be kept in memory
              * long enough to perform the operation they need to perform.
              */
-            //String base64EncodedPublicKey = "your public key here";
-            String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj7zgTswMi1ePyAK7rCnCOkpmviHZzoSn2cxtyQ5ZQRFifNGkKq3Gli3VbeIeeJR8GHzlfOPUSgtMrd17WtGJoo29rsw6UuXov+imQutGKZglcM/cIrlIdZCsse3dGYyDcKFhEHrC/nPdwlYxgIGBaZKAcbbhitkdgYaVHQvGFTagCytxDq9NDJAY7exSKKm2HimfjlcBZjhHeImZ+cRCPux+9uoBQ4mTRYjrXfcpi/OPKTKsq2AHXf/y60qsZJlgGl3tBgRQo6lOEr7UbbHKESTKvOQ4t3J1wjNz8Z3+T0PZHb5JkeTsdAE7cG7jmz2HmMxfdXcT5mBTTDei6DPDGwIDAQAB";
+        	//Chintan's Key
+            String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuRIrk/6nAPzZo5HKe261/ZMfoe63mtY5QUlc0A0/77RTicrS9Nk1VjtVniRpHmjasQOGsQrBpBGJUYp0ixsjJpgfjLv7OvpF8Hp/ucth2T/Bm7kl/odRDT3urAp3snvqZEzfOg1wtDU7DAnDW1zNSqVNCVczXRnNrEmGxEjamKkTTQwz37ui7AhjKXCXAJY4n5ANj1oymnjGN5FHfzcMb07wR/ucz39ZX+Raf6qBsbnYkmuDH6pJ/4ZI9+vjbgWzXCx07DefQW4dtNMQZlVlKgKnJUkafePUYJVIO4sRgeWL1e5b8dbIYMO7gB9oopyfVhZifi+pDGr5+YAxi6D3PwIDAQAB";
+            //Mandar's Key:
+            //String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj7zgTswMi1ePyAK7rCnCOkpmviHZzoSn2cxtyQ5ZQRFifNGkKq3Gli3VbeIeeJR8GHzlfOPUSgtMrd17WtGJoo29rsw6UuXov+imQutGKZglcM/cIrlIdZCsse3dGYyDcKFhEHrC/nPdwlYxgIGBaZKAcbbhitkdgYaVHQvGFTagCytxDq9NDJAY7exSKKm2HimfjlcBZjhHeImZ+cRCPux+9uoBQ4mTRYjrXfcpi/OPKTKsq2AHXf/y60qsZJlgGl3tBgRQo6lOEr7UbbHKESTKvOQ4t3J1wjNz8Z3+T0PZHb5JkeTsdAE7cG7jmz2HmMxfdXcT5mBTTDei6DPDGwIDAQAB";
             PublicKey key = Security.generatePublicKey(base64EncodedPublicKey);
             verified = Security.verify(key, signedData, signature);
             if (!verified) {
@@ -195,11 +198,10 @@ public class Security {
                  */
                 //TODO - Take care for signed purchases.
                 
-//                
-//                if (purchaseState == PurchaseState.PURCHASED && !verified) {
-//                    continue;
-//                }
-//                
+                if (purchaseState == PurchaseState.PURCHASED && !verified) {
+                    continue;
+                }
+                
                 purchases.add(new VerifiedPurchase(purchaseState, notifyId, productId,
                         orderId, purchaseTime, developerPayload));
             }

@@ -18,6 +18,7 @@ import com.parking.dashboard.R;
 import com.parking.dbManager.DataBaseHelper;
 import com.parking.paymenthistory.PaymentHistory;
 import com.parking.rulesandregulations.RulesandRegulations;
+import com.parking.timewidget.TimeActivity;
 import com.parking.towingcontacts.TowingContacts;
 import com.parking.utils.AppPreferences;
 import com.parking.findparking.LocationSelectorActivity;
@@ -96,8 +97,9 @@ public class DashboardActivity extends Activity{
 				startActivity(intent);
 				break;
 			case R.id.dashboard_button_parkandremind:
-				Toast.makeText(
-						DashboardActivity.this, "Functionality coming soon" , Toast.LENGTH_SHORT).show();
+				i = new Intent(DashboardActivity.this, TimeActivity.class);
+				/*Toast.makeText(
+						DashboardActivity.this, "Functionality coming soon" , Toast.LENGTH_SHORT).show();*/
 				break;
 			case R.id.dashboard_button_towingcontact:
 				i = new Intent(DashboardActivity.this, TowingContacts.class);
@@ -126,6 +128,8 @@ public class DashboardActivity extends Activity{
 			Log.v(TAG,"User is not authenticated. Initiating authentication sequence.");
 			Authenticator.authenticate(this.getBaseContext());
 		}
+		
+		
 	}
 
 }

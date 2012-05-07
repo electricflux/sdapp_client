@@ -27,12 +27,12 @@ public class MyParkingArrayAdapter extends ArrayAdapter<ParkingLocationDataEntry
    private int resource;
    private List<ParkingLocationDataEntry> parkingData = new ArrayList<ParkingLocationDataEntry>(); 
    private ParkingLocationDataEntry parkingSingle = new ParkingLocationDataEntry(); 
-   
+   public Context mContext;
    public MyParkingArrayAdapter(Context context, int textViewResourceId, List<ParkingLocationDataEntry> objects) {
       super(context, textViewResourceId, objects);
       resource = textViewResourceId;
       this.parkingData = (List<ParkingLocationDataEntry>) objects;
-      
+      mContext = context;
       
    }
 
@@ -44,7 +44,8 @@ public class MyParkingArrayAdapter extends ArrayAdapter<ParkingLocationDataEntry
       
       if(convertView == null){
          
-         parkingSpotView = new LinearLayout(DashboardActivity.myContext);
+         //parkingSpotView = new LinearLayout(DashboardActivity.myContext);
+         parkingSpotView = new LinearLayout(mContext);
          LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
          li.inflate(resource, parkingSpotView, true);
          
@@ -59,7 +60,7 @@ public class MyParkingArrayAdapter extends ArrayAdapter<ParkingLocationDataEntry
       parkingSingle = parkingData.get(position);
       
       String address = "Address not found";
-      Geocoder geoCoder = new Geocoder(DashboardActivity.myContext, Locale.getDefault());
+      Geocoder geoCoder = new Geocoder(mContext, Locale.getDefault());
       address = LocationUtility.ConvertPointToLocation(parkingSingle.getGeoPoint(), geoCoder);
       
       addressText.setText(address);
@@ -68,6 +69,7 @@ public class MyParkingArrayAdapter extends ArrayAdapter<ParkingLocationDataEntry
       return parkingSpotView;
       
    }
+   
    
    
 

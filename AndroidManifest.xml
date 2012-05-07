@@ -44,8 +44,14 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.parking.findparking.FindParkingMapActivity"
+            android:name="com.parking.reminder.ParkingReminder"
             android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        
+        <activity
+            android:name="com.parking.findparking.FindParkingMapActivity"
+            android:theme="@android:style/Theme.NoTitleBar" 
+            android:configChanges="orientation">
         </activity>
         <activity
             android:name="com.parking.findparking.ParkingSpotAndPaymentInformation"
@@ -64,6 +70,10 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
+            android:name="com.parking.timewidget.TimeActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>        
+        <activity
             android:name="com.parking.payforspot.PayForSpot"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
@@ -75,10 +85,11 @@
             android:name="com.parking.auth.GetAuthTokenActivity"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+        
         <activity
             android:name="com.parking.auth.RegisterUserActivity"
             android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
+        </activity> 
         <activity
             android:name="com.parking.rulesandregulations.RulesandRegulations"
             android:theme="@android:style/Theme.NoTitleBar" >
@@ -87,7 +98,10 @@
             android:name="com.parking.findparking.LocationSelectorActivity"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-   
+   		<activity
+            android:name="com.parking.findparking.ParkingSpotSelector"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
 
         <!-- In App Billing Test -->
         <activity
@@ -120,8 +134,9 @@
          <uses-library android:name="com.google.android.maps" />
       
          <service android:name="com.parking.billing.BillingService" />
-         
+         <receiver android:name="com.parking.reminder.ParkingReminderReceiver" />
          <receiver android:name="com.parking.billing.BillingReceiver">
+         
 
             <intent-filter>
                 <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />

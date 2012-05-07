@@ -4,7 +4,7 @@ import com.google.android.maps.GeoPoint;
 
 public class ParkingLocationDataEntry {
 
-	private enum ParkingType {
+	public enum ParkingType {
 		PRIVATELOT, MULTISPOT, STREET
 	};
 

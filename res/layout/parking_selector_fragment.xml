@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    android:background="@color/screen_background"
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true">
+
+    <TextView
+        android:id="@+id/spot_details"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dip"
+        android:text="@string/spot_details"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/parkingAllDetailsTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dip"
+        android:text="@string/spot_details"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_below="@+id/spot_details" />
+    <LinearLayout
+        	android:id="@+id/linearlayoutspinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+			android:layout_below="@+id/parkingAllDetailsTextView" >
+            <Spinner
+                android:id="@+id/license_plate_choices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:prompt="@string/select_license_plate_prompt" />
+    
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearlayoutbutton"
+        android:orientation="horizontal"
+        android:background="@android:drawable/bottom_bar"
+        android:paddingLeft="4.0dip"
+        android:paddingTop="5.0dip"
+        android:paddingRight="4.0dip"
+        android:paddingBottom="1.0dip"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_below="@+id/linearlayoutspinner">
+
+        <Button
+            android:id="@+id/directions"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:text="@string/driving_directions" 
+            android:layout_weight="1.0" />
+
+        <Button
+            android:id="@+id/buy_button"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:text="@string/select_spot"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+
+</RelativeLayout>
+

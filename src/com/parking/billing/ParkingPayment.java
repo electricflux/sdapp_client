@@ -88,7 +88,7 @@ OnItemSelectedListener {
 
 	private ParkingPurchaseObserver mParkingPurchaseObserver;
 	private Handler mHandler;
-
+	public int paidTime;
 	private BillingService mBillingService;
 	private Button mBuyButton;
 	private Spinner mSelectItemSpinner;
@@ -285,6 +285,15 @@ OnItemSelectedListener {
 
 		TextView textAll = (TextView) findViewById(R.id.parkingAllDetailsTextView);
 
+		/** Obtain time object **/
+		String timeObj = bundle.getString("time");
+		  try {
+		         paidTime = Integer.parseInt(timeObj);
+		         Log.v(TAG, "Calculated time : " + paidTime);
+		      } catch (NumberFormatException nfe) {
+		         Log.v(TAG, "NumberFormatException: " + nfe.getMessage());
+		      }
+		  
 		/** Create parkingLocationObj */
 		String all = bundle.getString("info");
 		parkingLocationObj = LocationUtility.convertStringToObject(all);
@@ -301,10 +310,11 @@ OnItemSelectedListener {
 		String typeToDisplay  = 
 				parkingLocationObj.getType() == null ? "Not known" : ""+parkingLocationObj.getType();
 
-		textAll.setText( "Details...\n"
-				+ "MeterId: " + parkingLocationObj.getMeterID() + "\n"
+		textAll.setText( "\n"
 				+ "Address: " + parkingLocationObj.getAddress() + "\n"
 				+ "Type:" + typeToDisplay + "\n"
+				+ "MeterId: " + parkingLocationObj.getMeterID() + "\n"				
+				+ "Number of Parking Spots at this location: " + parkingLocationObj.getQuantity() + "\n"
 				);
 
 		setupWidgets();
@@ -428,10 +438,11 @@ OnItemSelectedListener {
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mSelectLicensePlateSpinner.setAdapter(spinnerArrayAdapter);
 
-		mSelectItemSpinner = (Spinner) findViewById(R.id.item_choices);
+		//mSelectItemSpinner = (Spinner) findViewById(R.id.item_choices);
 		mCatalogAdapter = new CatalogAdapter(this, CATALOG);
-		mSelectItemSpinner.setAdapter(mCatalogAdapter);
-		mSelectItemSpinner.setOnItemSelectedListener(this);
+		//mSelectItemSpinner.setAdapter(mCatalogAdapter);
+		paymentCalculation();
+		//mSelectItemSpinner.setOnItemSelectedListener(this);
 	}
 
 	/**
@@ -543,5 +554,16 @@ OnItemSelectedListener {
 	}
 
 	public void onNothingSelected(AdapterView<?> arg0) {
+	}
+	
+	public void paymentCalculation () {
+		CatalogEntry cat = new CatalogEntry("android.test.purchased", R.string.min15, Managed.UNMANAGED);
+		mItemName = getString(cat.nameId);
+		//android.test.purchased
+		mSku = cat.sku;
+		//0 = 15 min, 1 = 30 min, 2 = 45 etc...
+		//total time =  (0+1)* 15
+		mDurationTotalTimeMinutes = (int) paidTime/60;
+		mTimePeriods = 1;	
 	}
 }

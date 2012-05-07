@@ -21,6 +21,9 @@ public class LocationSelectorActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.locationselector);
+		
+	}
+	public void onResume () {
 		Spinner spinner = (Spinner) findViewById(R.id.spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				this, R.array.locations_array, android.R.layout.simple_spinner_item);
@@ -28,6 +31,7 @@ public class LocationSelectorActivity extends Activity {
 		spinner.setAdapter(adapter);
 
 		spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
+		super.onResume();
 	}
 
 	public class MyOnItemSelectedListener implements OnItemSelectedListener {

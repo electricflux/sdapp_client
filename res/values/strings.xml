@@ -32,6 +32,10 @@
     <string name="learn_more">Learn more</string>
     <string name="help_url" formatted="false">http://market.android.com/support/bin/answer.py?answer=1050566&amp;hl=%lang%&amp;dl=%region%</string>
     <string name="pay_now">Pay Now</string>
+    <string name="select_spot">Select Spot</string>
+    <string name="driving_directions">Get Directions</string>
+    <string name="setToRemind">Remind</string>
+    <string name="setToPay">Pay and Remind</string>
     <string name="select_item">Select an item</string>
     <string name="edit_payload">Edit Payload</string>
     <string name="edit_payload_title">Edit the developer payload associated with this purchase</string>

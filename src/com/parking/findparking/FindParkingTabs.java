@@ -21,7 +21,9 @@ import com.parking.utils.ParkingConstants;
 public class FindParkingTabs extends TabActivity {
 
 	public static List<ParkingLocationDataEntry> parkingLocations = new ArrayList<ParkingLocationDataEntry>();
-
+	public static List<ParkingLocationDataEntry> allParkingLocations = new ArrayList<ParkingLocationDataEntry>();
+	public static int zoomlevel=ParkingConstants.DEFAULT_ZOOM_LEVEL;
+    public static boolean parkingListfilled = false;
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);

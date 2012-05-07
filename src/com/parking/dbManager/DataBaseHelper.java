@@ -21,6 +21,7 @@ import android.util.Log;
 import com.google.android.maps.GeoPoint;
 import com.parking.datamanager.ParkingLocationDataEntry;
 
+
 public class DataBaseHelper extends SQLiteOpenHelper {
 
    private static final String TAG = 
@@ -146,12 +147,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
    public void openDataBase() throws SQLException {
       String myPath = DB_PATH + DB_NAME;
-      myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+      myDataBase = SQLiteDatabase.openOrCreateDatabase(myPath, null);
    }
 
    @Override
-   public synchronized void close() {
-      if (myDataBase != null)
+ public synchronized void close() {
+  
+   if (myDataBase != null)
          myDataBase.close();
       
       super.close();
@@ -247,6 +249,71 @@ public class DataBaseHelper extends SQLiteOpenHelper {
    // to you to create adapters for your views.
 	}
 	
+	public void dbquery(List<ParkingLocationDataEntry> parkingLocations) {
+                
+        ParkingLocationDataEntry tLocationObj = null;
+        tLocationObj = new ParkingLocationDataEntry();
+        int iParkingObjs = 0;
+        double dist;
+        Cursor cursor=null;
+        if (myDataBase != null)
+        	cursor = myDataBase.rawQuery("select * from parking_info", null);
+        //Cursor cursor = getReadableDatabase().rawQuery(
+                    //"select * from parking_info where _id > "+start+ " and _id < "+ end, null);
+          //  		"select * from parking_info", null);
+        if (cursor != null) {
+                Log.v(TAG, "dbquery got 500 elements :: " + cursor.getCount());
+                /* Check if our result was valid. */
+                   if (cursor.moveToFirst()) {
+                      /* Loop through all Results */
+                        do {
+        
+                            /*
+                             * Retrieve the values of the Entry the Cursor is
+                             * pointing to.
+                             */
+                        	
+                            Long Id = (long) cursor.getInt(cursor
+                                    .getColumnIndexOrThrow("_id"));
+                            float dbLat = cursor.getFloat(cursor
+                                    .getColumnIndexOrThrow("Lat"));
+                            float dbLon = cursor.getFloat(cursor
+                                    .getColumnIndexOrThrow("Lon"));
+                            float dbRate = cursor.getFloat(cursor
+                                    .getColumnIndexOrThrow("Rate"));
+                            String dbType = cursor.getString(cursor
+                                    .getColumnIndexOrThrow("Type"));
+                            int dbQuantity = cursor.getInt(cursor
+                                    .getColumnIndexOrThrow("Quantity"));
+                            
+                            int ilat = (int) (dbLat * 1E6);
+    						int ilng = (int) (dbLon * 1E6);
+    						GeoPoint point = new GeoPoint(ilat, ilng);
+    				                               
+        						ParkingLocationDataEntry tempLocationObj = null;
+        				        tempLocationObj = new ParkingLocationDataEntry();
+        				        tempLocationObj.setId(Id);
+        				        tempLocationObj.setLatitude( dbLat);
+        				        tempLocationObj.setLongitude(dbLon);
+        				        tempLocationObj.setGeoPoint(point);
+        			//	        tempLocationObj.setDistance(dist);
+        				        tempLocationObj.setRate(dbRate);
+        				        tempLocationObj.setType(dbType);
+        				        tempLocationObj.setQuantity(dbQuantity);
+                                //Log.v(TAG, "dbquery :: " + dbType);
+                                parkingLocations.add(tempLocationObj);
+                                iParkingObjs++;
+                            
+                            
+                        } while (cursor.moveToNext()); 
+                        cursor.close();
+                    }
+                }
+        
+        
+       
+    }
+
 	public void dbquery(int distance,
             double mlat, double mlon, int limit,
             List<ParkingLocationDataEntry> parkingLocations) {
@@ -319,7 +386,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     }
                 }
         
-        
+/*        
         //Collections.sort(tempParkingSet, COMPARATOR);
         ParkingLocationDataEntry[] arrayOfLocation = tempParkingSet.toArray(new ParkingLocationDataEntry[]{});
        
@@ -332,6 +399,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         	parkingLocations.add(arrayOfLocation[i]);
         	count++;
         }
+  */
     }
 	//Below functions are helper functions to calculate distance
 	private double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -359,26 +427,3 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	   
 }
 
-
-class DistanceComparator implements Comparator<ParkingLocationDataEntry> {
-
-   @Override
-   public int compare(ParkingLocationDataEntry obj1, ParkingLocationDataEntry obj2) {
-
-      /*
-       * parameter are of type Object, so we have to downcast it
-       * to Employee objects
-       */
-
-      double dist1 = obj1.getDistance();
-      double dist2 = obj2.getDistance();
-
-      if (dist1 > dist2)
-         return 1;
-      else if (dist1 < dist2)
-         return -1;
-      else
-         return 0;
-   }
-
-}

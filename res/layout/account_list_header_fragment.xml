@@ -31,7 +31,7 @@
         android:textColor="#ff0000"
         android:textSize="21dp"
         android:gravity="center_horizontal"
-        android:paddingTop="10dp"
+        android:paddingTop="100dp"
         android:paddingBottom="10dp">
     </TextView>
 </LinearLayout>

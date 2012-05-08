@@ -27,7 +27,7 @@
 
     <application
         android:name="com.parking.application.ParkingApplication"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/quickpark_icon"
         android:label="@string/app_name" >
         <activity
             android:name="com.parking.dashboard.activity.DashboardActivity"

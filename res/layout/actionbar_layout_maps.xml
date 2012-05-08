@@ -19,7 +19,7 @@
         android:scaleType="center"
         android:src="@drawable/refresh"
         android:layout_alignParentRight="true"
-        android:background="#f00"
+        android:background="#0000ff"
         android:onClick="mapRefresh"/>
          
 </RelativeLayout>

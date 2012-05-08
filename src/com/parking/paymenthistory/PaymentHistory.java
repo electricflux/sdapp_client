@@ -10,6 +10,7 @@ import android.widget.SimpleCursorAdapter;
 import com.parking.billing.PurchaseDatabase;
 import com.parking.dashboard.R;
 import com.parking.dashboard.activity.DashboardActivity;
+import com.parking.utils.AppPreferences;
 
 public class PaymentHistory extends ListActivity{
    
@@ -49,7 +50,10 @@ public class PaymentHistory extends ListActivity{
 
    private void queryHistory() {
       
-      historyCursor = historyTable.queryAllHistoryItems();
+	   if (true == AppPreferences.getInstance().getGuestLogin())
+		   historyCursor = null;
+	   else
+		   historyCursor = historyTable.queryAllHistoryItems();
       startManagingCursor(historyCursor);
    }
    

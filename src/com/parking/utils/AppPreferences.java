@@ -62,7 +62,15 @@ public class AppPreferences {
          prefsEditor.putBoolean("guest_login", guest);
          prefsEditor.commit();
      }
-     
+    
+     public void setAccountInfo(String text) {
+    	 Editor prefsEditor;
+    	 prefsEditor = appSharedPrefs.edit();
+         prefsEditor.putString("user_account", text);
+         prefsEditor.commit();
+         Log.v(TAG,"Set UserAccount to : "+ getAccountInfo());
+     }
+    
      public float getLastPaidLocationLatitude() 
      {
          return appSharedPrefs.getFloat("last_paid_location_latitude", 0.0f);
@@ -76,6 +84,11 @@ public class AppPreferences {
      public boolean getGuestLogin() 
      {
          return appSharedPrefs.getBoolean("guest_login", false);
+     }
+     
+     public String getAccountInfo() 
+     {
+         return appSharedPrefs.getString("user_account", "");
      }
      
      public ArrayList<String> getLicensePlateList()

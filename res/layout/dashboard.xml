@@ -4,7 +4,7 @@
     android:layout_height="fill_parent" 
     android:orientation="vertical">
    
-    <include layout="@layout/actionbar_layout"/>    
+    <include layout="@layout/action_layout_dashboard"/>    
     <include layout="@layout/dashboard_fragment_layout"/>
     
 </LinearLayout>

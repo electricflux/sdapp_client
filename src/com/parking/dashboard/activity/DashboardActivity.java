@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.parking.application.ParkingApplication;
 import com.parking.auth.Authenticator;
+import com.parking.auth.GetAccountListActivity;
 import com.parking.dashboard.R;
 import com.parking.dbManager.DataBaseHelper;
 import com.parking.paymenthistory.PaymentHistory;
@@ -28,7 +30,7 @@ public class DashboardActivity extends Activity{
 
 	public static Context myContext = null;
 	public static DataBaseHelper myDbHelper = null;
-
+	public TextView textViewToChange;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -36,6 +38,8 @@ public class DashboardActivity extends Activity{
 		setContentView(R.layout.dashboard);
 		myContext = getApplicationContext();
 		DashboardActivity.myContext = getApplicationContext();
+		textViewToChange = (TextView) findViewById(R.id.login);
+		
 
 		//attach event handler to dash buttons
 		DashboardClickListener dBClickListener = new DashboardClickListener();
@@ -129,7 +133,27 @@ public class DashboardActivity extends Activity{
 			Authenticator.authenticate(this.getBaseContext());
 		}
 		
-		
+		if (true == AppPreferences.getInstance().getGuestLogin())
+		{
+			textViewToChange.setText(
+				    "Guest.\nLogin");
+		}
+		else
+		{
+			textViewToChange.setText(
+				    ""+ AppPreferences.getInstance().getAccountInfo() +".\nLogout");
+		}
+			
+	}
+
+	public void reLogin(View v){
+
+
+		/** Launch account list activity */
+		Intent intent = new Intent(getAppContext(), GetAccountListActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+
 	}
 
 }

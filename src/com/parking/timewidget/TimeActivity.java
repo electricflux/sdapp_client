@@ -170,8 +170,10 @@ public class TimeActivity extends Activity{
         							//do nothing?
         							return ;
         						}
-        						if (false == AppPreferences.getInstance().getGuestLogin())
-        						setupAlarm(true);
+        						if (false == AppPreferences.getInstance().getGuestLogin()){
+        							setupAlarm(true);	
+        						}
+        						
         						else {
         							Toast.makeText(TimeActivity.this, "Setting only a reminder because you are using Guest Account", Toast.LENGTH_LONG).show();
         							setupAlarm(false);

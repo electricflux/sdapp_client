@@ -61,7 +61,8 @@ public class GetAccountListActivity extends ListActivity{
 			return;
 		}
 		ParkingApplication.setAccount(accounts[position-1]);
-		
+		AppPreferences.getInstance().setGuestLogin(false);
+		AppPreferences.getInstance().setAccountInfo(ParkingApplication.getAccount().name);
 		intent = new Intent(this, GetAuthTokenActivity.class);
 		startActivity(intent);
 		finish();

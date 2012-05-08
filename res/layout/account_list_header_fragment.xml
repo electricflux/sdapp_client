@@ -26,9 +26,9 @@
         <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Please select a Google account to login"
+        android:text="Please select a Google account to login or use Guest account"
         android:background="#ffffff"
-        android:textColor="#ff0000"
+        android:textColor="#0000ff"
         android:textSize="21dp"
         android:gravity="center_horizontal"
         android:paddingTop="100dp"

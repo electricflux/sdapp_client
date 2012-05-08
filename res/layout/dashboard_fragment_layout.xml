@@ -15,32 +15,32 @@
         <Button android:id="@+id/dashboard_button_find_parking"
             style="@style/DashboardButton"
             android:text="@string/activity_findparking"
-            android:drawableTop="@drawable/dashboard_button_add" />
+            android:drawableTop="@drawable/dashboard_button_findpark" />
  
         <Button android:id="@+id/dashboard_button_viewall"
             style="@style/DashboardButton"
             android:text="@string/activity_locatemycar"
-            android:drawableTop="@drawable/dashboard_button_add" />
+            android:drawableTop="@drawable/drawable_button_locate" />
  
         <Button android:id="@+id/dashboard_button_personalbests"
             style="@style/DashboardButton"
             android:text="@string/activity_paymenthistory"
-            android:drawableTop="@drawable/dashboard_button_add" />
+            android:drawableTop="@drawable/dashboard_button_history" />
         
         <Button android:id="@+id/dashboard_button_parkandremind"
             style="@style/DashboardButton"
             android:text="@string/activity_parkandremind"
-            android:drawableTop="@drawable/dashboard_button_add" />       
+            android:drawableTop="@drawable/dashboard_button_remind" />       
             
         <Button android:id="@+id/dashboard_button_towingcontact"
             style="@style/DashboardButton"
             android:text="@string/activity_towingcontact"
-            android:drawableTop="@drawable/dashboard_button_add" />   
+            android:drawableTop="@drawable/dashboard_button_contacts" />   
         
         <Button android:id="@+id/dashboard_button_parkingrules"
             style="@style/DashboardButton"
             android:text="@string/activity_parkingrules"
-            android:drawableTop="@drawable/dashboard_button_add" />    
+            android:drawableTop="@drawable/dashboard_button_rules" />    
  
   </com.parking.dashboard.DashboardLayout>
 

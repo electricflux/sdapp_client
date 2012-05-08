@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -135,13 +136,15 @@ public class DashboardActivity extends Activity{
 		
 		if (true == AppPreferences.getInstance().getGuestLogin())
 		{
-			textViewToChange.setText(
-				    "Guest.\nLogin");
+			String source = "<b>Guest.</b><br/><u>Login</u>";
+			textViewToChange.setText(Html.fromHtml(source));
+				    
 		}
 		else
 		{
-			textViewToChange.setText(
-				    ""+ AppPreferences.getInstance().getAccountInfo() +".\nLogout");
+			String source = "<b>"+AppPreferences.getInstance().getAccountInfo() +"</b><u>Logout</u>";
+			textViewToChange.setText(Html.fromHtml(source));
+				    //""+ AppPreferences.getInstance().getAccountInfo() +".\nLogout");
 		}
 			
 	}
